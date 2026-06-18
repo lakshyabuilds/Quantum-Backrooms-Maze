@@ -3,1550 +3,482 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
-    <!-- SEO Meta -->
-    <title>Quantum Backrooms: The Observer's Maze – Psychological Horror Game</title>
-    <meta name="description" content="Play Quantum Backrooms: The Observer's Maze – a free online 3D horror game where reality shifts when you look away. Navigate a quantum maze, find the key, escape. Quantum tunneling, entangled doors, shadow entities. No download required.">
-    <meta name="keywords" content="quantum backrooms, observer's maze, three.js game, horror maze, quantum tunneling, backrooms game, psychological horror, browser game, online horror game, quantum maze, backrooms simulator, escape room, quantum physics game, weird maze, surreal horror, free browser game, play online, observer effect, quantum mechanics, psychedelic horror, LSD trip game, nightmare maze, shadow entities, jump scare, procedural generation, webGL game, three.js horror, browser based game, 3D maze, creepy game">
-    <meta name="author" content="Techiral Lakshya Gupta">
-    <meta name="robots" content="index, follow">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://quantum-backrooms.vercel.app">
+    <title>Quantum Backrooms: The Observer's Maze</title>
+    <meta name="description" content="Navigate a shifting quantum maze where observation changes reality. Quantum tunneling, entangled doors, shadow entities, and hallucinations. A browser-based psychological horror experience.">
+    <meta name="keywords" content="quantum backrooms, observer's maze, three.js horror, quantum maze, browser horror game, backrooms, psychological horror, free online game, webgl horror">
     <meta property="og:title" content="Quantum Backrooms: The Observer's Maze">
-    <meta property="og:description" content="A reality‑bending horror maze where observation shapes the world. Look away and walls disappear, doors entangle, and entities crawl from the dark.">
+    <meta property="og:description" content="Look away and reality shifts. A first‑person horror maze with quantum physics.">
     <meta property="og:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Quantum Backrooms dimly lit corridor with a golden key and a shadow entity lurking.">
-    <meta property="og:site_name" content="Quantum Backrooms">
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Quantum Backrooms: The Observer's Maze">
-    <meta name="twitter:description" content="Look away and reality shifts. A Three.js horror maze with quantum tunneling, entangled doors, and lurking entities.">
-    <meta name="twitter:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
-    <meta name="twitter:image:alt" content="A dim maze corridor with a golden key floating ahead.">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://quantum-backrooms.vercel.app">
-
-    <!-- Favicon & App Icons (square, auto-cropped from banner) -->
-    <link rel="icon" type="image/jpeg" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <link rel="icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <link rel="apple-touch-icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
-
-    <!-- Theme color for browser UI -->
     <meta name="theme-color" content="#0a0a0a">
-
-    <!-- Web App Manifest (optional PWA) -->
-    <link rel="manifest" href="data:application/json,{}">
-
     <style>
-        :root {
-            --bg: #0a0a0a;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000;
-            overflow: hidden;
-            font-family: 'Courier New', monospace;
-            cursor: default;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            height: 100vh;
-            width: 100vw;
-            touch-action: none;
-        }
-
-        canvas {
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-            pointer-events: none;
-            background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.65) 100%);
-            transition: opacity 0.3s;
-        }
-
-        #vignette {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9;
-            pointer-events: none;
-            box-shadow: inset 0 0 180px 60px rgba(0, 0, 0, 0.8);
-            border-radius: 0;
-        }
-
-        #chromatic {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 8;
-            pointer-events: none;
-            background: transparent;
-            mix-blend-mode: overlay;
-            opacity: 0.08;
-            animation: chromaticDrift 7s ease-in-out infinite;
-        }
-
-        @keyframes chromaticDrift {
-            0%,
-            100% {
-                background: transparent;
-            }
-            25% {
-                background: rgba(255, 0, 0, 0.03);
-            }
-            50% {
-                background: transparent;
-            }
-            75% {
-                background: rgba(0, 100, 255, 0.03);
-            }
-        }
-
-        #splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #0a0a0a;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-            pointer-events: all;
-        }
-
-        #splash.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        #splash h1 {
-            font-size: clamp(2rem, 5vw, 4rem);
-            color: #e8d5a3;
-            letter-spacing: 0.3em;
-            text-align: center;
-            margin-bottom: 0.5em;
-            text-shadow: 0 0 60px rgba(232, 213, 163, 0.5), 0 0 120px rgba(200, 170, 100, 0.3);
-            animation: titlePulse 3s ease-in-out infinite;
-            font-weight: 300;
-        }
-
-        @keyframes titlePulse {
-            0%,
-            100% {
-                text-shadow: 0 0 60px rgba(232, 213, 163, 0.5), 0 0 120px rgba(200, 170, 100, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 80px rgba(232, 213, 163, 0.8), 0 0 160px rgba(200, 170, 100, 0.5);
-            }
-        }
-
-        #splash .subtitle {
-            font-size: clamp(0.7rem, 1.5vw, 1rem);
-            color: #b8a080;
-            letter-spacing: 0.5em;
-            text-align: center;
-            margin-bottom: 3em;
-            opacity: 0.7;
-        }
-
-        #splash .enter-btn {
-            padding: 1em 3em;
-            font-size: 1.1rem;
-            letter-spacing: 0.4em;
-            color: #e8d5a3;
-            background: transparent;
-            border: 1px solid #e8d5a3;
-            cursor: pointer;
-            transition: all 0.4s;
-            font-family: inherit;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #splash .enter-btn:hover {
-            background: rgba(232, 213, 163, 0.1);
-            box-shadow: 0 0 40px rgba(232, 213, 163, 0.3);
-            letter-spacing: 0.6em;
-        }
-
-        #splash .enter-btn::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(232, 213, 163, 0.15) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        #splash .enter-btn:hover::after {
-            opacity: 1;
-        }
-
-        #hint {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            pointer-events: none;
-            color: rgba(200, 180, 150, 0.5);
-            font-size: 0.7rem;
-            letter-spacing: 0.3em;
-            transition: opacity 2s;
-            font-family: 'Courier New', monospace;
-        }
-
-        #jumpscare-flash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 50;
-            pointer-events: none;
-            background: #000;
-            opacity: 0;
-            transition: opacity 0.08s;
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}body{background:#000;overflow:hidden;font-family:'Courier New',monospace;cursor:default;user-select:none;touch-action:none;height:100vh;width:100vw}canvas{display:block;position:fixed;top:0;left:0;z-index:1}#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%);transition:opacity 0.3s}#vignette{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9;pointer-events:none;box-shadow:inset 0 0 180px 60px rgba(0,0,0,0.8)}#chromatic{position:fixed;top:0;left:0;width:100%;height:100%;z-index:8;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;animation:chromaticDrift 7s ease-in-out infinite}@keyframes chromaticDrift{0%,100%{background:transparent}25%{background:rgba(255,0,0,0.03)}50%{background:transparent}75%{background:rgba(0,100,255,0.03)}}#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;transition:opacity 0.8s,visibility 0.8s;pointer-events:all}#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}#splash h1{font-size:clamp(2rem,5vw,4rem);color:#e8d5a3;letter-spacing:0.3em;text-align:center;margin-bottom:0.5em;text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3);animation:titlePulse 3s ease-in-out infinite;font-weight:300}@keyframes titlePulse{0%,100%{text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3)}50%{text-shadow:0 0 80px rgba(232,213,163,0.8),0 0 160px rgba(200,170,100,0.5)}}#splash .subtitle{font-size:clamp(0.7rem,1.5vw,1rem);color:#b8a080;letter-spacing:0.5em;text-align:center;margin-bottom:3em;opacity:0.7}.enter-btn{padding:1em 3em;font-size:1.1rem;letter-spacing:0.4em;color:#e8d5a3;background:transparent;border:1px solid #e8d5a3;cursor:pointer;transition:all 0.4s;text-transform:uppercase;position:relative;overflow:hidden}.enter-btn:hover{background:rgba(232,213,163,0.1);box-shadow:0 0 40px rgba(232,213,163,0.3);letter-spacing:0.6em}.enter-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(232,213,163,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}.enter-btn:hover::after{opacity:1}#hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;pointer-events:none;color:rgba(200,180,150,0.5);font-size:0.7rem;letter-spacing:0.3em;transition:opacity 2s}#jumpscare-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;pointer-events:none;background:#000;opacity:0;transition:opacity 0.08s}
     </style>
 </head>
 <body>
+    <div id="splash"><h1>QUANTUM<br>BACKROOMS</h1><p class="subtitle">THE OBSERVER'S MAZE</p><button class="enter-btn" id="enterBtn">Enter</button></div>
+    <div id="overlay"></div><div id="vignette"></div><div id="chromatic"></div><div id="jumpscare-flash"></div><div id="hint"></div>
 
-    <!-- Splash screen -->
-    <div id="splash">
-        <h1>QUANTUM<br>BACKROOMS</h1>
-        <p class="subtitle">THE OBSERVER'S MAZE</p>
-        <button class="enter-btn" id="enterBtn">Enter</button>
-    </div>
-
-    <!-- Visual effect overlays -->
-    <div id="overlay"></div>
-    <div id="vignette"></div>
-    <div id="chromatic"></div>
-    <div id="jumpscare-flash"></div>
-    <div id="hint"></div>
-
-    <!-- Three.js Import Map -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
-            }
-        }
-    </script>
-
+    <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
     <script type="module">
         import * as THREE from 'three';
 
-        // ─────────────────────────────────────
-        // DOM ELEMENTS
-        // ─────────────────────────────────────
-        const splashEl = document.getElementById('splash');
-        const enterBtn = document.getElementById('enterBtn');
-        const hintEl = document.getElementById('hint');
-        const jumpscareFlash = document.getElementById('jumpscare-flash');
-        const overlayEl = document.getElementById('overlay');
-        const vignetteEl = document.getElementById('vignette');
-        const chromaticEl = document.getElementById('chromatic');
+        const splashEl = document.getElementById('splash'), enterBtn = document.getElementById('enterBtn'),
+              hintEl = document.getElementById('hint'), jumpscareFlash = document.getElementById('jumpscare-flash'),
+              overlayEl = document.getElementById('overlay'), vignetteEl = document.getElementById('vignette'),
+              chromaticEl = document.getElementById('chromatic');
 
-        // ─────────────────────────────────────
-        // THREE.JS SETUP
-        // ─────────────────────────────────────
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.1;
+        renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         document.body.appendChild(renderer.domElement);
 
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0a0a0a);
         scene.fog = new THREE.FogExp2(0x0a0a0a, 0.00025);
-
-        const camera = new THREE.PerspectiveCamera(82, window.innerWidth / window.innerHeight, 0.15, 80);
-        camera.position.set(2.5, 1.6, 2.5);
+        const camera = new THREE.PerspectiveCamera(82, window.innerWidth/window.innerHeight, 0.15, 80);
         camera.rotation.order = 'YXZ';
 
-        // ─────────────────────────────────────
-        // AUDIO SYSTEM
-        // ─────────────────────────────────────
-        const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let audioStarted = false;
-
-        function startAudio() {
-            if (!audioStarted) {
-                audioCtx.resume();
-                audioStarted = true;
-                createAmbientHum();
-            }
-        }
-
-        let humOsc, humGain, humFilter;
-        let ambientNoiseNode;
-
-        function createAmbientHum() {
-            humFilter = audioCtx.createBiquadFilter();
-            humFilter.type = 'lowpass';
-            humFilter.frequency.value = 200;
-            humFilter.Q.value = 1;
-
-            humOsc = audioCtx.createOscillator();
-            humOsc.type = 'sawtooth';
-            humOsc.frequency.value = 55;
-
-            const subOsc = audioCtx.createOscillator();
-            subOsc.type = 'sine';
-            subOsc.frequency.value = 28;
-
-            humGain = audioCtx.createGain();
-            humGain.gain.value = 0.04;
-
-            const subGain = audioCtx.createGain();
-            subGain.gain.value = 0.03;
-
-            humOsc.connect(humFilter);
-            humFilter.connect(humGain);
-            humGain.connect(audioCtx.destination);
-
-            subOsc.connect(subGain);
-            subGain.connect(audioCtx.destination);
-
-            humOsc.start();
-            subOsc.start();
-
-            const bufferSize = audioCtx.sampleRate * 2;
-            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = noiseBuffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                data[i] = (Math.random() * 2 - 1) * 0.02;
-            }
-            ambientNoiseNode = audioCtx.createBufferSource();
-            ambientNoiseNode.buffer = noiseBuffer;
-            ambientNoiseNode.loop = true;
-            const noiseGain = audioCtx.createGain();
-            noiseGain.gain.value = 0.015;
-            const noiseFilter = audioCtx.createBiquadFilter();
-            noiseFilter.type = 'bandpass';
-            noiseFilter.frequency.value = 800;
-            noiseFilter.Q.value = 0.5;
-            ambientNoiseNode.connect(noiseFilter);
-            noiseFilter.connect(noiseGain);
-            noiseGain.connect(audioCtx.destination);
+        function startAudio(){ if(!audioStarted){ audioCtx.resume(); audioStarted=true; createAmbientHum(); } }
+        let humOsc, humGain, humFilter, ambientNoiseNode;
+        function createAmbientHum(){
+            humFilter = audioCtx.createBiquadFilter(); humFilter.type='lowpass'; humFilter.frequency.value=200;
+            humOsc = audioCtx.createOscillator(); humOsc.type='sawtooth'; humOsc.frequency.value=55;
+            const sub = audioCtx.createOscillator(); sub.type='sine'; sub.frequency.value=28;
+            humGain = audioCtx.createGain(); humGain.gain.value=0.04;
+            const subGain = audioCtx.createGain(); subGain.gain.value=0.03;
+            humOsc.connect(humFilter); humFilter.connect(humGain); humGain.connect(audioCtx.destination);
+            sub.connect(subGain); subGain.connect(audioCtx.destination);
+            humOsc.start(); sub.start();
+            const noise = audioCtx.createBuffer(1, audioCtx.sampleRate*2, audioCtx.sampleRate);
+            const d = noise.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*0.02;
+            ambientNoiseNode = audioCtx.createBufferSource(); ambientNoiseNode.buffer=noise; ambientNoiseNode.loop=true;
+            const ng = audioCtx.createGain(); ng.gain.value=0.015;
+            const nf = audioCtx.createBiquadFilter(); nf.type='bandpass'; nf.frequency.value=800;
+            ambientNoiseNode.connect(nf); nf.connect(ng); ng.connect(audioCtx.destination);
             ambientNoiseNode.start();
         }
+        function playThud(v=0.3,f=60){ if(!audioStarted)return; const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type='sine'; o.frequency.setValueAtTime(f,audioCtx.currentTime); o.frequency.exponentialRampToValueAtTime(20,audioCtx.currentTime+0.4); g.gain.setValueAtTime(v,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.5); o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.5);}
+        function playJumpscareSound(){ if(!audioStarted)return; const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type='square'; o.frequency.setValueAtTime(200,audioCtx.currentTime); o.frequency.exponentialRampToValueAtTime(40,audioCtx.currentTime+0.6); g.gain.setValueAtTime(0.7,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.7); const d=audioCtx.createWaveShaper(); d.curve=new Float32Array([-1,-0.8,-0.3,0,0.3,0.8,1]); o.connect(d);d.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.7);}
+        function playDistantDoor(){ if(!audioStarted)return; const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type='triangle'; o.frequency.setValueAtTime(100,audioCtx.currentTime); o.frequency.exponentialRampToValueAtTime(30,audioCtx.currentTime+1.2); g.gain.setValueAtTime(0.12,audioCtx.currentTime); g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+1.3); const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=300;o.connect(f);f.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+1.3);}
+        function playHeartbeat(){ if(!audioStarted)return; const n=audioCtx.currentTime; for(let i=0;i<3;i++){ const o=audioCtx.createOscillator(),g=audioCtx.createGain(); o.type='sine';o.frequency.value=35; const t=n+i*0.25; g.gain.setValueAtTime(0.25,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.18); o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+0.2);} }
 
-        function playThud(volume = 0.3, freq = 60) {
-            if (!audioStarted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.4);
-            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.5);
+        const STATE = { level:1, maxLevel:5, gridSize:6, roomSize:5.5, wallH:3.2, hasKey:false, keyPos:null, exitPos:null, gameActive:false, levelComplete:false, chaos:0, instability:0, jumpscareCd:0, shake:0, lastTunnel:0, tunnelCd:1.2, heartbeat:false, hbTimer:0, sprint:false };
+
+        let hWalls=[], vWalls=[], wallTypes={}, wallLastObs={}, wallMeshes={}, cellFlick=[], cellLights=[];
+        const mazeGrp = new THREE.Group(), wallsGrp = new THREE.Group(), lightsGrp = new THREE.Group(),
+              floorGrp = new THREE.Group(), ceilGrp = new THREE.Group();
+        mazeGrp.add(wallsGrp); mazeGrp.add(lightsGrp); mazeGrp.add(floorGrp); mazeGrp.add(ceilGrp);
+        scene.add(mazeGrp);
+
+        const wallMat = new THREE.MeshStandardMaterial({color:0xd4c08a,roughness:0.75,metalness:0.05}),
+              wallMatAlt = new THREE.MeshStandardMaterial({color:0xc8b478,roughness:0.8,metalness:0.04}),
+              floorMat = new THREE.MeshStandardMaterial({color:0x3a3530,roughness:0.55,metalness:0.08}),
+              ceilMat = new THREE.MeshStandardMaterial({color:0x4a4540,roughness:0.7,metalness:0.1});
+
+        scene.add(new THREE.AmbientLight(0x2a2520,0.7));
+        const globalLight = new THREE.PointLight(0xffeedd,8,30,1.5);
+        globalLight.position.set(15,6,15); globalLight.castShadow=true;
+        globalLight.shadow.mapSize.set(512,512); globalLight.shadow.camera.near=0.3; globalLight.shadow.camera.far=50;
+        scene.add(globalLight);
+
+        const playerPos = new THREE.Vector3(), playerEuler={x:0,y:0};
+        const keys={}; let pointerLocked=false;
+        function resetPlayer(){
+            const gs=STATE.gridSize, rs=STATE.roomSize;
+            playerPos.set(rs/2,1.6,rs/2); playerEuler.x=0; playerEuler.y=Math.PI/4;
+            camera.position.copy(playerPos); camera.rotation.set(0,playerEuler.y,0);
         }
 
-        function playJumpscareSound() {
-            if (!audioStarted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.6);
-            gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.7);
-            const distort = audioCtx.createWaveShaper();
-            distort.curve = new Float32Array([-1, -0.8, -0.3, 0, 0.3, 0.8, 1]);
-            osc.connect(distort);
-            distort.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.7);
+        const entities=[], entityGrp=new THREE.Group(); scene.add(entityGrp);
+        function createEntity(){
+            const g=new THREE.Group(), m=new THREE.MeshStandardMaterial({color:0x080808,roughness:1,transparent:true,opacity:0.85});
+            const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.35,1.0,4,8),m); body.position.y=1.1; body.castShadow=true; g.add(body);
+            const head=new THREE.Mesh(new THREE.SphereGeometry(0.28,8,6),m); head.position.y=2.0; head.castShadow=true; g.add(head);
+            const lm=new THREE.MeshStandardMaterial({color:0x050505,roughness:1,transparent:true,opacity:0.7});
+            for(let i=-1;i<=1;i+=2){ const a=new THREE.Mesh(new THREE.CapsuleGeometry(0.1,0.7,4,6),lm); a.position.set(i*0.4,1.5,0); a.rotation.z=i*0.3; g.add(a); }
+            g.userData={bodyMesh:body,headMesh:head,animPhase:Math.random()*Math.PI*2,animSpeed:0.4+Math.random()*0.8};
+            return g;
+        }
+        function spawnEntity(r,c){
+            const rs=STATE.roomSize, e=createEntity(); e.position.set(c*rs+rs/2,0,r*rs+rs/2);
+            e.userData.gridR=r; e.userData.gridC=c; e.userData.state='idle'; e.userData.vanished=false;
+            entityGrp.add(e); entities.push(e); return e;
+        }
+        function despawnEntity(e){ e.userData.state='vanishing'; e.userData.vanished=true; e.userData.vanishStart=performance.now()/1000; }
+
+        const keyGrp=new THREE.Group(), exitGrp=new THREE.Group(); scene.add(keyGrp); scene.add(exitGrp);
+        let keyMesh=null, exitMesh=null;
+        function makeKey(){
+            const g=new THREE.Group(), mat=new THREE.MeshStandardMaterial({color:0xffd700,roughness:0.2,metalness:0.9,emissive:0xffd700,emissiveIntensity:0.6});
+            const bow=new THREE.Mesh(new THREE.TorusGeometry(0.22,0.06,8,12),mat); bow.rotation.x=Math.PI/2; g.add(bow);
+            const shaft=new THREE.Mesh(new THREE.CylinderGeometry(0.04,0.04,0.5,8),mat); shaft.position.y=-0.25; g.add(shaft);
+            const bit=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.15,0.06),mat); bit.position.y=-0.48; g.add(bit);
+            const light=new THREE.PointLight(0xffd700,1.5,4,2); g.add(light); g.userData={glow:light,baseY:0}; return g;
+        }
+        function makeExit(){
+            const g=new THREE.Group(), mat=new THREE.MeshStandardMaterial({color:0x00cc88,roughness:0.2,metalness:0.7,emissive:0x00cc88,emissiveIntensity:0.5});
+            const ring=new THREE.Mesh(new THREE.TorusGeometry(0.5,0.08,16,32),mat); ring.rotation.x=Math.PI/2; ring.position.y=0.1; g.add(ring);
+            const pillar=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,2.5,8),mat); pillar.position.y=1.25; g.add(pillar);
+            const light=new THREE.PointLight(0x00cc88,2,6,2); light.position.y=1.5; g.add(light); g.userData={glow:light}; return g;
+        }
+        function placeKey(r,c){
+            keyGrp.clear(); if(keyMesh) keyMesh.userData.glow?.dispose(); keyMesh=makeKey();
+            const rs=STATE.roomSize; keyMesh.position.set(c*rs+rs/2,1.3,r*rs+rs/2);
+            keyMesh.userData.baseY=keyMesh.position.y; STATE.keyPos={row:r,col:c}; keyGrp.add(keyMesh);
+        }
+        function placeExit(r,c){
+            exitGrp.clear(); if(exitMesh) exitMesh.userData.glow?.dispose(); exitMesh=makeExit();
+            const rs=STATE.roomSize; exitMesh.position.set(c*rs+rs/2,0,r*rs+rs/2);
+            STATE.exitPos={row:r,col:c}; exitGrp.add(exitMesh);
         }
 
-        function playDistantDoor() {
-            if (!audioStarted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 1.2);
-            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.3);
-            const filter = audioCtx.createBiquadFilter();
-            filter.type = 'lowpass';
-            filter.frequency.value = 300;
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1.3);
+        function clearMaze(){
+            wallsGrp.clear(); lightsGrp.clear(); floorGrp.clear(); ceilGrp.clear();
+            wallMeshes={}; wallTypes={}; wallLastObs={}; cellFlick=[]; cellLights=[];
+            entities.forEach(e=>entityGrp.remove(e)); entities.length=0;
+            keyGrp.clear(); exitGrp.clear(); keyMesh=exitMesh=null;
         }
 
-        function playHeartbeat() {
-            if (!audioStarted) return;
-            const now = audioCtx.currentTime;
-            for (let i = 0; i < 3; i++) {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = 35;
-                const t = now + i * 0.25;
-                gain.gain.setValueAtTime(0.25, t);
-                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(t);
-                osc.stop(t + 0.2);
-            }
-        }
-
-        // ─────────────────────────────────────
-        // GAME STATE
-        // ─────────────────────────────────────
-        const GAME_STATE = {
-            currentLevel: 1,
-            maxLevel: 5,
-            gridSize: 6,
-            roomSize: 5.5,
-            wallHeight: 3.2,
-            playerHasKey: false,
-            keyPosition: null,
-            exitPosition: null,
-            startPosition: null,
-            gameActive: false,
-            levelComplete: false,
-            totalChaos: 0,
-            quantumInstability: 0,
-            jumpscareCooldown: 0,
-            screenShakeAmount: 0,
-            lastTunnelTime: 0,
-            tunnelCooldown: 2.5,
-            heartbeating: false,
-            heartbeatTimer: 0,
-        };
-
-        // ─────────────────────────────────────
-        // MAZE DATA
-        // ─────────────────────────────────────
-        let horizontalWalls = []; 
-        let verticalWalls = []; 
-        let wallTypes = {};
-        let wallLastObserved = {}; 
-        let wallMeshes = {}; 
-        let cellLightFlicker = []; 
-        let cellLightMeshes = []; 
-
-        const mazeGroup = new THREE.Group();
-        const wallsGroup = new THREE.Group();
-        const lightsGroup = new THREE.Group();
-        const floorGroup = new THREE.Group();
-        const ceilingGroup = new THREE.Group();
-        mazeGroup.add(wallsGroup);
-        mazeGroup.add(lightsGroup);
-        mazeGroup.add(floorGroup);
-        mazeGroup.add(ceilingGroup);
-        scene.add(mazeGroup);
-
-        // ─────────────────────────────────────
-        // MATERIALS
-        // ─────────────────────────────────────
-        const wallMaterial = new THREE.MeshStandardMaterial({
-            color: 0xd4c08a,
-            roughness: 0.75,
-            metalness: 0.05,
-        });
-
-        const wallMaterialAlt = new THREE.MeshStandardMaterial({
-            color: 0xc8b478,
-            roughness: 0.8,
-            metalness: 0.04,
-        });
-
-        const floorMaterial = new THREE.MeshStandardMaterial({
-            color: 0x3a3530,
-            roughness: 0.55,
-            metalness: 0.08,
-        });
-
-        const ceilingMaterial = new THREE.MeshStandardMaterial({
-            color: 0x4a4540,
-            roughness: 0.7,
-            metalness: 0.1,
-        });
-
-        // ─────────────────────────────────────
-        // LIGHTING
-        // ─────────────────────────────────────
-        const ambientLight = new THREE.AmbientLight(0x2a2520, 0.7);
-        scene.add(ambientLight);
-
-        const globalPointLight = new THREE.PointLight(0xffeedd, 8, 30, 1.5);
-        globalPointLight.position.set(15, 6, 15);
-        globalPointLight.castShadow = true;
-        globalPointLight.shadow.mapSize.width = 512;
-        globalPointLight.shadow.mapSize.height = 512;
-        globalPointLight.shadow.camera.near = 0.3;
-        globalPointLight.shadow.camera.far = 50;
-        globalPointLight.shadow.bias = -0.0005;
-        scene.add(globalPointLight);
-
-        // ─────────────────────────────────────
-        // PLAYER
-        // ─────────────────────────────────────
-        const playerPosition = new THREE.Vector3();
-        const playerEuler = { x: 0, y: 0 };
-        const keysPressed = {};
-        let pointerLocked = false;
-
-        function resetPlayer() {
-            const gs = GAME_STATE.gridSize;
-            const rs = GAME_STATE.roomSize;
-            const sx = GAME_STATE.startPosition?.col ?? 0;
-            const sy = GAME_STATE.startPosition?.row ?? 0;
-            playerPosition.set(sx * rs + rs / 2, 1.6, sy * rs + rs / 2);
-            playerEuler.x = 0;
-            playerEuler.y = Math.PI / 4;
-            camera.position.copy(playerPosition);
-            camera.rotation.set(0, playerEuler.y, 0);
-        }
-
-        // ─────────────────────────────────────
-        // SHADOW ENTITIES
-        // ─────────────────────────────────────
-        const entities = [];
-        const entityGroup = new THREE.Group();
-        scene.add(entityGroup);
-
-        function createEntityMesh() {
-            const group = new THREE.Group();
-            const bodyMat = new THREE.MeshStandardMaterial({
-                color: 0x080808,
-                roughness: 1,
-                metalness: 0,
-                transparent: true,
-                opacity: 0.85,
-            });
-            const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.35, 1.0, 4, 8), bodyMat);
-            body.position.y = 1.1;
-            body.castShadow = true;
-            group.add(body);
-            const head = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 6), bodyMat);
-            head.position.y = 2.0;
-            head.castShadow = true;
-            group.add(head);
-            const limbMat = new THREE.MeshStandardMaterial({
-                color: 0x050505,
-                roughness: 1,
-                metalness: 0,
-                transparent: true,
-                opacity: 0.7,
-            });
-            for (let i = -1; i <= 1; i += 2) {
-                const arm = new THREE.Mesh(new THREE.CapsuleGeometry(0.1, 0.7, 4, 6), limbMat);
-                arm.position.set(i * 0.4, 1.5, 0);
-                arm.rotation.z = i * 0.3;
-                group.add(arm);
-            }
-            group.userData = {
-                bodyMesh: body,
-                headMesh: head,
-                baseOpacity: 0.85,
-                animationPhase: Math.random() * Math.PI * 2,
-                animationSpeed: 0.4 + Math.random() * 0.8,
-            };
-            return group;
-        }
-
-        function spawnEntity(row, col) {
-            const rs = GAME_STATE.roomSize;
-            const ex = col * rs + rs / 2;
-            const ez = row * rs + rs / 2;
-            const mesh = createEntityMesh();
-            mesh.position.set(ex, 0, ez);
-            mesh.visible = true;
-            mesh.userData.gridRow = row;
-            mesh.userData.gridCol = col;
-            mesh.userData.spawnTime = performance.now() / 1000;
-            mesh.userData.state = 'idle';
-            mesh.userData.chargeTarget = null;
-            mesh.userData.vanished = false;
-            entityGroup.add(mesh);
-            entities.push(mesh);
-            return mesh;
-        }
-
-        function despawnEntity(entity) {
-            entity.userData.state = 'vanishing';
-            entity.userData.vanished = true;
-            entity.userData.vanishStart = performance.now() / 1000;
-        }
-
-        function cleanupEntities() {
-            const now = performance.now() / 1000;
-            for (let i = entities.length - 1; i >= 0; i--) {
-                const e = entities[i];
-                if (e.userData.vanished && now - e.userData.vanishStart > 0.5) {
-                    entityGroup.remove(e);
-                    entities.splice(i, 1);
-                }
-            }
-        }
-
-        // ─────────────────────────────────────
-        // KEY & EXIT MESHES
-        // ─────────────────────────────────────
-        const keyGroup = new THREE.Group();
-        const exitGroup = new THREE.Group();
-        scene.add(keyGroup);
-        scene.add(exitGroup);
-
-        let keyMesh = null;
-        let exitMarkerMesh = null;
-
-        function createKeyMesh() {
-            const group = new THREE.Group();
-            const mat = new THREE.MeshStandardMaterial({
-                color: 0xffd700,
-                roughness: 0.2,
-                metalness: 0.9,
-                emissive: 0xffd700,
-                emissiveIntensity: 0.6,
-            });
-            const bow = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.06, 8, 12), mat);
-            bow.rotation.x = Math.PI / 2;
-            group.add(bow);
-            const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.5, 8), mat);
-            shaft.position.y = -0.25;
-            group.add(shaft);
-            const bit = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.15, 0.06), mat);
-            bit.position.y = -0.48;
-            group.add(bit);
-            const glowLight = new THREE.PointLight(0xffd700, 1.5, 4, 2);
-            glowLight.position.y = 0;
-            group.add(glowLight);
-            group.userData = { glowLight, baseY: 0 };
-            return group;
-        }
-
-        function createExitMarker() {
-            const group = new THREE.Group();
-            const mat = new THREE.MeshStandardMaterial({
-                color: 0x00cc88,
-                roughness: 0.2,
-                metalness: 0.7,
-                emissive: 0x00cc88,
-                emissiveIntensity: 0.5,
-            });
-            const ring = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.08, 16, 32), mat);
-            ring.rotation.x = Math.PI / 2;
-            ring.position.y = 0.1;
-            group.add(ring);
-            const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.5, 8), mat);
-            pillar.position.y = 1.25;
-            group.add(pillar);
-            const glowLight = new THREE.PointLight(0x00cc88, 2, 6, 2);
-            glowLight.position.y = 1.5;
-            group.add(glowLight);
-            group.userData = { glowLight };
-            return group;
-        }
-
-        function placeKey(row, col) {
-            keyGroup.clear();
-            if (keyMesh) keyMesh.userData?.glowLight?.dispose();
-            keyMesh = createKeyMesh();
-            const rs = GAME_STATE.roomSize;
-            keyMesh.position.set(col * rs + rs / 2, 1.3, row * rs + rs / 2);
-            keyMesh.userData.baseY = keyMesh.position.y;
-            keyMesh.userData.gridRow = row;
-            keyMesh.userData.gridCol = col;
-            keyGroup.add(keyMesh);
-            GAME_STATE.keyPosition = { row, col };
-        }
-
-        function placeExit(row, col) {
-            exitGroup.clear();
-            if (exitMarkerMesh) exitMarkerMesh.userData?.glowLight?.dispose();
-            exitMarkerMesh = createExitMarker();
-            const rs = GAME_STATE.roomSize;
-            exitMarkerMesh.position.set(col * rs + rs / 2, 0, row * rs + rs / 2);
-            exitMarkerMesh.userData.gridRow = row;
-            exitMarkerMesh.userData.gridCol = col;
-            exitGroup.add(exitMarkerMesh);
-            GAME_STATE.exitPosition = { row, col };
-        }
-
-        function removeKey() {
-            if (keyMesh) {
-                keyGroup.remove(keyMesh);
-                keyMesh.traverse(c => { if (c.material) c.material.dispose(); });
-                keyMesh = null;
-            }
-            GAME_STATE.keyPosition = null;
-        }
-
-        function removeExit() {
-            if (exitMarkerMesh) {
-                exitGroup.remove(exitMarkerMesh);
-                exitMarkerMesh.traverse(c => { if (c.material) c.material.dispose(); });
-                exitMarkerMesh = null;
-            }
-            GAME_STATE.exitPosition = null;
-        }
-
-        // ─────────────────────────────────────
-        // MAZE GENERATION
-        // ─────────────────────────────────────
-        function clearMaze() {
-            wallsGroup.clear();
-            lightsGroup.clear();
-            floorGroup.clear();
-            ceilingGroup.clear();
-            wallMeshes = {};
-            wallTypes = {};
-            wallLastObserved = {};
-            cellLightFlicker = [];
-            cellLightMeshes = [];
-            entities.forEach(e => entityGroup.remove(e));
-            entities.length = 0;
-            keyGroup.clear();
-            exitGroup.clear();
-            keyMesh = null;
-            exitMarkerMesh = null;
-        }
-
-        function generateMaze(level) {
+        function generateMaze(level){
             clearMaze();
-            const gs = GAME_STATE.gridSize;
-            const rs = GAME_STATE.roomSize;
-            const wh = GAME_STATE.wallHeight;
-
-            horizontalWalls = [];
-            verticalWalls = [];
-            for (let r = 0; r < gs; r++) {
-                horizontalWalls[r] = [];
-                verticalWalls[r] = [];
-                for (let c = 0; c < gs; c++) {
-                    if (r < gs - 1) horizontalWalls[r][c] = 'solid';
-                    if (c < gs - 1) verticalWalls[r][c] = 'solid';
+            const gs=STATE.gridSize, rs=STATE.roomSize, wh=STATE.wallH;
+            hWalls=Array.from({length:gs},()=>Array(gs).fill('solid'));
+            vWalls=Array.from({length:gs},()=>Array(gs).fill('solid'));
+            const vis=Array.from({length:gs},()=>Array(gs).fill(false));
+            const stack=[{r:0,c:0}]; vis[0][0]=true;
+            const dirs=[{dr:-1,dc:0,type:'h',wr:(r,c)=>r-1,wc:(r,c)=>c},{dr:1,dc:0,type:'h',wr:(r,c)=>r,wc:(r,c)=>c},{dr:0,dc:-1,type:'v',wr:(r,c)=>r,wc:(r,c)=>c-1},{dr:0,dc:1,type:'v',wr:(r,c)=>r,wc:(r,c)=>c}];
+            while(stack.length){
+                const cur=stack[stack.length-1]; const {r,c}=cur;
+                const neigh=[]; for(const d of dirs){ const nr=r+d.dr,nc=c+d.dc; if(nr>=0&&nr<gs&&nc>=0&&nc<gs&&!vis[nr][nc]) neigh.push({nr,nc,...d}); }
+                if(!neigh.length) stack.pop();
+                else{
+                    const ch=neigh[Math.floor(Math.random()*neigh.length)]; vis[ch.nr][ch.nc]=true;
+                    const wr=ch.wr(r,c), wc=ch.wc(r,c);
+                    if(ch.type==='h'&&wr>=0&&wr<gs-1) hWalls[wr][wc]='open';
+                    else if(ch.type==='v'&&wc>=0&&wc<gs-1) vWalls[wr][wc]='open';
+                    stack.push({r:ch.nr,c:ch.nc});
                 }
             }
+            // extra loops
+            for(let i=0;i<Math.floor(gs*gs*0.15);i++){
+                const r=Math.floor(Math.random()*gs),c=Math.floor(Math.random()*gs);
+                if(Math.random()<0.5&&r<gs-1&&hWalls[r][c]==='solid') hWalls[r][c]='open';
+                else if(c<gs-1&&vWalls[r][c]==='solid') vWalls[r][c]='open';
+            }
+            // quantum walls
+            const allW=[]; for(let r=0;r<gs-1;r++)for(let c=0;c<gs;c++)if(hWalls[r][c]==='open')allW.push({type:'h',r,c});
+            for(let r=0;r<gs;r++)for(let c=0;c<gs-1;c++)if(vWalls[r][c]==='open')allW.push({type:'v',r,c});
+            const qFrac=0.2+level*0.1, numQ=Math.floor(allW.length*Math.min(0.5,qFrac));
+            const shuf=[...allW].sort(()=>Math.random()-0.5);
+            for(let i=0;i<numQ;i++){
+                const w=shuf[i], key=`${w.type}-${w.r}-${w.c}`; wallTypes[key]='quantum';
+                if(w.type==='h') hWalls[w.r][w.c]='quantum'; else vWalls[w.r][w.c]='quantum';
+            }
+            // register all walls
+            for(let r=0;r<gs-1;r++)for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=hWalls[r][c]; }
+            for(let r=0;r<gs;r++)for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=vWalls[r][c]; }
 
-            const visited = Array.from({ length: gs }, () => Array(gs).fill(false));
-            const stack = [{ r: 0, c: 0 }];
-            visited[0][0] = true;
-
-            const directions = [
-                { dr: -1, dc: 0, wallType: 'h', wallR: (r,c)=>r-1, wallC: (r,c)=>c },
-                { dr: 1, dc: 0, wallType: 'h', wallR: (r,c)=>r, wallC: (r,c)=>c },
-                { dr: 0, dc: -1, wallType: 'v', wallR: (r,c)=>r, wallC: (r,c)=>c-1 },
-                { dr: 0, dc: 1, wallType: 'v', wallR: (r,c)=>r, wallC: (r,c)=>c },
-            ];
-
-            while (stack.length) {
-                const { r, c } = stack[stack.length - 1];
-                const neighbors = [];
-                for (const d of directions) {
-                    const nr = r + d.dr, nc = c + d.dc;
-                    if (nr >= 0 && nr < gs && nc >= 0 && nc < gs && !visited[nr][nc]) {
-                        neighbors.push({ nr, nc, ...d });
-                    }
-                }
-                if (!neighbors.length) stack.pop();
-                else {
-                    const chosen = neighbors[Math.floor(Math.random() * neighbors.length)];
-                    visited[chosen.nr][chosen.nc] = true;
-                    const wr = chosen.wallR(r, c), wc = chosen.wallC(r, c);
-                    if (chosen.wallType === 'h' && wr >= 0 && wr < gs - 1) horizontalWalls[wr][wc] = 'open';
-                    else if (chosen.wallType === 'v' && wc >= 0 && wc < gs - 1) verticalWalls[wr][wc] = 'open';
-                    stack.push({ r: chosen.nr, c: chosen.nc });
-                }
+            // guarantee start cell open
+            if(!hasOpenNeighbor(0,0)){
+                if(gs>1) { const k=`h-${0}-${0}`; wallTypes[k]='open'; hWalls[0][0]='open'; }
+            }
+            function hasOpenNeighbor(r,c){
+                if(r>0 && (wallTypes[`h-${r-1}-${c}`]==='open'||wallTypes[`h-${r-1}-${c}`]==='quantum')) return true;
+                if(r<gs-1 && (wallTypes[`h-${r}-${c}`]==='open'||wallTypes[`h-${r}-${c}`]==='quantum')) return true;
+                if(c>0 && (wallTypes[`v-${r}-${c-1}`]==='open'||wallTypes[`v-${r}-${c-1}`]==='quantum')) return true;
+                if(c<gs-1 && (wallTypes[`v-${r}-${c}`]==='open'||wallTypes[`v-${r}-${c}`]==='quantum')) return true;
+                return false;
             }
 
-            const extraConn = Math.floor(gs * gs * 0.15);
-            for (let i = 0; i < extraConn; i++) {
-                const r = Math.floor(Math.random() * gs), c = Math.floor(Math.random() * gs);
-                if (Math.random() < 0.5 && r < gs - 1 && horizontalWalls[r][c] === 'solid') horizontalWalls[r][c] = 'open';
-                else if (c < gs - 1 && verticalWalls[r][c] === 'solid') verticalWalls[r][c] = 'open';
-            }
+            const exitR=gs-1, exitC=gs-1;
+            let keyR,keyC; do{ keyR=Math.floor(Math.random()*gs); keyC=Math.floor(Math.random()*gs); }while((keyR===0&&keyC===0)||(keyR===exitR&&keyC===exitC));
+            STATE.keyPos={row:keyR,col:keyC}; STATE.exitPos={row:exitR,col:exitC};
+            ensurePath({row:0,col:0}, STATE.keyPos); ensurePath(STATE.keyPos, STATE.exitPos);
+            STATE.hasKey=false;
 
-            const quantumFraction = 0.15 + level * 0.12;
-            const allWallKeys = [];
-            for (let r = 0; r < gs - 1; r++) for (let c = 0; c < gs; c++) if (horizontalWalls[r][c] === 'open') allWallKeys.push({ type: 'h', r, c });
-            for (let r = 0; r < gs; r++) for (let c = 0; c < gs - 1; c++) if (verticalWalls[r][c] === 'open') allWallKeys.push({ type: 'v', r, c });
-            const numQuantum = Math.floor(allWallKeys.length * quantumFraction);
-            const shuffled = [...allWallKeys].sort(() => Math.random() - 0.5);
-            for (let i = 0; i < Math.min(numQuantum, shuffled.length); i++) {
-                const wk = shuffled[i];
-                const key = `${wk.type}-${wk.r}-${wk.c}`;
-                wallTypes[key] = 'quantum';
-                if (wk.type === 'h') horizontalWalls[wk.r][wk.c] = 'quantum';
-                else verticalWalls[wk.r][wk.c] = 'quantum';
-            }
+            buildGeometry();
+            placeKey(keyR,keyC); placeExit(exitR,exitC);
 
-            for (let r = 0; r < gs - 1; r++) for (let c = 0; c < gs; c++) {
-                const key = `h-${r}-${c}`;
-                if (!wallTypes[key]) wallTypes[key] = horizontalWalls[r][c];
-            }
-            for (let r = 0; r < gs; r++) for (let c = 0; c < gs - 1; c++) {
-                const key = `v-${r}-${c}`;
-                if (!wallTypes[key]) wallTypes[key] = verticalWalls[r][c];
-            }
-
-            GAME_STATE.startPosition = { row: 0, col: 0 };
-            const exitR = gs - 1, exitC = gs - 1;
-            let keyR, keyC;
-            do {
-                keyR = Math.floor(Math.random() * gs);
-                keyC = Math.floor(Math.random() * gs);
-            } while ((keyR === 0 && keyC === 0) || (keyR === exitR && keyC === exitC));
-
-            // ----- MISSING KEY/EXIT LOGIC -----
-            const levelFactor = level - 1;
-            const keyMissingChance = Math.min(0.4, levelFactor * 0.1);
-            const exitMissingChance = Math.min(0.35, levelFactor * 0.08);
-            const keyExists = Math.random() > keyMissingChance;
-            const exitExists = Math.random() > exitMissingChance;
-
-            if (keyExists) {
-                GAME_STATE.keyPosition = { row: keyR, col: keyC };
-                ensurePathExists({ row: 0, col: 0 }, GAME_STATE.keyPosition);
-            } else {
-                GAME_STATE.keyPosition = null;
-            }
-
-            if (exitExists) {
-                GAME_STATE.exitPosition = { row: exitR, col: exitC };
-                if (keyExists) ensurePathExists(GAME_STATE.keyPosition, GAME_STATE.exitPosition);
-            } else {
-                GAME_STATE.exitPosition = null;
-            }
-
-            GAME_STATE.playerHasKey = false;
-
-            buildMazeGeometry();
-
-            if (keyExists) placeKey(keyR, keyC);
-            else keyGroup.clear();
-            if (exitExists) placeExit(exitR, exitC);
-            else exitGroup.clear();
-
-            const now = performance.now() / 1000;
-            for (const key in wallTypes) wallLastObserved[key] = now;
-
-            cellLightFlicker = Array.from({ length: gs }, () =>
-                Array.from({ length: gs }, () => ({
-                    phase: Math.random() * Math.PI * 2,
-                    speed: 0.3 + Math.random() * 1.5,
-                    intensity: 0.6 + Math.random() * 0.4,
-                    nextFlicker: now + Math.random() * 5,
-                }))
-            );
+            const now=performance.now()/1000;
+            for(const k in wallTypes) wallLastObs[k]=now;
+            cellFlick=Array.from({length:gs},()=>Array.from({length:gs},()=>({phase:Math.random()*Math.PI*2,speed:0.3+Math.random()*1.5,intensity:0.6+Math.random()*0.4,nextFlick:now+Math.random()*5})));
         }
 
-        function ensurePathExists(from, to) {
-            if (!from || !to) return;
-            const gs = GAME_STATE.gridSize;
-            const visited = Array.from({ length: gs }, () => Array(gs).fill(false));
-            const queue = [{ r: from.row, c: from.col }];
-            visited[from.row][from.col] = true;
-            const dirs = [
-                { dr: -1, dc: 0, wType: 'h', wrOff: -1 },
-                { dr: 1, dc: 0, wType: 'h', wrOff: 0 },
-                { dr: 0, dc: -1, wType: 'v', wcOff: -1 },
-                { dr: 0, dc: 1, wType: 'v', wcOff: 0 },
-            ];
-            while (queue.length) {
-                const { r, c } = queue.shift();
-                if (r === to.row && c === to.col) return;
-                for (const d of dirs) {
-                    const nr = r + d.dr, nc = c + d.dc;
-                    if (nr < 0 || nr >= gs || nc < 0 || nc >= gs || visited[nr][nc]) continue;
-                    const wr = d.wType === 'h' ? (d.wrOff === -1 ? r - 1 : r) : r;
-                    const wc = d.wType === 'v' ? (d.wcOff === -1 ? c - 1 : c) : c;
-                    const key = `${d.wType}-${wr}-${wc}`;
-                    const wtype = wallTypes[key] || 'solid';
-                    if (wtype === 'open' || wtype === 'quantum') {
-                        visited[nr][nc] = true;
-                        queue.push({ r: nr, c: nc });
-                    }
-                }
+        function ensurePath(from,to){
+            const gs=STATE.gridSize; const vis=Array.from({length:gs},()=>Array(gs).fill(false));
+            const q=[{r:from.row,c:from.col}]; vis[from.row][from.col]=true;
+            const dirs=[{dr:-1,dc:0,wk:(r,c)=>`h-${r-1}-${c}`},{dr:1,dc:0,wk:(r,c)=>`h-${r}-${c}`},{dr:0,dc:-1,wk:(r,c)=>`v-${r}-${c-1}`},{dr:0,dc:1,wk:(r,c)=>`v-${r}-${c}`}];
+            while(q.length){
+                const cur=q.shift(); if(cur.r===to.row&&cur.c===to.col) return;
+                for(const d of dirs){ const nr=cur.r+d.dr,nc=cur.c+d.dc; if(nr<0||nr>=gs||nc<0||nc>=gs||vis[nr][nc]) continue;
+                    const key=d.wk(cur.r,cur.c); const t=wallTypes[key]||'solid'; if(t==='open'||t==='quantum'){ vis[nr][nc]=true; q.push({r:nr,c:nc}); } }
             }
-            carvePath(from, to);
+            carvePath(from,to);
         }
-
-        function carvePath(from, to) {
-            const gs = GAME_STATE.gridSize;
-            let cr = from.row, cc = from.col;
-            while (cr !== to.row || cc !== to.col) {
-                const dr = Math.sign(to.row - cr), dc = Math.sign(to.col - cc);
-                if (dr !== 0 && (Math.random() < 0.5 || dc === 0)) {
-                    const wr = dr === -1 ? cr - 1 : cr, wc = cc;
-                    const key = `h-${wr}-${wc}`;
-                    if (wr >= 0 && wr < gs - 1) {
-                        wallTypes[key] = 'open';
-                        horizontalWalls[wr][wc] = 'open';
-                    }
-                    cr += dr;
-                } else if (dc !== 0) {
-                    const wr = cr, wc = dc === -1 ? cc - 1 : cc;
-                    const key = `v-${wr}-${wc}`;
-                    if (wc >= 0 && wc < gs - 1) {
-                        wallTypes[key] = 'open';
-                        verticalWalls[wr][wc] = 'open';
-                    }
-                    cc += dc;
+        function carvePath(from,to){
+            const gs=STATE.gridSize; let cr=from.row,cc=from.col;
+            while(cr!==to.row||cc!==to.col){
+                const dr=Math.sign(to.row-cr),dc=Math.sign(to.col-cc);
+                if(dr!==0&&(Math.random()<0.5||dc===0)){
+                    const wr=dr===-1?cr-1:cr, wc=cc, key=`h-${wr}-${wc}`;
+                    if(wr>=0&&wr<gs-1){ wallTypes[key]='open'; hWalls[wr][wc]='open'; } cr+=dr;
+                }else if(dc!==0){
+                    const wr=cr, wc=dc===-1?cc-1:cc, key=`v-${wr}-${wc}`;
+                    if(wc>=0&&wc<gs-1){ wallTypes[key]='open'; vWalls[wr][wc]='open'; } cc+=dc;
                 }
             }
         }
 
-        function buildMazeGeometry() {
-            const gs = GAME_STATE.gridSize, rs = GAME_STATE.roomSize, wh = GAME_STATE.wallHeight, wt = 0.2;
-
-            const floorGeo = new THREE.PlaneGeometry(gs * rs + 1, gs * rs + 1);
-            const floorMesh = new THREE.Mesh(floorGeo, floorMaterial);
-            floorMesh.rotation.x = -Math.PI / 2;
-            floorMesh.position.set((gs * rs) / 2, -0.05, (gs * rs) / 2);
-            floorMesh.receiveShadow = true;
-            floorGroup.add(floorMesh);
-
-            const ceilGeo = new THREE.PlaneGeometry(gs * rs + 1, gs * rs + 1);
-            const ceilMesh = new THREE.Mesh(ceilGeo, ceilingMaterial);
-            ceilMesh.rotation.x = Math.PI / 2;
-            ceilMesh.position.set((gs * rs) / 2, wh + 0.05, (gs * rs) / 2);
-            ceilMesh.receiveShadow = true;
-            ceilingGroup.add(ceilMesh);
-
-            const outerWallGeoH = new THREE.BoxGeometry(gs * rs + 2, wh, wt);
-            const outerWallGeoV = new THREE.BoxGeometry(wt, wh, gs * rs + 2);
-            const outerWalls = [
-                { geo: outerWallGeoH, pos: [(gs * rs) / 2, wh / 2, -wt / 2] },
-                { geo: outerWallGeoH, pos: [(gs * rs) / 2, wh / 2, gs * rs + wt / 2] },
-                { geo: outerWallGeoV, pos: [-wt / 2, wh / 2, (gs * rs) / 2] },
-                { geo: outerWallGeoV, pos: [gs * rs + wt / 2, wh / 2, (gs * rs) / 2] },
-            ];
-            outerWalls.forEach(ow => {
-                const mesh = new THREE.Mesh(ow.geo, wallMaterial);
-                mesh.position.set(...ow.pos);
-                mesh.castShadow = true;
-                mesh.receiveShadow = true;
-                mesh.userData.isOuter = true;
-                wallsGroup.add(mesh);
+        function buildGeometry(){
+            const gs=STATE.gridSize, rs=STATE.roomSize, wh=STATE.wallH, wt=0.2;
+            const fg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const fm=new THREE.Mesh(fg,floorMat); fm.rotation.x=-Math.PI/2; fm.position.set(gs*rs/2,-0.05,gs*rs/2); fm.receiveShadow=true; floorGrp.add(fm);
+            const cg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const cm=new THREE.Mesh(cg,ceilMat); cm.rotation.x=Math.PI/2; cm.position.set(gs*rs/2,wh+0.05,gs*rs/2); cm.receiveShadow=true; ceilGrp.add(cm);
+            // outer
+            const oh=new THREE.BoxGeometry(gs*rs+2,wh,wt), ov=new THREE.BoxGeometry(wt,wh,gs*rs+2);
+            [[oh,gs*rs/2,wh/2,-wt/2],[oh,gs*rs/2,wh/2,gs*rs+wt/2],[ov,-wt/2,wh/2,gs*rs/2],[ov,gs*rs+wt/2,wh/2,gs*rs/2]].forEach(([geo,x,y,z])=>{
+                const m=new THREE.Mesh(geo,wallMat); m.position.set(x,y,z); m.castShadow=m.receiveShadow=true; wallsGrp.add(m);
             });
+            // interior
+            for(let r=0;r<gs-1;r++) for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){
+                const mesh=new THREE.Mesh(new THREE.BoxGeometry(rs+wt,wh,wt), t==='quantum'?wallMatAlt:wallMat);
+                mesh.position.set(c*rs+rs/2,wh/2,(r+1)*rs); mesh.castShadow=mesh.receiveShadow=true;
+                mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh);
+            }}
+            for(let r=0;r<gs;r++) for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){
+                const mesh=new THREE.Mesh(new THREE.BoxGeometry(wt,wh,rs+wt), t==='quantum'?wallMatAlt:wallMat);
+                mesh.position.set((c+1)*rs,wh/2,r*rs+rs/2); mesh.castShadow=mesh.receiveShadow=true;
+                mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh);
+            }}
+            // lights
+            for(let r=0;r<gs;r++){ cellLights[r]=[]; for(let c=0;c<gs;c++){
+                const lx=c*rs+rs/2, lz=r*rs+rs/2;
+                const lm=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.08,0.5), new THREE.MeshStandardMaterial({color:0xfff8e8,roughness:0.2,metalness:0.1,emissive:0xfff8e8,emissiveIntensity:1}));
+                lm.position.set(lx,wh-0.05,lz); const pl=new THREE.PointLight(0xffeedd,1.8,8,2); pl.position.set(lx,wh-0.2,lz); pl.userData.baseIntensity=1.8;
+                lm.userData={pointLight:pl}; cellLights[r][c]=lm; lightsGrp.add(lm); lightsGrp.add(pl);
+            }}
+        }
 
-            for (let r = 0; r < gs - 1; r++) {
-                for (let c = 0; c < gs; c++) {
-                    const key = `h-${r}-${c}`;
-                    const wtype = wallTypes[key] || 'solid';
-                    if (wtype === 'solid' || wtype === 'quantum') {
-                        const wx = c * rs + rs / 2, wz = (r + 1) * rs;
-                        const mesh = new THREE.Mesh(new THREE.BoxGeometry(rs + wt, wh, wt), wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
-                        mesh.position.set(wx, wh / 2, wz);
-                        mesh.castShadow = true; mesh.receiveShadow = true;
-                        mesh.userData.wallKey = key; mesh.userData.wallType = wtype;
-                        wallMeshes[key] = mesh;
-                        wallsGroup.add(mesh);
-                    }
+        function updateWallMesh(key){
+            const mesh=wallMeshes[key], t=wallTypes[key];
+            if(!mesh&&(t==='solid'||t==='quantum')){
+                const [type,r,c]=key.split('-'); const rs=STATE.roomSize, wh=STATE.wallH, wt=0.2;
+                let geo,wx,wz;
+                if(type==='h'){ geo=new THREE.BoxGeometry(rs+wt,wh,wt); wx=c*rs+rs/2; wz=(+r+1)*rs; }
+                else{ geo=new THREE.BoxGeometry(wt,wh,rs+wt); wx=(+c+1)*rs; wz=r*rs+rs/2; }
+                const nm=new THREE.Mesh(geo, t==='quantum'?wallMatAlt:wallMat); nm.position.set(wx,wh/2,wz); nm.castShadow=nm.receiveShadow=true;
+                nm.userData={wallKey:key,wallType:t}; wallMeshes[key]=nm; wallsGrp.add(nm);
+            }else if(mesh&&t==='open'){
+                wallsGrp.remove(mesh); mesh.geometry?.dispose(); mesh.material?.dispose(); delete wallMeshes[key];
+            }else if(mesh){ mesh.material=t==='quantum'?wallMatAlt:wallMat; mesh.userData.wallType=t; mesh.visible=true; }
+        }
+
+        function getGrid(){ const rs=STATE.roomSize; return {row:Math.max(0,Math.min(STATE.gridSize-1,Math.round(playerPos.z/rs-0.5))),col:Math.max(0,Math.min(STATE.gridSize-1,Math.round(playerPos.x/rs-0.5)))}; }
+
+        function isWallObserved(key){
+            const [type,wr,wc]=key.split('-'); const rs=STATE.roomSize;
+            let wx,wz; if(type==='h'){ wx=wc*rs+rs/2; wz=(+wr+1)*rs; } else{ wx=(+wc+1)*rs; wz=wr*rs+rs/2; }
+            const dx=wx-playerPos.x, dz=wz-playerPos.z, dist=Math.sqrt(dx*dx+dz*dz); if(dist>18)return false;
+            const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
+            const to=new THREE.Vector3(dx,0,dz).normalize(); const dot=fwd.dot(to);
+            return (dot>0.15&&dist<14)||(dot>-0.1&&dist<6);
+        }
+
+        function updateObs(){ const now=performance.now()/1000; for(const k in wallTypes) if(isWallObserved(k)) wallLastObs[k]=now; }
+
+        function wallFlash(pos){
+            const l=new THREE.PointLight(0xaaaaff,2,4,2); l.position.copy(pos); scene.add(l); setTimeout(()=>scene.remove(l),200);
+            for(let i=0;i<10;i++){ const g=new THREE.SphereGeometry(0.05), m=new THREE.MeshBasicMaterial({color:0xaaaaff,transparent:true,opacity:0.8}); const p=new THREE.Mesh(g,m); p.position.set(pos.x+(Math.random()-0.5)*1.2,pos.y+Math.random()*1.5,pos.z+(Math.random()-0.5)*1.2); scene.add(p); setTimeout(()=>{scene.remove(p);g.dispose();m.dispose();},500); }
+        }
+
+        function quantumFluctuation(){
+            const now=performance.now()/1000, chaosLvl=STATE.level*0.18;
+            const cand=[]; for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const last=wallLastObs[k]||now; if(now-last>0.8&&!isWallObserved(k)){ const prob=Math.min(0.9,(now-last-0.8)*0.25*(1+chaosLvl)); if(Math.random()<prob) cand.push(k); } }
+            if(cand.length){
+                const num=Math.min(cand.length,1+Math.floor(Math.random()*3*(1+chaosLvl)));
+                const sh=[...cand].sort(()=>Math.random()-0.5);
+                for(let i=0;i<num;i++){
+                    const key=sh[i], cur=wallTypes[key], nxt=cur==='quantum'?(Math.random()<0.5?'solid':'open'):(cur==='solid'?'open':'solid');
+                    wallTypes[key]=nxt; const [t,r,c]=key.split('-'); if(t==='h') hWalls[+r][+c]=nxt; else vWalls[+r][+c]=nxt;
+                    const mesh=wallMeshes[key]; if(mesh) wallFlash(mesh.position); updateWallMesh(key); wallLastObs[key]=now;
                 }
-            }
-            for (let r = 0; r < gs; r++) {
-                for (let c = 0; c < gs - 1; c++) {
-                    const key = `v-${r}-${c}`;
-                    const wtype = wallTypes[key] || 'solid';
-                    if (wtype === 'solid' || wtype === 'quantum') {
-                        const wx = (c + 1) * rs, wz = r * rs + rs / 2;
-                        const mesh = new THREE.Mesh(new THREE.BoxGeometry(wt, wh, rs + wt), wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
-                        mesh.position.set(wx, wh / 2, wz);
-                        mesh.castShadow = true; mesh.receiveShadow = true;
-                        mesh.userData.wallKey = key; mesh.userData.wallType = wtype;
-                        wallMeshes[key] = mesh;
-                        wallsGroup.add(mesh);
-                    }
-                }
-            }
-
-            for (let r = 0; r < gs; r++) {
-                cellLightMeshes[r] = [];
-                for (let c = 0; c < gs; c++) {
-                    const lx = c * rs + rs / 2, lz = r * rs + rs / 2;
-                    const lightGeo = new THREE.BoxGeometry(1.2, 0.08, 0.5);
-                    const lightMat = new THREE.MeshStandardMaterial({ color: 0xfff8e8, roughness: 0.2, metalness: 0.1, emissive: 0xfff8e8, emissiveIntensity: 1.0 });
-                    const lightMesh = new THREE.Mesh(lightGeo, lightMat);
-                    lightMesh.position.set(lx, wh - 0.05, lz);
-                    const ptLight = new THREE.PointLight(0xffeedd, 1.8, 8, 2);
-                    ptLight.position.set(lx, wh - 0.2, lz);
-                    ptLight.userData.baseIntensity = 1.8;
-                    lightMesh.userData = { pointLight: ptLight };
-                    cellLightMeshes[r][c] = lightMesh;
-                    lightsGroup.add(lightMesh);
-                    lightsGroup.add(ptLight);
-                }
+                if(num>0&&Math.random()<0.7) playDistantDoor();
+                STATE.instability=Math.min(1,STATE.instability+0.15);
             }
         }
 
-        function updateWallMesh(key) {
-            const mesh = wallMeshes[key];
-            const wtype = wallTypes[key];
-            if (!mesh && (wtype === 'solid' || wtype === 'quantum')) {
-                const parts = key.split('-'), type = parts[0], r = parseInt(parts[1]), c = parseInt(parts[2]);
-                const rs = GAME_STATE.roomSize, wh = GAME_STATE.wallHeight, wt = 0.2;
-                let geo, wx, wz;
-                if (type === 'h') { geo = new THREE.BoxGeometry(rs + wt, wh, wt); wx = c * rs + rs / 2; wz = (r + 1) * rs; }
-                else { geo = new THREE.BoxGeometry(wt, wh, rs + wt); wx = (c + 1) * rs; wz = r * rs + rs / 2; }
-                const newMesh = new THREE.Mesh(geo, wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
-                newMesh.position.set(wx, wh / 2, wz);
-                newMesh.castShadow = true; newMesh.receiveShadow = true;
-                newMesh.userData = { wallKey: key, wallType: wtype, isHorizontal: type === 'h' };
-                wallMeshes[key] = newMesh;
-                wallsGroup.add(newMesh);
-            } else if (mesh && wtype === 'open') {
-                wallsGroup.remove(mesh);
-                mesh.geometry?.dispose();
-                mesh.material?.dispose();
-                delete wallMeshes[key];
-            } else if (mesh && (wtype === 'solid' || wtype === 'quantum')) {
-                mesh.material = wtype === 'quantum' ? wallMaterialAlt : wallMaterial;
-                mesh.userData.wallType = wtype;
-                mesh.visible = true;
-            }
-        }
-
-        // ─────────────────────────────────────
-        // OBSERVATION & QUANTUM EFFECTS
-        // ─────────────────────────────────────
-        function getPlayerGridPos() {
-            const rs = GAME_STATE.roomSize;
-            const col = Math.round(playerPosition.x / rs - 0.5);
-            const row = Math.round(playerPosition.z / rs - 0.5);
-            return {
-                row: Math.max(0, Math.min(GAME_STATE.gridSize - 1, row)),
-                col: Math.max(0, Math.min(GAME_STATE.gridSize - 1, col)),
-            };
-        }
-
-        function isWallObserved(wallKey) {
-            const parts = wallKey.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
-            const rs = GAME_STATE.roomSize;
-            let wx, wz;
-            if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
-            else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
-            const dx = wx - playerPosition.x, dz = wz - playerPosition.z;
-            const dist = Math.sqrt(dx*dx + dz*dz);
-            if (dist > 18) return false;
-            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
-            const toWall = new THREE.Vector3(dx, 0, dz).normalize();
-            const dot = forward.dot(toWall);
-            return (dot > 0.15 && dist < 14) || (dot > -0.1 && dist < 6);
-        }
-
-        function updateObservation() {
-            const now = performance.now() / 1000;
-            for (const key in wallTypes) {
-                if (isWallObserved(key)) wallLastObserved[key] = now;
-            }
-        }
-
-        function wallChangeEffect(position) {
-            const light = new THREE.PointLight(0xaaaaff, 2, 4, 2);
-            light.position.copy(position);
-            scene.add(light);
-            setTimeout(() => scene.remove(light), 200);
-            for (let i = 0; i < 10; i++) {
-                const geo = new THREE.SphereGeometry(0.05, 2, 2);
-                const mat = new THREE.MeshBasicMaterial({ color: 0xaaaaff, transparent: true, opacity: 0.8 });
-                const particle = new THREE.Mesh(geo, mat);
-                particle.position.set(
-                    position.x + (Math.random() - 0.5) * 1.2,
-                    position.y + Math.random() * 1.5,
-                    position.z + (Math.random() - 0.5) * 1.2
-                );
-                scene.add(particle);
-                setTimeout(() => { scene.remove(particle); geo.dispose(); mat.dispose(); }, 500);
-            }
-        }
-
-        function triggerQuantumFluctuation() {
-            const now = performance.now() / 1000;
-            const chaosLevel = GAME_STATE.currentLevel * 0.18;
-            const candidates = [];
-            for (const key in wallTypes) {
-                if (wallTypes[key] !== 'quantum') continue;
-                const lastSeen = wallLastObserved[key] || now;
-                if (now - lastSeen > 1.0 && !isWallObserved(key)) {
-                    const probability = Math.min(0.8, (now - lastSeen - 1.0) * 0.2 * (1 + chaosLevel));
-                    if (Math.random() < probability) candidates.push(key);
-                }
-            }
-            if (candidates.length > 0) {
-                const numChanges = Math.min(candidates.length, 1 + Math.floor(Math.random() * 3 * (1 + chaosLevel)));
-                const shuffled = candidates.sort(() => Math.random() - 0.5);
-                for (let i = 0; i < numChanges; i++) {
-                    const key = shuffled[i];
-                    const currentState = wallTypes[key];
-                    const newState = currentState === 'quantum' ? (Math.random() < 0.5 ? 'solid' : 'open') : (currentState === 'solid' ? 'open' : 'solid');
-                    wallTypes[key] = newState;
-                    const parts = key.split('-');
-                    if (parts[0] === 'h') horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                    else verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                    const mesh = wallMeshes[key];
-                    if (mesh) wallChangeEffect(mesh.position);
-                    updateWallMesh(key);
-                    wallLastObserved[key] = now;
-                }
-                if (numChanges > 0 && Math.random() < 0.6) playDistantDoor();
-                GAME_STATE.quantumInstability = Math.min(1, GAME_STATE.quantumInstability + 0.15);
-            }
-        }
-
-        function checkQuantumTunneling() {
-            const now = performance.now() / 1000;
-            if (now - GAME_STATE.lastTunnelTime < GAME_STATE.tunnelCooldown) return false;
-            const chaosLevel = GAME_STATE.currentLevel * 0.08;
-            const baseChance = 0.015 + chaosLevel;
-            if (Math.random() < baseChance * (1 + GAME_STATE.quantumInstability)) {
-                GAME_STATE.lastTunnelTime = now;
-                GAME_STATE.quantumInstability = Math.max(0, GAME_STATE.quantumInstability - 0.3);
-                return true;
-            }
+        function tryTunnel(){
+            const now=performance.now()/1000; if(now-STATE.lastTunnel<STATE.tunnelCd) return false;
+            const chance=0.03+STATE.level*0.02+STATE.instability*0.05;
+            if(Math.random()<chance){ STATE.lastTunnel=now; STATE.instability=Math.max(0,STATE.instability-0.3); return true; }
             return false;
         }
 
-        function attemptQuantumTunnel() {
-            const rs = GAME_STATE.roomSize, gs = GAME_STATE.gridSize;
-            const px = playerPosition.x, pz = playerPosition.z;
-            const candidates = [];
-            for (const key in wallTypes) {
-                const wtype = wallTypes[key];
-                if (wtype !== 'solid' && wtype !== 'quantum') continue;
-                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
-                let wx, wz;
-                if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
-                else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
-                const dist = Math.sqrt((px - wx) ** 2 + (pz - wz) ** 2);
-                if (dist < 1.8) candidates.push({ key, type, wx, wz, dist });
-            }
-            if (!candidates.length) return false;
-            candidates.sort((a, b) => a.dist - b.dist);
-            const target = candidates[0];
-            const offset = 2.5;
-            if (target.type === 'h') playerPosition.z = target.wz + (pz < target.wz ? -1 : 1) * offset;
-            else playerPosition.x = target.wx + (px < target.wx ? -1 : 1) * offset;
-            playerPosition.x = Math.max(0.5, Math.min(gs * rs - 0.5, playerPosition.x));
-            playerPosition.z = Math.max(0.5, Math.min(gs * rs - 0.5, playerPosition.z));
-            GAME_STATE.screenShakeAmount = 0.6;
-            playThud(0.2, 40);
-            wallChangeEffect(new THREE.Vector3(playerPosition.x, 1.6, playerPosition.z));
-            return true;
+        function attemptTunnel(){
+            const rs=STATE.roomSize, gs=STATE.gridSize, px=playerPos.x, pz=playerPos.z;
+            const cand=[]; for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue;
+                const [typ,r,c]=k.split('-'); let wx,wz; if(typ==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; }
+                const dist=Math.hypot(px-wx,pz-wz); if(dist<1.8) cand.push({wx,wz,typ,dist}); }
+            if(!cand.length) return false;
+            cand.sort((a,b)=>a.dist-b.dist); const t=cand[0]; const off=2.5;
+            if(t.typ==='h') playerPos.z = t.wz + (pz<t.wz?-1:1)*off; else playerPos.x = t.wx + (px<t.wx?-1:1)*off;
+            playerPos.x=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.x)); playerPos.z=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.z));
+            STATE.shake=0.6; playThud(0.2,40); wallFlash(new THREE.Vector3(playerPos.x,1.6,playerPos.z)); return true;
         }
 
-        // ─────────────────────────────────────
-        // ENTANGLED DOORS
-        // ─────────────────────────────────────
-        let entangledPairs = [];
-
-        function setupEntangledDoors() {
-            entangledPairs = [];
-            const quantumWalls = [];
-            for (const key in wallTypes) if (wallTypes[key] === 'quantum') quantumWalls.push(key);
-            const numPairs = Math.min(3 + GAME_STATE.currentLevel, Math.floor(quantumWalls.length / 2));
-            const shuffled = [...quantumWalls].sort(() => Math.random() - 0.5);
-            for (let i = 0; i < numPairs * 2; i += 2) {
-                if (i + 1 < shuffled.length) entangledPairs.push([shuffled[i], shuffled[i + 1]]);
-            }
+        let entangledPairs=[];
+        function setupEntangled(){
+            entangledPairs=[]; const qw=[]; for(const k in wallTypes) if(wallTypes[k]==='quantum') qw.push(k);
+            const num=Math.min(3+STATE.level,Math.floor(qw.length/2)); const sh=[...qw].sort(()=>Math.random()-0.5);
+            for(let i=0;i<num*2;i+=2) if(sh[i]&&sh[i+1]) entangledPairs.push([sh[i],sh[i+1]]);
         }
-
-        function triggerEntangledPartner(changedKey) {
-            for (const pair of entangledPairs) {
-                if (pair[0] === changedKey || pair[1] === changedKey) {
-                    const partner = pair[0] === changedKey ? pair[1] : pair[0];
-                    if (wallTypes[partner] === 'quantum') {
-                        const newState = Math.random() < 0.5 ? 'solid' : 'open';
-                        wallTypes[partner] = newState;
-                        const parts = partner.split('-');
-                        if (parts[0] === 'h') horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                        else verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                        updateWallMesh(partner);
-                        wallLastObserved[partner] = performance.now() / 1000;
-                        playDistantDoor();
-                    }
+        function triggerEntangled(changed){
+            for(const [a,b] of entangledPairs){
+                const partner = a===changed?b:(b===changed?a:null); if(!partner) continue;
+                if(wallTypes[partner]==='quantum'){
+                    const ns=Math.random()<0.5?'solid':'open'; wallTypes[partner]=ns;
+                    const [t,r,c]=partner.split('-'); if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns;
+                    updateWallMesh(partner); wallLastObs[partner]=performance.now()/1000; playDistantDoor();
                 }
             }
         }
 
-        // ─────────────────────────────────────
-        // COLLISION
-        // ─────────────────────────────────────
-        function isPositionBlocked(x, z, radius = 0.45) {
-            const rs = GAME_STATE.roomSize, gs = GAME_STATE.gridSize;
-            if (x - radius < 0 || x + radius > gs * rs || z - radius < 0 || z + radius > gs * rs) return true;
-            for (const key in wallTypes) {
-                const wtype = wallTypes[key];
-                if (wtype !== 'solid' && wtype !== 'quantum') continue;
-                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
-                let wx, wz;
-                const wt = 0.2, rs = GAME_STATE.roomSize;
-                if (type === 'h') {
-                    wx = wc * rs + rs / 2; wz = (wr + 1) * rs;
-                    if (Math.abs(x - wx) < (rs / 2 + wt) + radius && Math.abs(z - wz) < wt / 2 + radius) return true;
-                } else {
-                    wx = (wc + 1) * rs; wz = wr * rs + rs / 2;
-                    if (Math.abs(x - wx) < wt / 2 + radius && Math.abs(z - wz) < (rs / 2 + wt) + radius) return true;
+        function isBlocked(x,z,rad=0.45){
+            const rs=STATE.roomSize, gs=STATE.gridSize; if(x-rad<0||x+rad>gs*rs||z-rad<0||z+rad>gs*rs) return true;
+            for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue;
+                const [type,r,c]=k.split('-'); let wx,wz; const wt=0.2, rs=STATE.roomSize;
+                if(type==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; if(Math.abs(x-wx)<(rs/2+wt)+rad&&Math.abs(z-wz)<wt/2+rad) return true; }
+                else{ wx=(+c+1)*rs; wz=r*rs+rs/2; if(Math.abs(x-wx)<wt/2+rad&&Math.abs(z-wz)<(rs/2+wt)+rad) return true; }
+            } return false;
+        }
+        function resolveCollision(dx,dz,rad=0.45){
+            if(!isBlocked(dx,dz,rad)) return {x:dx,z:dz,blocked:false};
+            if(!isBlocked(dx,playerPos.z,rad)) return {x:dx,z:playerPos.z,blocked:true};
+            if(!isBlocked(playerPos.x,dz,rad)) return {x:playerPos.x,z:dz,blocked:true};
+            return {x:playerPos.x,z:playerPos.z,blocked:true};
+        }
+
+        document.addEventListener('keydown',e=>{ keys[e.code]=true; if(e.code==='KeyF') interact(); if(e.code==='ShiftLeft') STATE.sprint=true; });
+        document.addEventListener('keyup',e=>{ keys[e.code]=false; if(e.code==='ShiftLeft') STATE.sprint=false; });
+        document.addEventListener('mousemove',e=>{ if(!pointerLocked||!STATE.gameActive)return; playerEuler.y-=e.movementX*0.002; playerEuler.x-=e.movementY*0.002; playerEuler.x=Math.max(-Math.PI/2.3,Math.min(Math.PI/2.3,playerEuler.x)); });
+        document.addEventListener('click',()=>{ if(STATE.gameActive&&!pointerLocked) renderer.domElement.requestPointerLock(); });
+        document.addEventListener('pointerlockchange',()=>{ pointerLocked=document.pointerLockElement===renderer.domElement; if(!pointerLocked&&STATE.gameActive){ hintEl.style.opacity='1'; hintEl.textContent='CLICK TO FOCUS'; setTimeout(()=>hintEl.style.opacity='0',2500); }});
+
+        function interact(){
+            if(!STATE.gameActive||STATE.levelComplete) return;
+            const rs=STATE.roomSize, px=playerPos.x, pz=playerPos.z;
+            if(keyMesh&&!STATE.hasKey){ const d=Math.hypot(px-keyMesh.position.x,pz-keyMesh.position.z); if(d<2.0){ STATE.hasKey=true; keyGrp.remove(keyMesh); keyMesh=null; STATE.keyPos=null; playThud(0.4,200); hintEl.style.opacity='1'; hintEl.textContent='KEY ACQUIRED'; setTimeout(()=>hintEl.style.opacity='0',3000); return; } }
+            if(STATE.hasKey&&exitMesh){ const d=Math.hypot(px-exitMesh.position.x,pz-exitMesh.position.z); if(d<2.2){ completeLevel(); return; } }
+            for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const [t,r,c]=k.split('-'); let wx,wz; if(t==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; } if(Math.hypot(px-wx,pz-wz)<2.5){
+                const ns=wallTypes[k]==='solid'?'open':'solid'; wallTypes[k]=ns; if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns; updateWallMesh(k); wallLastObs[k]=performance.now()/1000; triggerEntangled(k); playThud(0.15,80); return;
+            }}
+        }
+
+        function completeLevel(){ STATE.levelComplete=true; STATE.gameActive=false; hintEl.style.opacity='1'; if(STATE.level>=STATE.maxLevel){ hintEl.textContent='YOU ESCAPED'; setTimeout(()=>{hintEl.style.opacity='0'; resetGame();},4000); } else{ hintEl.textContent=`LEVEL ${STATE.level} COMPLETE`; setTimeout(()=>{STATE.level++; startLevel();},3500); } }
+
+        function resetGame(){ STATE.level=1; STATE.gridSize=6; STATE.hasKey=false; STATE.instability=0; STATE.chaos=0; STATE.jumpscareCd=0; STATE.shake=0; clearMaze(); generateMaze(1); setupEntangled(); resetPlayer(); STATE.gameActive=true; STATE.levelComplete=false; hintEl.style.opacity='0'; }
+        function startLevel(){ STATE.gridSize=6+Math.floor((STATE.level-1)*1.2); STATE.hasKey=false; STATE.instability=STATE.level*0.08; STATE.chaos=STATE.level*0.1; STATE.jumpscareCd=0; STATE.shake=0; clearMaze(); generateMaze(STATE.level); setupEntangled(); resetPlayer(); STATE.gameActive=true; hintEl.style.opacity='1'; hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`; setTimeout(()=>hintEl.style.opacity='0',3000); if(pointerLocked) document.exitPointerLock(); }
+
+        function updateEntities(dt){
+            const now=performance.now()/1000, chaosLvl=STATE.level*0.12;
+            if(entities.length<2+STATE.level && Math.random()<0.02*(1+chaosLvl) && STATE.jumpscareCd<=0){
+                const gs=STATE.gridSize, pg=getGrid(); let sr,sc; for(let i=0;i<30;i++){ sr=Math.floor(Math.random()*gs); sc=Math.floor(Math.random()*gs); if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) break; }
+                if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) spawnEntity(sr,sc);
+            }
+            for(const e of entities){
+                if(e.userData.vanished) continue;
+                const dx=playerPos.x-e.position.x, dz=playerPos.z-e.position.z, dist=Math.hypot(dx,dz);
+                const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
+                const to=new THREE.Vector3(dx,0,dz).normalize(); const looking=fwd.dot(to)>0.7 && dist<12;
+                if(e.userData.state==='idle'){
+                    if(dist<5&&!looking&&Math.random()<0.04) e.userData.state='stalking';
+                    else if(looking&&Math.random()<0.05){ despawnEntity(e); }
+                }else if(e.userData.state==='stalking'){
+                    if(dist<2.5&&STATE.jumpscareCd<=0) triggerJumpscare(e);
+                    else if(looking&&Math.random()<0.1){ despawnEntity(e); }
+                    else{ const sp=1.2+chaosLvl; e.position.x+=(dx/dist)*sp*dt; e.position.z+=(dz/dist)*sp*dt; e.lookAt(playerPos.x,e.position.y,playerPos.z); }
                 }
+                if(e.userData.vanished){ const el=now-e.userData.vanishStart; e.traverse(c=>{if(c.material&&c.material.transparent)c.material.opacity=Math.max(0,0.85-el*1.7);}); }
+                const anim=e.userData.animPhase+now*e.userData.animSpeed; if(e.userData.bodyMesh) e.userData.bodyMesh.position.y=1.1+Math.sin(anim)*0.08; if(e.userData.headMesh) e.userData.headMesh.position.y=2.0+Math.sin(anim*1.3)*0.05;
             }
-            return false;
+            const near=entities.some(e=>!e.userData.vanished&&Math.hypot(playerPos.x-e.position.x,playerPos.z-e.position.z)<7);
+            STATE.heartbeat=near; if(STATE.heartbeat){ STATE.hbTimer+=dt; if(STATE.hbTimer>1.5){ STATE.hbTimer=0; playHeartbeat(); } }
         }
 
-        function resolveCollision(desiredX, desiredZ, radius = 0.45) {
-            if (!isPositionBlocked(desiredX, desiredZ, radius)) return { x: desiredX, z: desiredZ, blocked: false };
-            if (!isPositionBlocked(desiredX, playerPosition.z, radius)) return { x: desiredX, z: playerPosition.z, blocked: true };
-            if (!isPositionBlocked(playerPosition.x, desiredZ, radius)) return { x: playerPosition.x, z: desiredZ, blocked: true };
-            return { x: playerPosition.x, z: playerPosition.z, blocked: true };
+        function triggerJumpscare(e){
+            STATE.jumpscareCd=4; STATE.shake=1.5; playJumpscareSound();
+            jumpscareFlash.style.opacity='0.9'; setTimeout(()=>jumpscareFlash.style.opacity='0',120);
+            const gs=STATE.gridSize, rs=STATE.roomSize;
+            playerPos.x=Math.floor(Math.random()*gs)*rs+rs/2; playerPos.z=Math.floor(Math.random()*gs)*rs+rs/2;
+            despawnEntity(e); STATE.instability=Math.min(1,STATE.instability+0.35);
         }
 
-        // ─────────────────────────────────────
-        // INPUT & INTERACTION
-        // ─────────────────────────────────────
-        document.addEventListener('keydown', (e) => { keysPressed[e.code] = true; if (e.code === 'KeyF') tryInteract(); });
-        document.addEventListener('keyup', (e) => { keysPressed[e.code] = false; });
-        document.addEventListener('mousemove', (e) => {
-            if (!pointerLocked || !GAME_STATE.gameActive) return;
-            playerEuler.y -= e.movementX * 0.002;
-            playerEuler.x -= e.movementY * 0.002;
-            playerEuler.x = Math.max(-Math.PI / 2.3, Math.min(Math.PI / 2.3, playerEuler.x));
-        });
-        document.addEventListener('click', () => {
-            if (GAME_STATE.gameActive && !pointerLocked) renderer.domElement.requestPointerLock();
-        });
-        document.addEventListener('pointerlockchange', () => {
-            pointerLocked = document.pointerLockElement === renderer.domElement;
-            if (!pointerLocked && GAME_STATE.gameActive) {
-                hintEl.style.opacity = '1';
-                hintEl.textContent = 'CLICK TO FOCUS';
-                setTimeout(() => { hintEl.style.opacity = '0'; }, 2500);
-            }
-        });
+        const clock=new THREE.Clock(); let qt=0, ft=0, hallTimer=0;
+        function update(dt){
+            if(!STATE.gameActive||STATE.levelComplete){ camera.rotation.order='YXZ'; camera.rotation.y=playerEuler.y; camera.rotation.x=playerEuler.x; return; }
+            dt=Math.min(dt,0.2);
+            if(STATE.jumpscareCd>0) STATE.jumpscareCd-=dt;
+            if(STATE.shake>0.001) STATE.shake*=Math.exp(-dt*4); else STATE.shake=0;
 
-        function tryInteract() {
-            if (!GAME_STATE.gameActive || GAME_STATE.levelComplete) return;
-            const rs = GAME_STATE.roomSize;
-            const px = playerPosition.x, pz = playerPosition.z;
-            if (keyMesh && !GAME_STATE.playerHasKey) {
-                const dist = Math.sqrt((px - keyMesh.position.x) ** 2 + (pz - keyMesh.position.z) ** 2);
-                if (dist < 2.0) {
-                    GAME_STATE.playerHasKey = true;
-                    keyGroup.remove(keyMesh);
-                    keyMesh.traverse(c => { if (c.material) c.material.dispose(); });
-                    keyMesh = null;
-                    GAME_STATE.keyPosition = null;
-                    playThud(0.4, 200);
-                    hintEl.style.opacity = '1';
-                    hintEl.textContent = 'KEY ACQUIRED';
-                    setTimeout(() => { hintEl.style.opacity = '0'; }, 3000);
-                    return;
-                }
+            const fwd=new THREE.Vector3(0,0,-1).applyAxisAngle(new THREE.Vector3(0,1,0),playerEuler.y);
+            const right=new THREE.Vector3(1,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),playerEuler.y);
+            let mx=0,mz=0;
+            if(keys['KeyW']||keys['ArrowUp']){ mx+=fwd.x; mz+=fwd.z; } if(keys['KeyS']||keys['ArrowDown']){ mx-=fwd.x; mz-=fwd.z; }
+            if(keys['KeyA']||keys['ArrowLeft']){ mx-=right.x; mz-=right.z; } if(keys['KeyD']||keys['ArrowRight']){ mx+=right.x; mz+=right.z; }
+            const speed=STATE.sprint?7.5:5.5;
+            if(mx!==0||mz!==0){ const len=Math.hypot(mx,mz); mx/=len; mz/=len;
+                const dx=playerPos.x+mx*speed*dt, dz=playerPos.z+mz*speed*dt;
+                const res=resolveCollision(dx,dz); if(res.blocked&&tryTunnel()){ if(!attemptTunnel()){ playerPos.x=res.x; playerPos.z=res.z; } }
+                else{ playerPos.x=res.x; playerPos.z=res.z; }
             }
-            if (GAME_STATE.playerHasKey && exitMarkerMesh) {
-                const dist = Math.sqrt((px - exitMarkerMesh.position.x) ** 2 + (pz - exitMarkerMesh.position.z) ** 2);
-                if (dist < 2.2) { completeLevel(); return; }
-            }
-            for (const key in wallTypes) {
-                if (wallTypes[key] !== 'quantum') continue;
-                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
-                let wx, wz;
-                if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
-                else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
-                if (Math.sqrt((px - wx) ** 2 + (pz - wz) ** 2) < 2.5) {
-                    const newState = wallTypes[key] === 'solid' ? 'open' : 'solid';
-                    wallTypes[key] = newState;
-                    if (type === 'h') horizontalWalls[wr][wc] = newState;
-                    else verticalWalls[wr][wc] = newState;
-                    updateWallMesh(key);
-                    wallLastObserved[key] = performance.now() / 1000;
-                    triggerEntangledPartner(key);
-                    playThud(0.15, 80);
-                    return;
-                }
-            }
+            playerPos.y=1.6;
+            camera.position.set(playerPos.x+STATE.shake*(Math.random()-0.5)*0.3, playerPos.y+STATE.shake*(Math.random()-0.5)*0.25, playerPos.z+STATE.shake*(Math.random()-0.5)*0.3);
+            camera.rotation.order='YXZ'; camera.rotation.y=playerEuler.y; camera.rotation.x=playerEuler.x;
+
+            updateObs();
+            qt+=dt; if(qt>0.8+Math.random()*0.4){ qt=0; quantumFluctuation(); }
+            updateEntities(dt);
+            for(let i=entities.length-1;i>=0;i--){ const e=entities[i]; if(e.userData.vanished&&performance.now()/1000-e.userData.vanishStart>0.5){ entityGrp.remove(e); entities.splice(i,1); }}
+
+            ft+=dt; if(ft>0.3){ ft=0; const now=performance.now()/1000; for(let r=0;r<STATE.gridSize;r++)for(let c=0;c<STATE.gridSize;c++){ const f=cellFlick[r]?.[c]; if(!f) continue; if(now>f.nextFlick){ f.intensity=0.25+Math.random()*0.75; f.nextFlick=now+0.5+Math.random()*4; } const lvl=Math.max(0.3,Math.min(1.5,f.intensity+Math.sin(now*f.speed+f.phase)*0.2)); const pt=cellLights[r]?.[c]?.userData?.pointLight; if(pt) pt.intensity=pt.userData.baseIntensity*lvl; if(cellLights[r]?.[c]?.material) cellLights[r][c].material.emissiveIntensity=lvl; }}
+
+            if(keyMesh){ keyMesh.position.y=keyMesh.userData.baseY+Math.sin(performance.now()/1000*2)*0.25; keyMesh.rotation.y+=dt*1.5; }
+            if(exitMesh){ exitMesh.rotation.y+=dt*0.6; if(exitMesh.userData.glow) exitMesh.userData.glow.intensity=2+Math.sin(performance.now()/1000*3)*0.8; }
+
+            const inst=STATE.instability; overlayEl.style.background=`radial-gradient(ellipse at center,transparent ${55-inst*20}%,rgba(0,0,0,${0.55+inst*0.3}) 100%)`;
+            vignetteEl.style.boxShadow=`inset 0 0 ${180+inst*80}px ${60+inst*50}px rgba(0,0,0,${0.7+inst*0.25})`;
+            chromaticEl.style.opacity=0.08+inst*0.12;
+
+            hallTimer+=dt; if(hallTimer>5+Math.random()*10){ hallTimer=0; triggerHallucination(); }
+
+            STATE.instability=Math.max(0,STATE.instability-dt*0.04);
+            if(humGain){ const cv=STATE.chaos+STATE.instability; humGain.gain.value=0.04+cv*0.06; humFilter.frequency.value=200-cv*80; }
         }
 
-        function completeLevel() {
-            GAME_STATE.levelComplete = true;
-            GAME_STATE.gameActive = false;
-            hintEl.style.opacity = '1';
-            if (GAME_STATE.currentLevel >= GAME_STATE.maxLevel) {
-                hintEl.textContent = 'YOU ESCAPED THE QUANTUM MAZE';
-                setTimeout(() => { hintEl.style.opacity = '0'; resetGame(); }, 4000);
-            } else {
-                hintEl.textContent = `LEVEL ${GAME_STATE.currentLevel} COMPLETE`;
-                setTimeout(() => { GAME_STATE.currentLevel++; startLevel(); }, 3500);
-            }
+        function triggerHallucination(){
+            const r=Math.random();
+            if(r<0.3){ scene.fog=new THREE.FogExp2(new THREE.Color(Math.random()*0xffffff),0.0005); setTimeout(()=>scene.fog=new THREE.FogExp2(0x0a0a0a,0.00025),2000); }
+            else if(r<0.6){ chromaticEl.style.opacity='0.3'; setTimeout(()=>chromaticEl.style.opacity='0.08',800); }
+            else{ playDistantDoor(); hintEl.style.opacity='1'; hintEl.textContent='...'; setTimeout(()=>hintEl.style.opacity='0',1500); }
         }
 
-        function resetGame() {
-            GAME_STATE.currentLevel = 1;
-            GAME_STATE.gridSize = 6;
-            GAME_STATE.playerHasKey = false;
-            GAME_STATE.levelComplete = false;
-            GAME_STATE.quantumInstability = 0;
-            GAME_STATE.totalChaos = 0;
-            GAME_STATE.jumpscareCooldown = 0;
-            GAME_STATE.screenShakeAmount = 0;
-            GAME_STATE.lastTunnelTime = 0;
-            GAME_STATE.heartbeating = false;
-            clearMaze();
-            generateMaze(1);
-            setupEntangledDoors();
-            resetPlayer();
-            GAME_STATE.gameActive = true;
-            GAME_STATE.levelComplete = false;
-            hintEl.style.opacity = '0';
-        }
+        function render(){ renderer.render(scene,camera); }
+        function loop(){ requestAnimationFrame(loop); update(Math.min(clock.getDelta(),0.25)); render(); }
 
-        function startLevel() {
-            const level = GAME_STATE.currentLevel;
-            GAME_STATE.gridSize = 6 + Math.floor((level - 1) * 1.2);
-            GAME_STATE.playerHasKey = false;
-            GAME_STATE.levelComplete = false;
-            GAME_STATE.quantumInstability = level * 0.08;
-            GAME_STATE.totalChaos = level * 0.1;
-            GAME_STATE.jumpscareCooldown = 0;
-            GAME_STATE.screenShakeAmount = 0;
-            GAME_STATE.lastTunnelTime = 0;
-            clearMaze();
-            generateMaze(level);
-            setupEntangledDoors();
-            resetPlayer();
-            GAME_STATE.gameActive = true;
-            hintEl.style.opacity = '1';
-            hintEl.textContent = `LEVEL ${level} - FIND THE KEY`;
-            setTimeout(() => { hintEl.style.opacity = '0'; }, 3000);
-            if (pointerLocked) document.exitPointerLock();
-        }
+        function initGame(){ STATE.level=1; STATE.gridSize=6; STATE.hasKey=false; STATE.gameActive=false; STATE.instability=0; STATE.chaos=0; STATE.jumpscareCd=0; STATE.shake=0; clearMaze(); generateMaze(1); setupEntangled(); resetPlayer(); camera.position.copy(playerPos); camera.rotation.set(0,playerEuler.y,0); }
 
-        // ─────────────────────────────────────
-        // ENTITY AI
-        // ─────────────────────────────────────
-        function updateEntities(deltaTime) {
-            const now = performance.now() / 1000;
-            const chaosLevel = GAME_STATE.currentLevel * 0.12;
-            if (entities.length < 2 + GAME_STATE.currentLevel && Math.random() < 0.012 * (1 + chaosLevel) && GAME_STATE.jumpscareCooldown <= 0) {
-                const gs = GAME_STATE.gridSize, pg = getPlayerGridPos();
-                let sr, sc;
-                for (let i = 0; i < 30; i++) {
-                    sr = Math.floor(Math.random() * gs); sc = Math.floor(Math.random() * gs);
-                    if (Math.abs(sr - pg.row) + Math.abs(sc - pg.col) >= 3) break;
-                }
-                spawnEntity(sr, sc);
-            }
-            for (const entity of entities) {
-                if (entity.userData.vanished) continue;
-                const dx = playerPosition.x - entity.position.x, dz = playerPosition.z - entity.position.z;
-                const dist = Math.sqrt(dx*dx + dz*dz);
-                const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
-                const toEntity = new THREE.Vector3(dx, 0, dz).normalize();
-                const looking = forward.dot(toEntity) > 0.7 && dist < 12;
-                if (entity.userData.state === 'idle') {
-                    if (dist < 5 && !looking && Math.random() < 0.03) entity.userData.state = 'stalking';
-                    else if (looking && Math.random() < 0.04) { despawnEntity(entity); }
-                } else if (entity.userData.state === 'stalking') {
-                    if (dist < 2.5 && GAME_STATE.jumpscareCooldown <= 0) triggerJumpscare(entity);
-                    else if (looking && Math.random() < 0.08) { despawnEntity(entity); }
-                    else {
-                        const speed = 1.0 + chaosLevel;
-                        entity.position.x += (dx / dist) * speed * deltaTime;
-                        entity.position.z += (dz / dist) * speed * deltaTime;
-                        entity.lookAt(playerPosition.x, entity.position.y, playerPosition.z);
-                    }
-                }
-                if (entity.userData.vanished) {
-                    const elapsed = now - entity.userData.vanishStart;
-                    entity.traverse(c => { if (c.material && c.material.transparent) c.material.opacity = Math.max(0, 0.85 - elapsed * 1.7); });
-                }
-            }
-            const nearby = entities.some(e => !e.userData.vanished && Math.hypot(playerPosition.x - e.position.x, playerPosition.z - e.position.z) < 7);
-            GAME_STATE.heartbeating = nearby;
-            if (GAME_STATE.heartbeating) {
-                GAME_STATE.heartbeatTimer += deltaTime;
-                if (GAME_STATE.heartbeatTimer > 1.5) { GAME_STATE.heartbeatTimer = 0; playHeartbeat(); }
-            }
-        }
-
-        function triggerJumpscare(entity) {
-            GAME_STATE.jumpscareCooldown = 4;
-            GAME_STATE.screenShakeAmount = 1.5;
-            playJumpscareSound();
-            jumpscareFlash.style.opacity = '0.9';
-            setTimeout(() => { jumpscareFlash.style.opacity = '0'; }, 120);
-            const gs = GAME_STATE.gridSize, rs = GAME_STATE.roomSize;
-            playerPosition.x = Math.floor(Math.random() * gs) * rs + rs / 2;
-            playerPosition.z = Math.floor(Math.random() * gs) * rs + rs / 2;
-            despawnEntity(entity);
-            GAME_STATE.quantumInstability = Math.min(1, GAME_STATE.quantumInstability + 0.35);
-        }
-
-        // ─────────────────────────────────────
-        // GAME LOOP
-        // ─────────────────────────────────────
-        const clock = new THREE.Clock();
-        let quantumEventTimer = 0, flickerTimer = 0;
-
-        function update(deltaTime) {
-            if (!GAME_STATE.gameActive || GAME_STATE.levelComplete) {
-                camera.rotation.order = 'YXZ';
-                camera.rotation.y = playerEuler.y;
-                camera.rotation.x = playerEuler.x;
-                return;
-            }
-            deltaTime = Math.min(deltaTime, 0.2);
-            if (GAME_STATE.jumpscareCooldown > 0) GAME_STATE.jumpscareCooldown -= deltaTime;
-            if (GAME_STATE.screenShakeAmount > 0.001) GAME_STATE.screenShakeAmount *= Math.exp(-deltaTime * 4);
-            else GAME_STATE.screenShakeAmount = 0;
-
-            const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
-            const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
-            let moveX = 0, moveZ = 0;
-            if (keysPressed['KeyW'] || keysPressed['ArrowUp']) { moveX += forward.x; moveZ += forward.z; }
-            if (keysPressed['KeyS'] || keysPressed['ArrowDown']) { moveX -= forward.x; moveZ -= forward.z; }
-            if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) { moveX -= right.x; moveZ -= right.z; }
-            if (keysPressed['KeyD'] || keysPressed['ArrowRight']) { moveX += right.x; moveZ += right.z; }
-            if (moveX !== 0 || moveZ !== 0) {
-                const len = Math.sqrt(moveX*moveX + moveZ*moveZ);
-                moveX /= len; moveZ /= len;
-                const desiredX = playerPosition.x + moveX * 5.5 * deltaTime;
-                const desiredZ = playerPosition.z + moveZ * 5.5 * deltaTime;
-                const resolved = resolveCollision(desiredX, desiredZ);
-                if (resolved.blocked && checkQuantumTunneling()) {
-                    if (!attemptQuantumTunnel()) { playerPosition.x = resolved.x; playerPosition.z = resolved.z; }
-                } else { playerPosition.x = resolved.x; playerPosition.z = resolved.z; }
-            }
-            playerPosition.y = 1.6;
-            camera.position.set(
-                playerPosition.x + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3,
-                playerPosition.y + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.25,
-                playerPosition.z + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3
-            );
-            camera.rotation.order = 'YXZ';
-            camera.rotation.y = playerEuler.y;
-            camera.rotation.x = playerEuler.x;
-
-            updateObservation();
-            quantumEventTimer += deltaTime;
-            if (quantumEventTimer > 1.0 + Math.random() * 0.5) { quantumEventTimer = 0; triggerQuantumFluctuation(); }
-            updateEntities(deltaTime);
-            cleanupEntities();
-
-            flickerTimer += deltaTime;
-            if (flickerTimer > 0.3) {
-                flickerTimer = 0;
-                const now = performance.now() / 1000;
-                for (let r = 0; r < GAME_STATE.gridSize; r++) for (let c = 0; c < GAME_STATE.gridSize; c++) {
-                    if (!cellLightFlicker[r]?.[c]) continue;
-                    const f = cellLightFlicker[r][c];
-                    if (now > f.nextFlicker) { f.intensity = 0.25 + Math.random() * 0.75; f.nextFlicker = now + 0.5 + Math.random() * 4; }
-                    const level = Math.max(0.3, Math.min(1.5, f.intensity + Math.sin(now * f.speed + f.phase) * 0.2));
-                    const pt = cellLightMeshes[r]?.[c]?.userData?.pointLight;
-                    if (pt) pt.intensity = pt.userData.baseIntensity * level;
-                    if (cellLightMeshes[r]?.[c]?.material) cellLightMeshes[r][c].material.emissiveIntensity = level;
-                }
-            }
-
-            if (keyMesh) { keyMesh.position.y = keyMesh.userData.baseY + Math.sin(performance.now() / 1000 * 2) * 0.25; keyMesh.rotation.y += deltaTime * 1.5; }
-            if (exitMarkerMesh) { exitMarkerMesh.rotation.y += deltaTime * 0.6; if (exitMarkerMesh.userData.glowLight) exitMarkerMesh.userData.glowLight.intensity = 2 + Math.sin(performance.now() / 1000 * 3) * 0.8; }
-
-            const inst = GAME_STATE.quantumInstability;
-            overlayEl.style.background = `radial-gradient(ellipse at center, transparent ${55 - inst*20}%, rgba(0,0,0,${0.55 + inst*0.3}) 100%)`;
-            vignetteEl.style.boxShadow = `inset 0 0 ${180 + inst*80}px ${60 + inst*50}px rgba(0,0,0,${0.7 + inst*0.25})`;
-            chromaticEl.style.opacity = 0.08 + inst * 0.12;
-            GAME_STATE.quantumInstability = Math.max(0, GAME_STATE.quantumInstability - deltaTime * 0.04);
-            if (humGain) { const cv = GAME_STATE.totalChaos + GAME_STATE.quantumInstability; humGain.gain.value = 0.04 + cv * 0.06; humFilter.frequency.value = 200 - cv * 80; }
-        }
-
-        function render() { renderer.render(scene, camera); }
-
-        function gameLoop() {
-            requestAnimationFrame(gameLoop);
-            update(Math.min(clock.getDelta(), 0.25));
-            render();
-        }
-
-        // ─────────────────────────────────────
-        // INIT
-        // ─────────────────────────────────────
-        function initGame() {
-            GAME_STATE.currentLevel = 1; GAME_STATE.gridSize = 6; GAME_STATE.playerHasKey = false; GAME_STATE.levelComplete = false;
-            GAME_STATE.gameActive = false; GAME_STATE.quantumInstability = 0; GAME_STATE.totalChaos = 0;
-            GAME_STATE.jumpscareCooldown = 0; GAME_STATE.screenShakeAmount = 0; GAME_STATE.lastTunnelTime = 0;
-            GAME_STATE.heartbeating = false; GAME_STATE.heartbeatTimer = 0;
-            clearMaze();
-            generateMaze(1);
-            setupEntangledDoors();
-            resetPlayer();
-            camera.position.copy(playerPosition);
-            camera.rotation.set(0, playerEuler.y, 0);
-        }
-
-        enterBtn.addEventListener('click', () => {
-            startAudio();
-            initGame();
-            GAME_STATE.gameActive = true;
-            splashEl.classList.add('hidden');
-            hintEl.style.opacity = '1';
-            hintEl.textContent = 'CLICK TO FOCUS - WASD TO MOVE - F TO INTERACT';
-            setTimeout(() => { hintEl.style.opacity = '0'; renderer.domElement.requestPointerLock(); }, 3500);
-        });
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        initGame();
-        gameLoop();
-        splashEl.classList.remove('hidden');
-        hintEl.style.opacity = '0';
+        enterBtn.addEventListener('click',()=>{ startAudio(); initGame(); STATE.gameActive=true; splashEl.classList.add('hidden'); hintEl.style.opacity='1'; hintEl.textContent='CLICK TO FOCUS - WASD MOVE - F INTERACT - SHIFT SPRINT'; setTimeout(()=>{hintEl.style.opacity='0';renderer.domElement.requestPointerLock();},3500); });
+        window.addEventListener('resize',()=>{ camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
+        initGame(); loop(); splashEl.classList.remove('hidden'); hintEl.style.opacity='0';
     </script>
 </body>
 </html>
