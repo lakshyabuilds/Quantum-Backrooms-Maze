@@ -8,8 +8,6 @@
     <meta name="keywords" content="quantum backrooms, observer's maze, quantum maze, quantum physics game, quantum tunneling, observer effect, schrödinger's maze, quantum mechanics horror, backrooms game, psychological horror, browser horror, three.js game, webgl horror, free online game, lakshya gupta, techiral, quantum entanglement, quantum fluctuation, quantum nightmare, escape room, creepy maze, surreal horror, shadow entities, jump scare, hallucination game">
     <meta name="author" content="Techiral (Lakshya Gupta)">
     <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="language" content="English">
-
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://quantum-backrooms.vercel.app/">
     <meta property="og:title" content="Quantum Backrooms: The Observer's Maze">
@@ -17,64 +15,29 @@
     <meta property="og:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Quantum Backrooms dimly lit corridor with a golden key and a shadow entity lurking.">
-    <meta property="og:site_name" content="Quantum Backrooms">
-    <meta property="og:locale" content="en_US">
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://quantum-backrooms.vercel.app/">
     <meta name="twitter:title" content="Quantum Backrooms: The Observer's Maze">
     <meta name="twitter:description" content="Look away and reality shifts. A Three.js horror maze with quantum tunneling, entangled doors, and lurking entities. Created by Techiral.">
     <meta name="twitter:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
-    <meta name="twitter:image:alt" content="A dim maze corridor with a golden key floating ahead.">
-    <meta name="twitter:creator" content="@techiral">
-
     <link rel="canonical" href="https://quantum-backrooms.vercel.app/">
-
     <link rel="icon" type="image/jpeg" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <link rel="apple-touch-icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
-
     <meta name="theme-color" content="#0a0a0a">
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "VideoGame",
-        "name": "Quantum Backrooms: The Observer's Maze",
-        "description": "A psychological horror maze where observation changes reality. Quantum tunneling, entangled doors, shadow entities, and hallucinations.",
-        "url": "https://quantum-backrooms.vercel.app/",
-        "image": "https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true",
-        "author": {
-            "@type": "Person",
-            "name": "Techiral (Lakshya Gupta)",
-            "url": "https://github.com/lakshyabuilds"
-        },
-        "genre": ["Horror", "Psychological", "Quantum Physics", "Maze"],
-        "gamePlatform": "Web Browser",
-        "operatingSystem": "Any",
-        "applicationCategory": "Game",
-        "playMode": "SinglePlayer",
-        "inLanguage": "en",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        }
-    }
-    </script>
-
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}body{background:#000;overflow:hidden;font-family:'Courier New',monospace;cursor:default;user-select:none;touch-action:none;height:100vh;width:100vw}canvas{display:block;position:fixed;top:0;left:0;z-index:1}#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%);transition:opacity 0.3s}#vignette{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9;pointer-events:none;box-shadow:inset 0 0 180px 60px rgba(0,0,0,0.8)}#chromatic{position:fixed;top:0;left:0;width:100%;height:100%;z-index:8;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;animation:chromaticDrift 7s ease-in-out infinite}@keyframes chromaticDrift{0%,100%{background:transparent}25%{background:rgba(255,0,0,0.03)}50%{background:transparent}75%{background:rgba(0,100,255,0.03)}}#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;transition:opacity 0.8s,visibility 0.8s;pointer-events:all;padding:2rem}#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}#splash h1{font-size:clamp(2rem,5vw,4rem);color:#e8d5a3;letter-spacing:0.3em;text-align:center;margin-bottom:0.3em;text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3);animation:titlePulse 3s ease-in-out infinite;font-weight:300}@keyframes titlePulse{0%,100%{text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3)}50%{text-shadow:0 0 80px rgba(232,213,163,0.8),0 0 160px rgba(200,170,100,0.5)}}#splash .subtitle{font-size:clamp(0.7rem,1.5vw,1rem);color:#b8a080;letter-spacing:0.5em;text-align:center;margin-bottom:2em;opacity:0.7}.description{color:#c0b090;text-align:center;max-width:600px;margin:0 auto 2.5em;font-size:0.75rem;letter-spacing:0.15em;line-height:2;opacity:0.9}.description p{margin:0.4em 0;text-shadow:0 0 15px rgba(200,170,100,0.3)}.description p:first-child{font-size:0.9rem;color:#e8d5a3;letter-spacing:0.3em;font-weight:bold;margin-bottom:0.8em}.enter-btn{padding:1em 3em;font-size:1.1rem;letter-spacing:0.4em;color:#e8d5a3;background:transparent;border:1px solid #e8d5a3;cursor:pointer;transition:all 0.4s;text-transform:uppercase;position:relative;overflow:hidden}.enter-btn:hover{background:rgba(232,213,163,0.1);box-shadow:0 0 40px rgba(232,213,163,0.3);letter-spacing:0.6em}.enter-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(232,213,163,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}.enter-btn:hover::after{opacity:1}#hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;pointer-events:none;color:rgba(200,180,150,0.5);font-size:0.7rem;letter-spacing:0.3em;transition:opacity 2s}#jumpscare-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;pointer-events:none;background:#000;opacity:0;transition:opacity 0.08s}
+        *{margin:0;padding:0;box-sizing:border-box}body{background:#000;overflow:hidden;font-family:'Courier New',monospace;cursor:default;user-select:none;touch-action:none;height:100vh;width:100vw}canvas{display:block;position:fixed;top:0;left:0;z-index:1}#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%);transition:opacity 0.3s}#vignette{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9;pointer-events:none;box-shadow:inset 0 0 180px 60px rgba(0,0,0,0.8)}#chromatic{position:fixed;top:0;left:0;width:100%;height:100%;z-index:8;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;animation:chromaticDrift 7s ease-in-out infinite}@keyframes chromaticDrift{0%,100%{background:transparent}25%{background:rgba(255,0,0,0.03)}50%{background:transparent}75%{background:rgba(0,100,255,0.03)}}#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;transition:opacity 0.8s,visibility 0.8s;pointer-events:all;padding:2rem}#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}#splash h1{font-size:clamp(2rem,5vw,4rem);color:#e8d5a3;letter-spacing:0.3em;text-align:center;margin-bottom:0.3em;text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3);animation:titlePulse 3s ease-in-out infinite;font-weight:300}@keyframes titlePulse{0%,100%{text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3)}50%{text-shadow:0 0 80px rgba(232,213,163,0.8),0 0 160px rgba(200,170,100,0.5)}}#splash .subtitle{font-size:clamp(0.7rem,1.5vw,1rem);color:#b8a080;letter-spacing:0.5em;text-align:center;margin-bottom:2em;opacity:0.7}.description{color:#c0b090;text-align:center;max-width:600px;margin:0 auto 2.5em;font-size:0.75rem;letter-spacing:0.15em;line-height:2;opacity:0.9}.description p{margin:0.4em 0;text-shadow:0 0 15px rgba(200,170,100,0.3)}.description p:first-child{font-size:0.9rem;color:#e8d5a3;letter-spacing:0.3em;font-weight:bold;margin-bottom:0.8em}.enter-btn{padding:1em 3em;font-size:1.1rem;letter-spacing:0.4em;color:#e8d5a3;background:transparent;border:1px solid #e8d5a3;cursor:pointer;transition:all 0.4s;text-transform:uppercase;position:relative;overflow:hidden}.enter-btn:hover{background:rgba(232,213,163,0.1);box-shadow:0 0 40px rgba(232,213,163,0.3);letter-spacing:0.6em}.enter-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(232,213,163,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}.enter-btn:hover::after{opacity:1}#hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;pointer-events:none;color:rgba(200,180,150,0.5);font-size:0.7rem;letter-spacing:0.3em;transition:opacity 2s}#jumpscare-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;pointer-events:none;background:#000;opacity:0;transition:opacity 0.08s}
     </style>
 </head>
 <body>
-    <div id="splash"><h1>QUANTUM<br>BACKROOMS</h1><p class="subtitle">THE OBSERVER'S MAZE</p>
+    <div id="splash">
+        <h1>QUANTUM<br>BACKROOMS</h1>
+        <p class="subtitle">THE OBSERVER'S MAZE</p>
         <div class="description">
             <p>YOUR EYES ARE THE ONLY REALITY.</p>
             <p>Walls shift when you look away. Doors entangle across the void.</p>
             <p>Quantum tunneling phases you through solid matter.</p>
             <p>Shadow entities freeze when watched – stare too long and they attack.</p>
-            <p>Hallucinations warp your senses.</p>
+            <p>Quantum traps litter the floor. Hallucinations warp your senses.</p>
             <p>This is not a maze – it's a quantum nightmare.</p>
         </div>
         <button class="enter-btn" id="enterBtn">Enter</button>
@@ -157,7 +120,7 @@
             camera.position.copy(playerPos); camera.rotation.set(0,playerEuler.y,0);
         }
 
-        // ---------- ENTITIES (Enderman-like behavior) ----------
+        // ---------- ENTITIES ----------
         const entities=[], entityGrp=new THREE.Group(); scene.add(entityGrp);
         function createEntity(){
             const g=new THREE.Group(), m=new THREE.MeshStandardMaterial({color:0x080808,roughness:1,transparent:true,opacity:0.85});
@@ -167,8 +130,8 @@
             for(let i=-1;i<=1;i+=2){ const a=new THREE.Mesh(new THREE.CapsuleGeometry(0.1,0.7,4,6),lm); a.position.set(i*0.4,1.5,0); a.rotation.z=i*0.3; g.add(a); }
             g.userData={
                 bodyMesh:body, headMesh:head,
-                state: 'idle',       // idle, frozen, stalking, aggressive
-                stareTimer: 0,       // how long player has been looking
+                state: 'idle',
+                stareTimer: 0,
                 teleportCooldown: 0,
                 animPhase: Math.random()*Math.PI*2, animSpeed: 0.4+Math.random()*0.8
             };
@@ -179,166 +142,146 @@
             e.userData.gridR=r; e.userData.gridC=c;
             entityGrp.add(e); entities.push(e); return e;
         }
-
-        // Check if player is looking at a specific entity
         function isPlayerLookingAt(e){
             const dx = e.position.x - playerPos.x, dz = e.position.z - playerPos.z;
             const dist = Math.hypot(dx, dz);
             if(dist > 15) return false;
             const fwd = new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
             const to = new THREE.Vector3(dx, 0, dz).normalize();
-            const dot = fwd.dot(to);
-            // looking within ~30° cone and not too far
-            return dot > 0.86 && dist < 10;
+            return fwd.dot(to) > 0.86 && dist < 10;
         }
-
         function teleportEntity(e){
             const gs = STATE.gridSize, rs = STATE.roomSize;
-            // teleport to a random nearby cell
-            const curR = e.userData.gridR, curC = e.userData.gridC;
-            let newR, newC;
-            for(let tries=0; tries<20; tries++){
-                newR = curR + Math.floor(Math.random()*5)-2;
-                newC = curC + Math.floor(Math.random()*5)-2;
-                if(newR>=0 && newR<gs && newC>=0 && newC<gs && (newR!==curR || newC!==curC)) break;
-            }
+            let newR = e.userData.gridR + Math.floor(Math.random()*5)-2;
+            let newC = e.userData.gridC + Math.floor(Math.random()*5)-2;
+            newR = Math.max(0, Math.min(gs-1, newR));
+            newC = Math.max(0, Math.min(gs-1, newC));
             e.position.set(newC*rs+rs/2, 0, newR*rs+rs/2);
             e.userData.gridR = newR; e.userData.gridC = newC;
-            // small visual flash
-            const l = new THREE.PointLight(0x8888ff,1.5,3);
-            l.position.copy(e.position); l.position.y += 1.5;
+            const l = new THREE.PointLight(0x8888ff,1.5,3); l.position.copy(e.position); l.position.y+=1.5;
             scene.add(l); setTimeout(()=>scene.remove(l), 200);
         }
-
         function updateEntities(dt){
             const now = performance.now()/1000;
-            const playerGrid = getGrid();
             for(const e of entities){
                 const dx = e.position.x - playerPos.x, dz = e.position.z - playerPos.z;
                 const dist = Math.hypot(dx, dz);
                 const lookedAt = isPlayerLookingAt(e);
-
-                // Teleport cooldown
                 if(e.userData.teleportCooldown > 0) e.userData.teleportCooldown -= dt;
-
-                // State machine
                 switch(e.userData.state){
                     case 'idle':
-                        if(lookedAt){
-                            e.userData.state = 'frozen';
-                            e.userData.stareTimer = 0;
-                        } else if(dist < 7 && Math.random()<0.01){
-                            // occasionally start stalking when close and unobserved
-                            e.userData.state = 'stalking';
-                        } else {
-                            // idle wandering
-                            if(Math.random()<0.02){
-                                const angle = Math.random()*Math.PI*2;
-                                e.position.x += Math.cos(angle)*0.3*dt;
-                                e.position.z += Math.sin(angle)*0.3*dt;
-                            }
-                        }
+                        if(lookedAt){ e.userData.state='frozen'; e.userData.stareTimer=0; }
+                        else if(dist < 7 && Math.random()<0.01){ e.userData.state='stalking'; }
+                        else { if(Math.random()<0.02){ const a=Math.random()*Math.PI*2; e.position.x+=Math.cos(a)*0.3*dt; e.position.z+=Math.sin(a)*0.3*dt; } }
                         break;
-
                     case 'frozen':
                         if(!lookedAt){
-                            // player looked away -> teleport away sometimes
-                            if(Math.random()<0.4 && e.userData.teleportCooldown<=0){
-                                teleportEntity(e);
-                                e.userData.teleportCooldown = 2.0;
-                            }
-                            e.userData.state = 'idle';
-                            e.userData.stareTimer = 0;
-                        } else {
-                            e.userData.stareTimer += dt;
-                            if(e.userData.stareTimer > 1.5){
-                                // stared too long -> become aggressive (like Enderman)
-                                e.userData.state = 'aggressive';
-                                e.userData.stareTimer = 0;
-                                playDistantDoor(); // eerie sound
-                            }
-                        }
+                            if(Math.random()<0.4 && e.userData.teleportCooldown<=0){ teleportEntity(e); e.userData.teleportCooldown=2.0; }
+                            e.userData.state='idle'; e.userData.stareTimer=0;
+                        } else { e.userData.stareTimer+=dt; if(e.userData.stareTimer>1.5){ e.userData.state='aggressive'; playDistantDoor(); } }
                         break;
-
                     case 'stalking':
-                        if(lookedAt){
-                            e.userData.state = 'frozen';
-                            e.userData.stareTimer = 0;
-                        } else if(dist < 2.2 && STATE.jumpscareCd<=0){
-                            // very close and unobserved -> jumpscare
-                            triggerJumpscare(e);
-                        } else if(dist > 12){
-                            e.userData.state = 'idle';
-                        } else {
-                            // move toward player slowly
-                            const speed = 1.0 + STATE.level*0.12;
-                            const moveX = (-dx/dist) * speed * dt;
-                            const moveZ = (-dz/dist) * speed * dt;
-                            e.position.x += moveX;
-                            e.position.z += moveZ;
-                            e.lookAt(playerPos.x, e.position.y, playerPos.z);
-                        }
+                        if(lookedAt){ e.userData.state='frozen'; e.userData.stareTimer=0; }
+                        else if(dist < 2.2 && STATE.jumpscareCd<=0){ triggerJumpscare(e); }
+                        else if(dist > 12){ e.userData.state='idle'; }
+                        else { const sp=1.0+STATE.level*0.12; e.position.x += (-dx/dist)*sp*dt; e.position.z += (-dz/dist)*sp*dt; e.lookAt(playerPos.x, e.position.y, playerPos.z); }
                         break;
-
                     case 'aggressive':
-                        // always moves toward player, even if looked at
-                        if(dist < 2.0 && STATE.jumpscareCd<=0){
-                            triggerJumpscare(e);
-                        } else if(dist > 15){
-                            e.userData.state = 'idle';
-                        } else {
-                            const speed = 1.8 + STATE.level*0.2;
-                            const moveX = (-dx/dist) * speed * dt;
-                            const moveZ = (-dz/dist) * speed * dt;
-                            e.position.x += moveX;
-                            e.position.z += moveZ;
-                            e.lookAt(playerPos.x, e.position.y, playerPos.z);
-                            // if player looks away for a while, maybe go back to idle
-                            if(!lookedAt && Math.random()<0.05){
-                                e.userData.state = 'idle';
-                            }
-                        }
+                        if(dist < 2.0 && STATE.jumpscareCd<=0){ triggerJumpscare(e); }
+                        else if(dist > 15){ e.userData.state='idle'; }
+                        else { const sp=1.8+STATE.level*0.2; e.position.x += (-dx/dist)*sp*dt; e.position.z += (-dz/dist)*sp*dt; e.lookAt(playerPos.x, e.position.y, playerPos.z); if(!lookedAt && Math.random()<0.05) e.userData.state='idle'; }
                         break;
                 }
-
-                // Clamp to grid
                 const rs = STATE.roomSize, gs = STATE.gridSize;
                 e.position.x = Math.max(0.5, Math.min(gs*rs-0.5, e.position.x));
                 e.position.z = Math.max(0.5, Math.min(gs*rs-0.5, e.position.z));
-
-                // Animation
                 const anim = e.userData.animPhase + now*e.userData.animSpeed;
                 if(e.userData.bodyMesh) e.userData.bodyMesh.position.y = 1.1 + Math.sin(anim)*0.08;
                 if(e.userData.headMesh) e.userData.headMesh.position.y = 2.0 + Math.sin(anim*1.3)*0.05;
             }
-            // Spawn new entities occasionally
             if(entities.length < 2+STATE.level && Math.random()<0.02*(1+STATE.level*0.12) && STATE.jumpscareCd<=0){
-                const pg = getGrid();
-                let sr, sc;
-                for(let i=0;i<30;i++){
-                    sr = Math.floor(Math.random()*gs); sc = Math.floor(Math.random()*gs);
-                    if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) break;
-                }
+                const pg=getGrid(); let sr,sc; for(let i=0;i<30;i++){ sr=Math.floor(Math.random()*STATE.gridSize); sc=Math.floor(Math.random()*STATE.gridSize); if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) break; }
                 if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) spawnEntity(sr,sc);
             }
-            // Heartbeat when entity nearby
             const near = entities.some(e => Math.hypot(playerPos.x-e.position.x, playerPos.z-e.position.z)<7);
-            STATE.heartbeat = near;
-            if(STATE.heartbeat){ STATE.hbTimer+=dt; if(STATE.hbTimer>1.5){ STATE.hbTimer=0; playHeartbeat(); } }
+            STATE.heartbeat = near; if(STATE.heartbeat){ STATE.hbTimer+=dt; if(STATE.hbTimer>1.5){ STATE.hbTimer=0; playHeartbeat(); } }
         }
-
         function triggerJumpscare(e){
-            STATE.jumpscareCd = 4; STATE.shake = 1.5; playJumpscareSound();
+            STATE.jumpscareCd=4; STATE.shake=1.5; playJumpscareSound();
             jumpscareFlash.style.opacity='0.9'; setTimeout(()=>jumpscareFlash.style.opacity='0',120);
             const gs=STATE.gridSize, rs=STATE.roomSize;
             playerPos.x = Math.floor(Math.random()*gs)*rs+rs/2;
             playerPos.z = Math.floor(Math.random()*gs)*rs+rs/2;
-            // Remove entity and spawn another elsewhere
             entityGrp.remove(e); entities.splice(entities.indexOf(e),1);
             STATE.instability = Math.min(1, STATE.instability+0.35);
         }
 
-        // ---------- KEY & EXIT (always present) ----------
+        // ---------- QUANTUM TRAPS ----------
+        const traps = [];
+        const trapGroup = new THREE.Group(); scene.add(trapGroup);
+        function createTrapMarker(r,c){
+            const rs = STATE.roomSize;
+            const geo = new THREE.CylinderGeometry(0.4, 0.4, 0.05, 8);
+            const mat = new THREE.MeshStandardMaterial({color:0xff3333, emissive:0xff0000, emissiveIntensity:0.5, roughness:0.3});
+            const marker = new THREE.Mesh(geo, mat);
+            marker.position.set(c*rs+rs/2, 0.03, r*rs+rs/2);
+            marker.userData = { gridR: r, gridC: c, cooldown: 0 };
+            trapGroup.add(marker);
+            traps.push(marker);
+        }
+        function clearTraps(){
+            while(trapGroup.children.length > 0){
+                trapGroup.remove(trapGroup.children[0]);
+            }
+            traps.length = 0;
+        }
+        function spawnTraps(level){
+            clearTraps();
+            const count = 3 + level;
+            const gs = STATE.gridSize;
+            for(let i=0; i<count; i++){
+                let r = Math.floor(Math.random()*gs);
+                let c = Math.floor(Math.random()*gs);
+                // avoid start and exit cells
+                if((r===0 && c===0) || (r===STATE.exitPos.row && c===STATE.exitPos.col)) continue;
+                createTrapMarker(r,c);
+            }
+        }
+        function updateTraps(dt){
+            const now = performance.now()/1000;
+            const playerRadius = 0.6;
+            for(const trap of traps){
+                if(trap.userData.cooldown > 0) trap.userData.cooldown -= dt;
+                const dx = playerPos.x - trap.position.x;
+                const dz = playerPos.z - trap.position.z;
+                const dist = Math.hypot(dx, dz);
+                // player standing on trap
+                if(dist < 1.0 && trap.userData.cooldown <= 0){
+                    // trigger teleport after short delay
+                    if(!trap.userData.triggerTimer) trap.userData.triggerTimer = 0;
+                    trap.userData.triggerTimer += dt;
+                    if(trap.userData.triggerTimer > 0.6){
+                        // teleport player
+                        const gs = STATE.gridSize, rs = STATE.roomSize;
+                        let nr, nc;
+                        do {
+                            nr = Math.floor(Math.random()*gs);
+                            nc = Math.floor(Math.random()*gs);
+                        } while(nr === getGrid().row && nc === getGrid().col);
+                        playerPos.x = nc*rs+rs/2;
+                        playerPos.z = nr*rs+rs/2;
+                        trap.userData.cooldown = 3.0;
+                        trap.userData.triggerTimer = 0;
+                        STATE.shake = 0.5;
+                        playThud(0.25, 50);
+                    }
+                } else {
+                    trap.userData.triggerTimer = 0;
+                }
+            }
+        }
+
+        // ---------- KEY & EXIT ----------
         const keyGrp=new THREE.Group(), exitGrp=new THREE.Group(); scene.add(keyGrp); scene.add(exitGrp);
         let keyMesh=null, exitMesh=null;
         function makeKey(){
@@ -365,12 +308,12 @@
             STATE.exitPos={row:r,col:c}; exitGrp.add(exitMesh);
         }
 
-        // ---------- MAZE GENERATION (key & exit always present) ----------
         function clearMaze(){
             wallsGrp.clear(); lightsGrp.clear(); floorGrp.clear(); ceilGrp.clear();
             wallMeshes={}; wallTypes={}; wallLastObs={}; cellFlick=[]; cellLights=[];
             entities.forEach(e=>entityGrp.remove(e)); entities.length=0;
             keyGrp.clear(); exitGrp.clear(); keyMesh=exitMesh=null;
+            clearTraps();
         }
 
         function generateMaze(level){
@@ -393,13 +336,11 @@
                     stack.push({r:ch.nr,c:ch.nc});
                 }
             }
-            // extra loops
             for(let i=0;i<Math.floor(gs*gs*0.15);i++){
                 const r=Math.floor(Math.random()*gs),c=Math.floor(Math.random()*gs);
                 if(Math.random()<0.5&&r<gs-1&&hWalls[r][c]==='solid') hWalls[r][c]='open';
                 else if(c<gs-1&&vWalls[r][c]==='solid') vWalls[r][c]='open';
             }
-            // quantum walls
             const allW=[]; for(let r=0;r<gs-1;r++)for(let c=0;c<gs;c++)if(hWalls[r][c]==='open')allW.push({type:'h',r,c});
             for(let r=0;r<gs;r++)for(let c=0;c<gs-1;c++)if(vWalls[r][c]==='open')allW.push({type:'v',r,c});
             const qFrac=0.2+level*0.1, numQ=Math.floor(allW.length*Math.min(0.5,qFrac));
@@ -410,11 +351,7 @@
             }
             for(let r=0;r<gs-1;r++)for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=hWalls[r][c]; }
             for(let r=0;r<gs;r++)for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=vWalls[r][c]; }
-
-            // guarantee start cell open
-            if(!hasOpenNeighbor(0,0)){
-                if(gs>1) { const k=`h-${0}-${0}`; wallTypes[k]='open'; hWalls[0][0]='open'; }
-            }
+            if(!hasOpenNeighbor(0,0)){ if(gs>1) { const k=`h-${0}-${0}`; wallTypes[k]='open'; hWalls[0][0]='open'; } }
             function hasOpenNeighbor(r,c){
                 if(r>0 && (wallTypes[`h-${r-1}-${c}`]==='open'||wallTypes[`h-${r-1}-${c}`]==='quantum')) return true;
                 if(r<gs-1 && (wallTypes[`h-${r}-${c}`]==='open'||wallTypes[`h-${r}-${c}`]==='quantum')) return true;
@@ -422,171 +359,79 @@
                 if(c<gs-1 && (wallTypes[`v-${r}-${c}`]==='open'||wallTypes[`v-${r}-${c}`]==='quantum')) return true;
                 return false;
             }
-
-            // Always place key and exit
             const exitR=gs-1, exitC=gs-1;
             let keyR,keyC; do{ keyR=Math.floor(Math.random()*gs); keyC=Math.floor(Math.random()*gs); }while((keyR===0&&keyC===0)||(keyR===exitR&&keyC===exitC));
             STATE.keyPos={row:keyR,col:keyC}; STATE.exitPos={row:exitR,col:exitC};
             ensurePath({row:0,col:0}, STATE.keyPos); ensurePath(STATE.keyPos, STATE.exitPos);
             STATE.hasKey=false;
-
             buildGeometry();
             placeKey(keyR,keyC); placeExit(exitR,exitC);
-
             const now=performance.now()/1000;
             for(const k in wallTypes) wallLastObs[k]=now;
             cellFlick=Array.from({length:gs},()=>Array.from({length:gs},()=>({phase:Math.random()*Math.PI*2,speed:0.3+Math.random()*1.5,intensity:0.6+Math.random()*0.4,nextFlick:now+Math.random()*5})));
         }
 
-        function ensurePath(from,to){
-            const gs=STATE.gridSize; const vis=Array.from({length:gs},()=>Array(gs).fill(false));
-            const q=[{r:from.row,c:from.col}]; vis[from.row][from.col]=true;
+        function ensurePath(from,to){ /* same as before */ 
+            const gs=STATE.gridSize; const vis=Array.from({length:gs},()=>Array(gs).fill(false)); const q=[{r:from.row,c:from.col}]; vis[from.row][from.col]=true;
             const dirs=[{dr:-1,dc:0,wk:(r,c)=>`h-${r-1}-${c}`},{dr:1,dc:0,wk:(r,c)=>`h-${r}-${c}`},{dr:0,dc:-1,wk:(r,c)=>`v-${r}-${c-1}`},{dr:0,dc:1,wk:(r,c)=>`v-${r}-${c}`}];
-            while(q.length){
-                const cur=q.shift(); if(cur.r===to.row&&cur.c===to.col) return;
-                for(const d of dirs){ const nr=cur.r+d.dr,nc=cur.c+d.dc; if(nr<0||nr>=gs||nc<0||nc>=gs||vis[nr][nc]) continue;
-                    const key=d.wk(cur.r,cur.c); const t=wallTypes[key]||'solid'; if(t==='open'||t==='quantum'){ vis[nr][nc]=true; q.push({r:nr,c:nc}); } }
-            }
+            while(q.length){ const cur=q.shift(); if(cur.r===to.row&&cur.c===to.col) return; for(const d of dirs){ const nr=cur.r+d.dr,nc=cur.c+d.dc; if(nr<0||nr>=gs||nc<0||nc>=gs||vis[nr][nc]) continue; const key=d.wk(cur.r,cur.c); const t=wallTypes[key]||'solid'; if(t==='open'||t==='quantum'){ vis[nr][nc]=true; q.push({r:nr,c:nc}); } } }
             carvePath(from,to);
         }
-        function carvePath(from,to){
-            const gs=STATE.gridSize; let cr=from.row,cc=from.col;
-            while(cr!==to.row||cc!==to.col){
-                const dr=Math.sign(to.row-cr),dc=Math.sign(to.col-cc);
-                if(dr!==0&&(Math.random()<0.5||dc===0)){
-                    const wr=dr===-1?cr-1:cr, wc=cc, key=`h-${wr}-${wc}`;
-                    if(wr>=0&&wr<gs-1){ wallTypes[key]='open'; hWalls[wr][wc]='open'; } cr+=dr;
-                }else if(dc!==0){
-                    const wr=cr, wc=dc===-1?cc-1:cc, key=`v-${wr}-${wc}`;
-                    if(wc>=0&&wc<gs-1){ wallTypes[key]='open'; vWalls[wr][wc]='open'; } cc+=dc;
-                }
-            }
+        function carvePath(from,to){ /* same */ 
+            const gs=STATE.gridSize; let cr=from.row,cc=from.col; while(cr!==to.row||cc!==to.col){ const dr=Math.sign(to.row-cr),dc=Math.sign(to.col-cc); if(dr!==0&&(Math.random()<0.5||dc===0)){ const wr=dr===-1?cr-1:cr, wc=cc, key=`h-${wr}-${wc}`; if(wr>=0&&wr<gs-1){ wallTypes[key]='open'; hWalls[wr][wc]='open'; } cr+=dr; }else if(dc!==0){ const wr=cr, wc=dc===-1?cc-1:cc, key=`v-${wr}-${wc}`; if(wc>=0&&wc<gs-1){ wallTypes[key]='open'; vWalls[wr][wc]='open'; } cc+=dc; } }
         }
 
-        function buildGeometry(){
+        function buildGeometry(){ /* same */ 
             const gs=STATE.gridSize, rs=STATE.roomSize, wh=STATE.wallH, wt=0.2;
             const fg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const fm=new THREE.Mesh(fg,floorMat); fm.rotation.x=-Math.PI/2; fm.position.set(gs*rs/2,-0.05,gs*rs/2); fm.receiveShadow=true; floorGrp.add(fm);
             const cg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const cm=new THREE.Mesh(cg,ceilMat); cm.rotation.x=Math.PI/2; cm.position.set(gs*rs/2,wh+0.05,gs*rs/2); cm.receiveShadow=true; ceilGrp.add(cm);
             const oh=new THREE.BoxGeometry(gs*rs+2,wh,wt), ov=new THREE.BoxGeometry(wt,wh,gs*rs+2);
-            [[oh,gs*rs/2,wh/2,-wt/2],[oh,gs*rs/2,wh/2,gs*rs+wt/2],[ov,-wt/2,wh/2,gs*rs/2],[ov,gs*rs+wt/2,wh/2,gs*rs/2]].forEach(([geo,x,y,z])=>{
-                const m=new THREE.Mesh(geo,wallMat); m.position.set(x,y,z); m.castShadow=m.receiveShadow=true; wallsGrp.add(m);
-            });
-            for(let r=0;r<gs-1;r++) for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){
-                const mesh=new THREE.Mesh(new THREE.BoxGeometry(rs+wt,wh,wt), t==='quantum'?wallMatAlt:wallMat);
-                mesh.position.set(c*rs+rs/2,wh/2,(r+1)*rs); mesh.castShadow=mesh.receiveShadow=true;
-                mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh);
-            }}
-            for(let r=0;r<gs;r++) for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){
-                const mesh=new THREE.Mesh(new THREE.BoxGeometry(wt,wh,rs+wt), t==='quantum'?wallMatAlt:wallMat);
-                mesh.position.set((c+1)*rs,wh/2,r*rs+rs/2); mesh.castShadow=mesh.receiveShadow=true;
-                mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh);
-            }}
-            for(let r=0;r<gs;r++){ cellLights[r]=[]; for(let c=0;c<gs;c++){
-                const lx=c*rs+rs/2, lz=r*rs+rs/2;
-                const lm=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.08,0.5), new THREE.MeshStandardMaterial({color:0xfff8e8,roughness:0.2,metalness:0.1,emissive:0xfff8e8,emissiveIntensity:1}));
-                lm.position.set(lx,wh-0.05,lz); const pl=new THREE.PointLight(0xffeedd,1.8,8,2); pl.position.set(lx,wh-0.2,lz); pl.userData.baseIntensity=1.8;
-                lm.userData={pointLight:pl}; cellLights[r][c]=lm; lightsGrp.add(lm); lightsGrp.add(pl);
-            }}
+            [[oh,gs*rs/2,wh/2,-wt/2],[oh,gs*rs/2,wh/2,gs*rs+wt/2],[ov,-wt/2,wh/2,gs*rs/2],[ov,gs*rs+wt/2,wh/2,gs*rs/2]].forEach(([geo,x,y,z])=>{ const m=new THREE.Mesh(geo,wallMat); m.position.set(x,y,z); m.castShadow=m.receiveShadow=true; wallsGrp.add(m); });
+            for(let r=0;r<gs-1;r++) for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){ const mesh=new THREE.Mesh(new THREE.BoxGeometry(rs+wt,wh,wt), t==='quantum'?wallMatAlt:wallMat); mesh.position.set(c*rs+rs/2,wh/2,(r+1)*rs); mesh.castShadow=mesh.receiveShadow=true; mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh); }}
+            for(let r=0;r<gs;r++) for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){ const mesh=new THREE.Mesh(new THREE.BoxGeometry(wt,wh,rs+wt), t==='quantum'?wallMatAlt:wallMat); mesh.position.set((c+1)*rs,wh/2,r*rs+rs/2); mesh.castShadow=mesh.receiveShadow=true; mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh); }}
+            for(let r=0;r<gs;r++){ cellLights[r]=[]; for(let c=0;c<gs;c++){ const lx=c*rs+rs/2, lz=r*rs+rs/2; const lm=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.08,0.5), new THREE.MeshStandardMaterial({color:0xfff8e8,roughness:0.2,metalness:0.1,emissive:0xfff8e8,emissiveIntensity:1})); lm.position.set(lx,wh-0.05,lz); const pl=new THREE.PointLight(0xffeedd,1.8,8,2); pl.position.set(lx,wh-0.2,lz); pl.userData.baseIntensity=1.8; lm.userData={pointLight:pl}; cellLights[r][c]=lm; lightsGrp.add(lm); lightsGrp.add(pl); }}
         }
 
-        function updateWallMesh(key){
-            const mesh=wallMeshes[key], t=wallTypes[key];
-            if(!mesh&&(t==='solid'||t==='quantum')){
-                const [type,r,c]=key.split('-'); const rs=STATE.roomSize, wh=STATE.wallH, wt=0.2;
-                let geo,wx,wz;
-                if(type==='h'){ geo=new THREE.BoxGeometry(rs+wt,wh,wt); wx=c*rs+rs/2; wz=(+r+1)*rs; }
-                else{ geo=new THREE.BoxGeometry(wt,wh,rs+wt); wx=(+c+1)*rs; wz=r*rs+rs/2; }
-                const nm=new THREE.Mesh(geo, t==='quantum'?wallMatAlt:wallMat); nm.position.set(wx,wh/2,wz); nm.castShadow=nm.receiveShadow=true;
-                nm.userData={wallKey:key,wallType:t}; wallMeshes[key]=nm; wallsGrp.add(nm);
-            }else if(mesh&&t==='open'){
-                wallsGrp.remove(mesh); mesh.geometry?.dispose(); mesh.material?.dispose(); delete wallMeshes[key];
-            }else if(mesh){ mesh.material=t==='quantum'?wallMatAlt:wallMat; mesh.userData.wallType=t; mesh.visible=true; }
+        function updateWallMesh(key){ /* same */ 
+            const mesh=wallMeshes[key], t=wallTypes[key]; if(!mesh&&(t==='solid'||t==='quantum')){ const [type,r,c]=key.split('-'); const rs=STATE.roomSize, wh=STATE.wallH, wt=0.2; let geo,wx,wz; if(type==='h'){ geo=new THREE.BoxGeometry(rs+wt,wh,wt); wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ geo=new THREE.BoxGeometry(wt,wh,rs+wt); wx=(+c+1)*rs; wz=r*rs+rs/2; } const nm=new THREE.Mesh(geo, t==='quantum'?wallMatAlt:wallMat); nm.position.set(wx,wh/2,wz); nm.castShadow=nm.receiveShadow=true; nm.userData={wallKey:key,wallType:t}; wallMeshes[key]=nm; wallsGrp.add(nm); } else if(mesh&&t==='open'){ wallsGrp.remove(mesh); mesh.geometry?.dispose(); mesh.material?.dispose(); delete wallMeshes[key]; } else if(mesh){ mesh.material=t==='quantum'?wallMatAlt:wallMat; mesh.userData.wallType=t; mesh.visible=true; }
         }
 
         function getGrid(){ const rs=STATE.roomSize; return {row:Math.max(0,Math.min(STATE.gridSize-1,Math.round(playerPos.z/rs-0.5))),col:Math.max(0,Math.min(STATE.gridSize-1,Math.round(playerPos.x/rs-0.5)))}; }
 
-        function isWallObserved(key){
-            const [type,wr,wc]=key.split('-'); const rs=STATE.roomSize;
-            let wx,wz; if(type==='h'){ wx=wc*rs+rs/2; wz=(+wr+1)*rs; } else{ wx=(+wc+1)*rs; wz=wr*rs+rs/2; }
-            const dx=wx-playerPos.x, dz=wz-playerPos.z, dist=Math.sqrt(dx*dx+dz*dz); if(dist>18)return false;
-            const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
-            const to=new THREE.Vector3(dx,0,dz).normalize(); const dot=fwd.dot(to);
-            return (dot>0.15&&dist<14)||(dot>-0.1&&dist<6);
+        function isWallObserved(key){ /* same */ 
+            const [type,wr,wc]=key.split('-'); const rs=STATE.roomSize; let wx,wz; if(type==='h'){ wx=wc*rs+rs/2; wz=(+wr+1)*rs; } else{ wx=(+wc+1)*rs; wz=wr*rs+rs/2; } const dx=wx-playerPos.x, dz=wz-playerPos.z, dist=Math.sqrt(dx*dx+dz*dz); if(dist>18)return false; const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion); const to=new THREE.Vector3(dx,0,dz).normalize(); const dot=fwd.dot(to); return (dot>0.15&&dist<14)||(dot>-0.1&&dist<6);
         }
 
         function updateObs(){ const now=performance.now()/1000; for(const k in wallTypes) if(isWallObserved(k)) wallLastObs[k]=now; }
 
-        function wallFlash(pos){
-            const l=new THREE.PointLight(0xaaaaff,2,4,2); l.position.copy(pos); scene.add(l); setTimeout(()=>scene.remove(l),200);
-            for(let i=0;i<10;i++){ const g=new THREE.SphereGeometry(0.05), m=new THREE.MeshBasicMaterial({color:0xaaaaff,transparent:true,opacity:0.8}); const p=new THREE.Mesh(g,m); p.position.set(pos.x+(Math.random()-0.5)*1.2,pos.y+Math.random()*1.5,pos.z+(Math.random()-0.5)*1.2); scene.add(p); setTimeout(()=>{scene.remove(p);g.dispose();m.dispose();},500); }
+        function wallFlash(pos){ /* same */ 
+            const l=new THREE.PointLight(0xaaaaff,2,4,2); l.position.copy(pos); scene.add(l); setTimeout(()=>scene.remove(l),200); for(let i=0;i<10;i++){ const g=new THREE.SphereGeometry(0.05), m=new THREE.MeshBasicMaterial({color:0xaaaaff,transparent:true,opacity:0.8}); const p=new THREE.Mesh(g,m); p.position.set(pos.x+(Math.random()-0.5)*1.2,pos.y+Math.random()*1.5,pos.z+(Math.random()-0.5)*1.2); scene.add(p); setTimeout(()=>{scene.remove(p);g.dispose();m.dispose();},500); }
         }
 
-        function quantumFluctuation(){
-            const now=performance.now()/1000, chaosLvl=STATE.level*0.18;
-            const cand=[]; for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const last=wallLastObs[k]||now; if(now-last>0.8&&!isWallObserved(k)){ const prob=Math.min(0.9,(now-last-0.8)*0.25*(1+chaosLvl)); if(Math.random()<prob) cand.push(k); } }
-            if(cand.length){
-                const num=Math.min(cand.length,1+Math.floor(Math.random()*3*(1+chaosLvl)));
-                const sh=[...cand].sort(()=>Math.random()-0.5);
-                for(let i=0;i<num;i++){
-                    const key=sh[i], cur=wallTypes[key], nxt=cur==='quantum'?(Math.random()<0.5?'solid':'open'):(cur==='solid'?'open':'solid');
-                    wallTypes[key]=nxt; const [t,r,c]=key.split('-'); if(t==='h') hWalls[+r][+c]=nxt; else vWalls[+r][+c]=nxt;
-                    const mesh=wallMeshes[key]; if(mesh) wallFlash(mesh.position); updateWallMesh(key); wallLastObs[key]=now;
-                }
-                if(num>0&&Math.random()<0.7) playDistantDoor();
-                STATE.instability=Math.min(1,STATE.instability+0.15);
-            }
+        function quantumFluctuation(){ /* same */ 
+            const now=performance.now()/1000, chaosLvl=STATE.level*0.18; const cand=[]; for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const last=wallLastObs[k]||now; if(now-last>0.8&&!isWallObserved(k)){ const prob=Math.min(0.9,(now-last-0.8)*0.25*(1+chaosLvl)); if(Math.random()<prob) cand.push(k); } } if(cand.length){ const num=Math.min(cand.length,1+Math.floor(Math.random()*3*(1+chaosLvl))); const sh=[...cand].sort(()=>Math.random()-0.5); for(let i=0;i<num;i++){ const key=sh[i], cur=wallTypes[key], nxt=cur==='quantum'?(Math.random()<0.5?'solid':'open'):(cur==='solid'?'open':'solid'); wallTypes[key]=nxt; const [t,r,c]=key.split('-'); if(t==='h') hWalls[+r][+c]=nxt; else vWalls[+r][+c]=nxt; const mesh=wallMeshes[key]; if(mesh) wallFlash(mesh.position); updateWallMesh(key); wallLastObs[key]=now; } if(num>0&&Math.random()<0.7) playDistantDoor(); STATE.instability=Math.min(1,STATE.instability+0.15); }
         }
 
-        function tryTunnel(){
-            const now=performance.now()/1000; if(now-STATE.lastTunnel<STATE.tunnelCd) return false;
-            const chance=0.03+STATE.level*0.02+STATE.instability*0.05;
-            if(Math.random()<chance){ STATE.lastTunnel=now; STATE.instability=Math.max(0,STATE.instability-0.3); return true; }
-            return false;
+        function tryTunnel(){ /* same */ 
+            const now=performance.now()/1000; if(now-STATE.lastTunnel<STATE.tunnelCd) return false; const chance=0.03+STATE.level*0.02+STATE.instability*0.05; if(Math.random()<chance){ STATE.lastTunnel=now; STATE.instability=Math.max(0,STATE.instability-0.3); return true; } return false;
         }
 
-        function attemptTunnel(){
-            const rs=STATE.roomSize, gs=STATE.gridSize, px=playerPos.x, pz=playerPos.z;
-            const cand=[]; for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue;
-                const [typ,r,c]=k.split('-'); let wx,wz; if(typ==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; }
-                const dist=Math.hypot(px-wx,pz-wz); if(dist<1.8) cand.push({wx,wz,typ,dist}); }
-            if(!cand.length) return false;
-            cand.sort((a,b)=>a.dist-b.dist); const t=cand[0]; const off=2.5;
-            if(t.typ==='h') playerPos.z = t.wz + (pz<t.wz?-1:1)*off; else playerPos.x = t.wx + (px<t.wx?-1:1)*off;
-            playerPos.x=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.x)); playerPos.z=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.z));
-            STATE.shake=0.6; playThud(0.2,40); wallFlash(new THREE.Vector3(playerPos.x,1.6,playerPos.z)); return true;
+        function attemptTunnel(){ /* same */ 
+            const rs=STATE.roomSize, gs=STATE.gridSize, px=playerPos.x, pz=playerPos.z; const cand=[]; for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue; const [typ,r,c]=k.split('-'); let wx,wz; if(typ==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; } const dist=Math.hypot(px-wx,pz-wz); if(dist<1.8) cand.push({wx,wz,typ,dist}); } if(!cand.length) return false; cand.sort((a,b)=>a.dist-b.dist); const t=cand[0]; const off=2.5; if(t.typ==='h') playerPos.z = t.wz + (pz<t.wz?-1:1)*off; else playerPos.x = t.wx + (px<t.wx?-1:1)*off; playerPos.x=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.x)); playerPos.z=Math.max(0.5,Math.min(gs*rs-0.5,playerPos.z)); STATE.shake=0.6; playThud(0.2,40); wallFlash(new THREE.Vector3(playerPos.x,1.6,playerPos.z)); return true;
         }
 
         let entangledPairs=[];
-        function setupEntangled(){
-            entangledPairs=[]; const qw=[]; for(const k in wallTypes) if(wallTypes[k]==='quantum') qw.push(k);
-            const num=Math.min(3+STATE.level,Math.floor(qw.length/2)); const sh=[...qw].sort(()=>Math.random()-0.5);
-            for(let i=0;i<num*2;i+=2) if(sh[i]&&sh[i+1]) entangledPairs.push([sh[i],sh[i+1]]);
+        function setupEntangled(){ /* same */ 
+            entangledPairs=[]; const qw=[]; for(const k in wallTypes) if(wallTypes[k]==='quantum') qw.push(k); const num=Math.min(3+STATE.level,Math.floor(qw.length/2)); const sh=[...qw].sort(()=>Math.random()-0.5); for(let i=0;i<num*2;i+=2) if(sh[i]&&sh[i+1]) entangledPairs.push([sh[i],sh[i+1]]);
         }
-        function triggerEntangled(changed){
-            for(const [a,b] of entangledPairs){
-                const partner = a===changed?b:(b===changed?a:null); if(!partner) continue;
-                if(wallTypes[partner]==='quantum'){
-                    const ns=Math.random()<0.5?'solid':'open'; wallTypes[partner]=ns;
-                    const [t,r,c]=partner.split('-'); if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns;
-                    updateWallMesh(partner); wallLastObs[partner]=performance.now()/1000; playDistantDoor();
-                }
-            }
+        function triggerEntangled(changed){ /* same */ 
+            for(const [a,b] of entangledPairs){ const partner = a===changed?b:(b===changed?a:null); if(!partner) continue; if(wallTypes[partner]==='quantum'){ const ns=Math.random()<0.5?'solid':'open'; wallTypes[partner]=ns; const [t,r,c]=partner.split('-'); if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns; updateWallMesh(partner); wallLastObs[partner]=performance.now()/1000; playDistantDoor(); } }
         }
 
-        function isBlocked(x,z,rad=0.45){
-            const rs=STATE.roomSize, gs=STATE.gridSize; if(x-rad<0||x+rad>gs*rs||z-rad<0||z+rad>gs*rs) return true;
-            for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue;
-                const [type,r,c]=k.split('-'); let wx,wz; const wt=0.2, rs=STATE.roomSize;
-                if(type==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; if(Math.abs(x-wx)<(rs/2+wt)+rad&&Math.abs(z-wz)<wt/2+rad) return true; }
-                else{ wx=(+c+1)*rs; wz=r*rs+rs/2; if(Math.abs(x-wx)<wt/2+rad&&Math.abs(z-wz)<(rs/2+wt)+rad) return true; }
-            } return false;
+        function isBlocked(x,z,rad=0.45){ /* same */ 
+            const rs=STATE.roomSize, gs=STATE.gridSize; if(x-rad<0||x+rad>gs*rs||z-rad<0||z+rad>gs*rs) return true; for(const k in wallTypes){ const t=wallTypes[k]; if(t!=='solid'&&t!=='quantum') continue; const [type,r,c]=k.split('-'); let wx,wz; const wt=0.2, rs=STATE.roomSize; if(type==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; if(Math.abs(x-wx)<(rs/2+wt)+rad&&Math.abs(z-wz)<wt/2+rad) return true; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; if(Math.abs(x-wx)<wt/2+rad&&Math.abs(z-wz)<(rs/2+wt)+rad) return true; } } return false;
         }
-        function resolveCollision(dx,dz,rad=0.45){
-            if(!isBlocked(dx,dz,rad)) return {x:dx,z:dz,blocked:false};
-            if(!isBlocked(dx,playerPos.z,rad)) return {x:dx,z:playerPos.z,blocked:true};
-            if(!isBlocked(playerPos.x,dz,rad)) return {x:playerPos.x,z:dz,blocked:true};
-            return {x:playerPos.x,z:playerPos.z,blocked:true};
-        }
+        function resolveCollision(dx,dz,rad=0.45){ if(!isBlocked(dx,dz,rad)) return {x:dx,z:dz,blocked:false}; if(!isBlocked(dx,playerPos.z,rad)) return {x:dx,z:playerPos.z,blocked:true}; if(!isBlocked(playerPos.x,dz,rad)) return {x:playerPos.x,z:dz,blocked:true}; return {x:playerPos.x,z:playerPos.z,blocked:true}; }
 
         document.addEventListener('keydown',e=>{ keys[e.code]=true; if(e.code==='KeyF') interact(); if(e.code==='ShiftLeft') STATE.sprint=true; });
         document.addEventListener('keyup',e=>{ keys[e.code]=false; if(e.code==='ShiftLeft') STATE.sprint=false; });
@@ -599,9 +444,7 @@
             const rs=STATE.roomSize, px=playerPos.x, pz=playerPos.z;
             if(keyMesh&&!STATE.hasKey){ const d=Math.hypot(px-keyMesh.position.x,pz-keyMesh.position.z); if(d<2.0){ STATE.hasKey=true; keyGrp.remove(keyMesh); keyMesh=null; STATE.keyPos=null; playThud(0.4,200); hintEl.style.opacity='1'; hintEl.textContent='KEY ACQUIRED'; setTimeout(()=>hintEl.style.opacity='0',3000); return; } }
             if(STATE.hasKey&&exitMesh){ const d=Math.hypot(px-exitMesh.position.x,pz-exitMesh.position.z); if(d<2.2){ completeLevel(); return; } }
-            for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const [t,r,c]=k.split('-'); let wx,wz; if(t==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; } if(Math.hypot(px-wx,pz-wz)<2.5){
-                const ns=wallTypes[k]==='solid'?'open':'solid'; wallTypes[k]=ns; if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns; updateWallMesh(k); wallLastObs[k]=performance.now()/1000; triggerEntangled(k); playThud(0.15,80); return;
-            }}
+            for(const k in wallTypes){ if(wallTypes[k]!=='quantum') continue; const [t,r,c]=k.split('-'); let wx,wz; if(t==='h'){ wx=c*rs+rs/2; wz=(+r+1)*rs; } else{ wx=(+c+1)*rs; wz=r*rs+rs/2; } if(Math.hypot(px-wx,pz-wz)<2.5){ const ns=wallTypes[k]==='solid'?'open':'solid'; wallTypes[k]=ns; if(t==='h') hWalls[+r][+c]=ns; else vWalls[+r][+c]=ns; updateWallMesh(k); wallLastObs[k]=performance.now()/1000; triggerEntangled(k); playThud(0.15,80); return; } }
         }
 
         function completeLevel(){ STATE.levelComplete=true; STATE.gameActive=false; hintEl.style.opacity='1'; if(STATE.level>=STATE.maxLevel){ hintEl.textContent='YOU ESCAPED'; setTimeout(()=>{hintEl.style.opacity='0'; resetGame();},4000); } else{ hintEl.textContent=`LEVEL ${STATE.level} COMPLETE`; setTimeout(()=>{STATE.level++; startLevel();},3500); } }
@@ -612,18 +455,26 @@
             STATE.hasKey=false; STATE.instability=STATE.level*0.08; STATE.chaos=STATE.level*0.1;
             STATE.jumpscareCd=0; STATE.shake=0;
             clearMaze(); generateMaze(STATE.level); setupEntangled(); resetPlayer();
+            // spawn initial entity
+            if(entities.length === 0) {
+                const gs = STATE.gridSize;
+                let sr = Math.floor(Math.random()*gs), sc = Math.floor(Math.random()*gs);
+                if(sr===0 && sc===0) sr=1;
+                spawnEntity(sr, sc);
+            }
+            // spawn traps
+            spawnTraps(STATE.level);
             STATE.gameActive=true; STATE.levelComplete=false;
             hintEl.style.opacity='1'; hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`;
             setTimeout(()=>hintEl.style.opacity='0',3000);
         }
 
-        const clock=new THREE.Clock(); let qt=0, ft=0, hallTimer=0;
+        const clock=new THREE.Clock(); let qt=0, ft=0, hallTimer=3;
         function update(dt){
             if(!STATE.gameActive||STATE.levelComplete){ camera.rotation.order='YXZ'; camera.rotation.y=playerEuler.y; camera.rotation.x=playerEuler.x; return; }
             dt=Math.min(dt,0.2);
             if(STATE.jumpscareCd>0) STATE.jumpscareCd-=dt;
             if(STATE.shake>0.001) STATE.shake*=Math.exp(-dt*4); else STATE.shake=0;
-
             const fwd=new THREE.Vector3(0,0,-1).applyAxisAngle(new THREE.Vector3(0,1,0),playerEuler.y);
             const right=new THREE.Vector3(1,0,0).applyAxisAngle(new THREE.Vector3(0,1,0),playerEuler.y);
             let mx=0,mz=0;
@@ -638,22 +489,17 @@
             playerPos.y=1.6;
             camera.position.set(playerPos.x+STATE.shake*(Math.random()-0.5)*0.3, playerPos.y+STATE.shake*(Math.random()-0.5)*0.25, playerPos.z+STATE.shake*(Math.random()-0.5)*0.3);
             camera.rotation.order='YXZ'; camera.rotation.y=playerEuler.y; camera.rotation.x=playerEuler.x;
-
             updateObs(); qt+=dt; if(qt>0.8+Math.random()*0.4){ qt=0; quantumFluctuation(); }
             updateEntities(dt);
             for(let i=entities.length-1;i>=0;i--){ const e=entities[i]; if(e.userData.vanished&&performance.now()/1000-e.userData.vanishStart>0.5){ entityGrp.remove(e); entities.splice(i,1); }}
-
+            updateTraps(dt);
             ft+=dt; if(ft>0.3){ ft=0; const now=performance.now()/1000; for(let r=0;r<STATE.gridSize;r++)for(let c=0;c<STATE.gridSize;c++){ const f=cellFlick[r]?.[c]; if(!f) continue; if(now>f.nextFlick){ f.intensity=0.25+Math.random()*0.75; f.nextFlick=now+0.5+Math.random()*4; } const lvl=Math.max(0.3,Math.min(1.5,f.intensity+Math.sin(now*f.speed+f.phase)*0.2)); const pt=cellLights[r]?.[c]?.userData?.pointLight; if(pt) pt.intensity=pt.userData.baseIntensity*lvl; if(cellLights[r]?.[c]?.material) cellLights[r][c].material.emissiveIntensity=lvl; }}
-
             if(keyMesh){ keyMesh.position.y=keyMesh.userData.baseY+Math.sin(performance.now()/1000*2)*0.25; keyMesh.rotation.y+=dt*1.5; }
             if(exitMesh){ exitMesh.rotation.y+=dt*0.6; if(exitMesh.userData.glow) exitMesh.userData.glow.intensity=2+Math.sin(performance.now()/1000*3)*0.8; }
-
             const inst=STATE.instability; overlayEl.style.background=`radial-gradient(ellipse at center,transparent ${55-inst*20}%,rgba(0,0,0,${0.55+inst*0.3}) 100%)`;
             vignetteEl.style.boxShadow=`inset 0 0 ${180+inst*80}px ${60+inst*50}px rgba(0,0,0,${0.7+inst*0.25})`;
             chromaticEl.style.opacity=0.08+inst*0.12;
-
             hallTimer+=dt; if(hallTimer>5+Math.random()*10){ hallTimer=0; triggerHallucination(); }
-
             STATE.instability=Math.max(0,STATE.instability-dt*0.04);
             if(humGain){ const cv=STATE.chaos+STATE.instability; humGain.gain.value=0.04+cv*0.06; humFilter.frequency.value=200-cv*80; }
         }
