@@ -3,24 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Quantum Backrooms: The Observer's Maze</title>
-    <meta name="description" content="Navigate a shifting quantum maze where observation changes reality. Quantum tunneling, entangled doors, shadow entities, and hallucinations. A browser-based psychological horror experience.">
-    <meta name="keywords" content="quantum backrooms, observer's maze, three.js horror, quantum maze, browser horror game, backrooms, psychological horror, free online game, webgl horror">
+    <title>Quantum Backrooms: The Observer's Maze | A Quantum Physics Horror Game</title>
+    <meta name="description" content="Enter the Quantum Backrooms — a psychological horror maze where observation shapes reality. Walls shift, quantum tunneling phases you through solid matter, entangled doors echo your actions, and shadow entities stalk you. Made by Techiral (Lakshya Gupta). Play free online.">
+    <meta name="keywords" content="quantum backrooms, observer's maze, quantum maze, quantum physics game, quantum tunneling, observer effect, schrödinger's maze, quantum mechanics horror, backrooms game, psychological horror, browser horror, three.js game, webgl horror, free online game, lakshya gupta, techiral, quantum entanglement, quantum fluctuation, quantum nightmare, escape room, creepy maze, surreal horror, shadow entities, jump scare, hallucination game">
+    <meta name="author" content="Techiral (Lakshya Gupta)">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="language" content="English">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantum-backrooms.vercel.app/">
     <meta property="og:title" content="Quantum Backrooms: The Observer's Maze">
-    <meta property="og:description" content="Look away and reality shifts. A first‑person horror maze with quantum physics.">
+    <meta property="og:description" content="A reality‑bending horror maze where observation shapes the world. Look away and walls disappear, doors entangle, and entities crawl from the dark. Play free.">
     <meta property="og:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Quantum Backrooms dimly lit corridor with a golden key and a shadow entity lurking.">
+    <meta property="og:site_name" content="Quantum Backrooms">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <meta name="twitter:url" content="https://quantum-backrooms.vercel.app/">
+    <meta name="twitter:title" content="Quantum Backrooms: The Observer's Maze">
+    <meta name="twitter:description" content="Look away and reality shifts. A Three.js horror maze with quantum tunneling, entangled doors, and lurking entities. Created by Techiral.">
+    <meta name="twitter:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <meta name="twitter:image:alt" content="A dim maze corridor with a golden key floating ahead.">
+    <meta name="twitter:creator" content="@techiral">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://quantum-backrooms.vercel.app/">
+
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/jpeg" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <link rel="apple-touch-icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+
+    <!-- Theme color -->
     <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Structured Data for Game -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Quantum Backrooms: The Observer's Maze",
+        "description": "A psychological horror maze where observation changes reality. Quantum tunneling, entangled doors, shadow entities, and hallucinations.",
+        "url": "https://quantum-backrooms.vercel.app/",
+        "image": "https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true",
+        "author": {
+            "@type": "Person",
+            "name": "Techiral (Lakshya Gupta)",
+            "url": "https://github.com/lakshyabuilds"
+        },
+        "genre": ["Horror", "Psychological", "Quantum Physics", "Maze"],
+        "gamePlatform": "Web Browser",
+        "operatingSystem": "Any",
+        "applicationCategory": "Game",
+        "playMode": "SinglePlayer",
+        "inLanguage": "en",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}body{background:#000;overflow:hidden;font-family:'Courier New',monospace;cursor:default;user-select:none;touch-action:none;height:100vh;width:100vw}canvas{display:block;position:fixed;top:0;left:0;z-index:1}#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%);transition:opacity 0.3s}#vignette{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9;pointer-events:none;box-shadow:inset 0 0 180px 60px rgba(0,0,0,0.8)}#chromatic{position:fixed;top:0;left:0;width:100%;height:100%;z-index:8;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;animation:chromaticDrift 7s ease-in-out infinite}@keyframes chromaticDrift{0%,100%{background:transparent}25%{background:rgba(255,0,0,0.03)}50%{background:transparent}75%{background:rgba(0,100,255,0.03)}}#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;transition:opacity 0.8s,visibility 0.8s;pointer-events:all}#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}#splash h1{font-size:clamp(2rem,5vw,4rem);color:#e8d5a3;letter-spacing:0.3em;text-align:center;margin-bottom:0.5em;text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3);animation:titlePulse 3s ease-in-out infinite;font-weight:300}@keyframes titlePulse{0%,100%{text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3)}50%{text-shadow:0 0 80px rgba(232,213,163,0.8),0 0 160px rgba(200,170,100,0.5)}}#splash .subtitle{font-size:clamp(0.7rem,1.5vw,1rem);color:#b8a080;letter-spacing:0.5em;text-align:center;margin-bottom:3em;opacity:0.7}.enter-btn{padding:1em 3em;font-size:1.1rem;letter-spacing:0.4em;color:#e8d5a3;background:transparent;border:1px solid #e8d5a3;cursor:pointer;transition:all 0.4s;text-transform:uppercase;position:relative;overflow:hidden}.enter-btn:hover{background:rgba(232,213,163,0.1);box-shadow:0 0 40px rgba(232,213,163,0.3);letter-spacing:0.6em}.enter-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(232,213,163,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}.enter-btn:hover::after{opacity:1}#hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;pointer-events:none;color:rgba(200,180,150,0.5);font-size:0.7rem;letter-spacing:0.3em;transition:opacity 2s}#jumpscare-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;pointer-events:none;background:#000;opacity:0;transition:opacity 0.08s}
+        *{margin:0;padding:0;box-sizing:border-box;}body{background:#000;overflow:hidden;font-family:'Courier New',monospace;cursor:default;user-select:none;touch-action:none;height:100vh;width:100vw}canvas{display:block;position:fixed;top:0;left:0;z-index:1}#overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;pointer-events:none;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.65) 100%);transition:opacity 0.3s}#vignette{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9;pointer-events:none;box-shadow:inset 0 0 180px 60px rgba(0,0,0,0.8)}#chromatic{position:fixed;top:0;left:0;width:100%;height:100%;z-index:8;pointer-events:none;mix-blend-mode:overlay;opacity:0.08;animation:chromaticDrift 7s ease-in-out infinite}@keyframes chromaticDrift{0%,100%{background:transparent}25%{background:rgba(255,0,0,0.03)}50%{background:transparent}75%{background:rgba(0,100,255,0.03)}}#splash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0a0a0a;transition:opacity 0.8s,visibility 0.8s;pointer-events:all;padding:2rem}#splash.hidden{opacity:0;visibility:hidden;pointer-events:none}#splash h1{font-size:clamp(2rem,5vw,4rem);color:#e8d5a3;letter-spacing:0.3em;text-align:center;margin-bottom:0.3em;text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3);animation:titlePulse 3s ease-in-out infinite;font-weight:300}@keyframes titlePulse{0%,100%{text-shadow:0 0 60px rgba(232,213,163,0.5),0 0 120px rgba(200,170,100,0.3)}50%{text-shadow:0 0 80px rgba(232,213,163,0.8),0 0 160px rgba(200,170,100,0.5)}}#splash .subtitle{font-size:clamp(0.7rem,1.5vw,1rem);color:#b8a080;letter-spacing:0.5em;text-align:center;margin-bottom:2em;opacity:0.7}.description{color:#c0b090;text-align:center;max-width:600px;margin:0 auto 2.5em;font-size:0.75rem;letter-spacing:0.15em;line-height:2;opacity:0.9}.description p{margin:0.4em 0;text-shadow:0 0 15px rgba(200,170,100,0.3)}.description p:first-child{font-size:0.9rem;color:#e8d5a3;letter-spacing:0.3em;font-weight:bold;margin-bottom:0.8em}.enter-btn{padding:1em 3em;font-size:1.1rem;letter-spacing:0.4em;color:#e8d5a3;background:transparent;border:1px solid #e8d5a3;cursor:pointer;transition:all 0.4s;text-transform:uppercase;position:relative;overflow:hidden}.enter-btn:hover{background:rgba(232,213,163,0.1);box-shadow:0 0 40px rgba(232,213,163,0.3);letter-spacing:0.6em}.enter-btn::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(232,213,163,0.15) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}.enter-btn:hover::after{opacity:1}#hint{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:20;pointer-events:none;color:rgba(200,180,150,0.5);font-size:0.7rem;letter-spacing:0.3em;transition:opacity 2s}#jumpscare-flash{position:fixed;top:0;left:0;width:100%;height:100%;z-index:50;pointer-events:none;background:#000;opacity:0;transition:opacity 0.08s}
     </style>
 </head>
 <body>
-    <div id="splash"><h1>QUANTUM<br>BACKROOMS</h1><p class="subtitle">THE OBSERVER'S MAZE</p><button class="enter-btn" id="enterBtn">Enter</button></div>
+    <div id="splash">
+        <h1>QUANTUM<br>BACKROOMS</h1>
+        <p class="subtitle">THE OBSERVER'S MAZE</p>
+        <div class="description">
+            <p>YOUR EYES ARE THE ONLY REALITY.</p>
+            <p>Walls shift when you look away. Doors entangle across the void.</p>
+            <p>Quantum tunneling phases you through solid matter.</p>
+            <p>Shadow entities stalk from the corners of perception.</p>
+            <p>Hallucinations warp your senses. The exit may not exist.</p>
+            <p>This is not a maze – it's a quantum nightmare.</p>
+        </div>
+        <button class="enter-btn" id="enterBtn">Enter</button>
+    </div>
     <div id="overlay"></div><div id="vignette"></div><div id="chromatic"></div><div id="jumpscare-flash"></div><div id="hint"></div>
 
     <script type="importmap">{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }</script>
@@ -386,7 +452,20 @@
         function completeLevel(){ STATE.levelComplete=true; STATE.gameActive=false; hintEl.style.opacity='1'; if(STATE.level>=STATE.maxLevel){ hintEl.textContent='YOU ESCAPED'; setTimeout(()=>{hintEl.style.opacity='0'; resetGame();},4000); } else{ hintEl.textContent=`LEVEL ${STATE.level} COMPLETE`; setTimeout(()=>{STATE.level++; startLevel();},3500); } }
 
         function resetGame(){ STATE.level=1; STATE.gridSize=6; STATE.hasKey=false; STATE.instability=0; STATE.chaos=0; STATE.jumpscareCd=0; STATE.shake=0; clearMaze(); generateMaze(1); setupEntangled(); resetPlayer(); STATE.gameActive=true; STATE.levelComplete=false; hintEl.style.opacity='0'; }
-        function startLevel(){ STATE.gridSize=6+Math.floor((STATE.level-1)*1.2); STATE.hasKey=false; STATE.instability=STATE.level*0.08; STATE.chaos=STATE.level*0.1; STATE.jumpscareCd=0; STATE.shake=0; clearMaze(); generateMaze(STATE.level); setupEntangled(); resetPlayer(); STATE.gameActive=true; hintEl.style.opacity='1'; hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`; setTimeout(()=>hintEl.style.opacity='0',3000); if(pointerLocked) document.exitPointerLock(); }
+        function startLevel(){
+            STATE.gridSize=6+Math.floor((STATE.level-1)*1.2);
+            STATE.hasKey=false; STATE.instability=STATE.level*0.08; STATE.chaos=STATE.level*0.1;
+            STATE.jumpscareCd=0; STATE.shake=0;
+            clearMaze();
+            generateMaze(STATE.level);
+            setupEntangled();
+            resetPlayer();
+            STATE.gameActive=true;
+            STATE.levelComplete=false;
+            hintEl.style.opacity='1';
+            hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`;
+            setTimeout(()=>hintEl.style.opacity='0',3000);
+        }
 
         function updateEntities(dt){
             const now=performance.now()/1000, chaosLvl=STATE.level*0.12;
