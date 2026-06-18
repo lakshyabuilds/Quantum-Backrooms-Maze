@@ -2,8 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Backrooms - The Observer's Maze</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <!-- SEO Meta -->
+    <title>Quantum Backrooms: The Observer's Maze – Psychological Horror Game</title>
+    <meta name="description" content="Play Quantum Backrooms: The Observer's Maze – a free online 3D horror game where reality shifts when you look away. Navigate a quantum maze, find the key, escape. Quantum tunneling, entangled doors, shadow entities. No download required.">
+    <meta name="keywords" content="quantum backrooms, observer's maze, three.js game, horror maze, quantum tunneling, backrooms game, psychological horror, browser game, online horror game, quantum maze, backrooms simulator, escape room, quantum physics game, weird maze, surreal horror, free browser game, play online, observer effect, quantum mechanics, psychedelic horror, LSD trip game, nightmare maze, shadow entities, jump scare, procedural generation, webGL game, three.js horror, browser based game, 3D maze, creepy game">
+    <meta name="author" content="Techiral Lakshya Gupta">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://quantum-backrooms.vercel.app">
+    <meta property="og:title" content="Quantum Backrooms: The Observer's Maze">
+    <meta property="og:description" content="A reality‑bending horror maze where observation shapes the world. Look away and walls disappear, doors entangle, and entities crawl from the dark.">
+    <meta property="og:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Quantum Backrooms dimly lit corridor with a golden key and a shadow entity lurking.">
+    <meta property="og:site_name" content="Quantum Backrooms">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quantum Backrooms: The Observer's Maze">
+    <meta name="twitter:description" content="Look away and reality shifts. A Three.js horror maze with quantum tunneling, entangled doors, and lurking entities.">
+    <meta name="twitter:image" content="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <meta name="twitter:image:alt" content="A dim maze corridor with a golden key floating ahead.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://quantum-backrooms.vercel.app">
+
+    <!-- Favicon & App Icons (square, auto-cropped from banner) -->
+    <link rel="icon" type="image/jpeg" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+    <link rel="apple-touch-icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
+
+    <!-- Theme color for browser UI -->
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Web App Manifest (optional PWA) -->
+    <link rel="manifest" href="data:application/json,{}">
+
     <style>
         :root {
             --bg: #0a0a0a;
@@ -208,18 +246,21 @@
 </head>
 <body>
 
+    <!-- Splash screen -->
     <div id="splash">
         <h1>QUANTUM<br>BACKROOMS</h1>
         <p class="subtitle">THE OBSERVER'S MAZE</p>
         <button class="enter-btn" id="enterBtn">Enter</button>
     </div>
 
+    <!-- Visual effect overlays -->
     <div id="overlay"></div>
     <div id="vignette"></div>
     <div id="chromatic"></div>
     <div id="jumpscare-flash"></div>
     <div id="hint"></div>
 
+    <!-- Three.js Import Map -->
     <script type="importmap">
         {
             "imports": {
@@ -240,6 +281,7 @@
         const jumpscareFlash = document.getElementById('jumpscare-flash');
         const overlayEl = document.getElementById('overlay');
         const vignetteEl = document.getElementById('vignette');
+        const chromaticEl = document.getElementById('chromatic');
 
         // ─────────────────────────────────────
         // THREE.JS SETUP
@@ -309,7 +351,6 @@
             humOsc.start();
             subOsc.start();
 
-            // Noise for atmosphere
             const bufferSize = audioCtx.sampleRate * 2;
             const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
             const data = noiseBuffer.getChannelData(0);
@@ -429,13 +470,13 @@
         // ─────────────────────────────────────
         // MAZE DATA
         // ─────────────────────────────────────
-        let horizontalWalls = []; // [row][col] - wall between (row,col) and (row+1,col)
-        let verticalWalls = []; // [row][col] - wall between (row,col) and (row,col+1)
-        let wallTypes = {}; // key: "h-row-col" or "v-row-col" -> 'solid' | 'open' | 'quantum'
-        let wallLastObserved = {}; // timestamp of last observation
-        let wallMeshes = {}; // Three.js mesh references
-        let cellLightFlicker = []; // [row][col] flicker state
-        let cellLightMeshes = []; // [row][col] mesh refs
+        let horizontalWalls = []; 
+        let verticalWalls = []; 
+        let wallTypes = {};
+        let wallLastObserved = {}; 
+        let wallMeshes = {}; 
+        let cellLightFlicker = []; 
+        let cellLightMeshes = []; 
 
         const mazeGroup = new THREE.Group();
         const wallsGroup = new THREE.Group();
@@ -475,12 +516,6 @@
             metalness: 0.1,
         });
 
-        const doorFrameMaterial = new THREE.MeshStandardMaterial({
-            color: 0x8a7a60,
-            roughness: 0.5,
-            metalness: 0.3,
-        });
-
         // ─────────────────────────────────────
         // LIGHTING
         // ─────────────────────────────────────
@@ -500,7 +535,6 @@
         // ─────────────────────────────────────
         // PLAYER
         // ─────────────────────────────────────
-        const playerVelocity = new THREE.Vector3();
         const playerPosition = new THREE.Vector3();
         const playerEuler = { x: 0, y: 0 };
         const keysPressed = {};
@@ -512,7 +546,6 @@
             const sx = GAME_STATE.startPosition?.col ?? 0;
             const sy = GAME_STATE.startPosition?.row ?? 0;
             playerPosition.set(sx * rs + rs / 2, 1.6, sy * rs + rs / 2);
-            playerVelocity.set(0, 0, 0);
             playerEuler.x = 0;
             playerEuler.y = Math.PI / 4;
             camera.position.copy(playerPosition);
@@ -539,12 +572,10 @@
             body.position.y = 1.1;
             body.castShadow = true;
             group.add(body);
-
             const head = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 6), bodyMat);
             head.position.y = 2.0;
             head.castShadow = true;
             group.add(head);
-
             const limbMat = new THREE.MeshStandardMaterial({
                 color: 0x050505,
                 roughness: 1,
@@ -558,7 +589,6 @@
                 arm.rotation.z = i * 0.3;
                 group.add(arm);
             }
-
             group.userData = {
                 bodyMesh: body,
                 headMesh: head,
@@ -569,7 +599,7 @@
             return group;
         }
 
-        function spawnEntity(row, col, distanceFromPlayer = 8) {
+        function spawnEntity(row, col) {
             const rs = GAME_STATE.roomSize;
             const ex = col * rs + rs / 2;
             const ez = row * rs + rs / 2;
@@ -579,7 +609,7 @@
             mesh.userData.gridRow = row;
             mesh.userData.gridCol = col;
             mesh.userData.spawnTime = performance.now() / 1000;
-            mesh.userData.state = 'idle'; // 'idle' | 'stalking' | 'charging' | 'vanishing'
+            mesh.userData.state = 'idle';
             mesh.userData.chargeTarget = null;
             mesh.userData.vanished = false;
             entityGroup.add(mesh);
@@ -599,7 +629,6 @@
                 const e = entities[i];
                 if (e.userData.vanished && now - e.userData.vanishStart > 0.5) {
                     entityGroup.remove(e);
-                    if (e.userData.bodyMesh) e.userData.bodyMesh.material.dispose();
                     entities.splice(i, 1);
                 }
             }
@@ -634,11 +663,9 @@
             const bit = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.15, 0.06), mat);
             bit.position.y = -0.48;
             group.add(bit);
-
             const glowLight = new THREE.PointLight(0xffd700, 1.5, 4, 2);
             glowLight.position.y = 0;
             group.add(glowLight);
-
             group.userData = { glowLight, baseY: 0 };
             return group;
         }
@@ -656,26 +683,19 @@
             ring.rotation.x = Math.PI / 2;
             ring.position.y = 0.1;
             group.add(ring);
-
             const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.5, 8), mat);
             pillar.position.y = 1.25;
             group.add(pillar);
-
             const glowLight = new THREE.PointLight(0x00cc88, 2, 6, 2);
             glowLight.position.y = 1.5;
             group.add(glowLight);
-
             group.userData = { glowLight };
             return group;
         }
 
         function placeKey(row, col) {
             keyGroup.clear();
-            if (keyMesh) {
-                keyMesh.userData?.glowLight?.dispose();
-                keyMesh.traverse(c => { if (c.material && c.material !== keyMesh.userData?.glowLight?.material) c.material
-                        .dispose(); });
-            }
+            if (keyMesh) keyMesh.userData?.glowLight?.dispose();
             keyMesh = createKeyMesh();
             const rs = GAME_STATE.roomSize;
             keyMesh.position.set(col * rs + rs / 2, 1.3, row * rs + rs / 2);
@@ -688,11 +708,7 @@
 
         function placeExit(row, col) {
             exitGroup.clear();
-            if (exitMarkerMesh) {
-                exitMarkerMesh.userData?.glowLight?.dispose();
-                exitMarkerMesh.traverse(c => { if (c.material && c.material !== exitMarkerMesh.userData?.glowLight
-                        ?.material) c.material.dispose(); });
-            }
+            if (exitMarkerMesh) exitMarkerMesh.userData?.glowLight?.dispose();
             exitMarkerMesh = createExitMarker();
             const rs = GAME_STATE.roomSize;
             exitMarkerMesh.position.set(col * rs + rs / 2, 0, row * rs + rs / 2);
@@ -700,6 +716,24 @@
             exitMarkerMesh.userData.gridCol = col;
             exitGroup.add(exitMarkerMesh);
             GAME_STATE.exitPosition = { row, col };
+        }
+
+        function removeKey() {
+            if (keyMesh) {
+                keyGroup.remove(keyMesh);
+                keyMesh.traverse(c => { if (c.material) c.material.dispose(); });
+                keyMesh = null;
+            }
+            GAME_STATE.keyPosition = null;
+        }
+
+        function removeExit() {
+            if (exitMarkerMesh) {
+                exitGroup.remove(exitMarkerMesh);
+                exitMarkerMesh.traverse(c => { if (c.material) c.material.dispose(); });
+                exitMarkerMesh = null;
+            }
+            GAME_STATE.exitPosition = null;
         }
 
         // ─────────────────────────────────────
@@ -723,27 +757,12 @@
             exitMarkerMesh = null;
         }
 
-        function disposeMaterial(obj) {
-            obj.traverse(child => {
-                if (child.material) {
-                    if (Array.isArray(child.material)) {
-                        child.material.forEach(m => m.dispose());
-                    } else {
-                        child.material.dispose();
-                    }
-                }
-                if (child.geometry) child.geometry.dispose();
-            });
-        }
-
         function generateMaze(level) {
             clearMaze();
             const gs = GAME_STATE.gridSize;
             const rs = GAME_STATE.roomSize;
             const wh = GAME_STATE.wallHeight;
-            const wallThickness = 0.2;
 
-            // Initialize wall arrays
             horizontalWalls = [];
             verticalWalls = [];
             for (let r = 0; r < gs; r++) {
@@ -755,72 +774,48 @@
                 }
             }
 
-            // Generate maze paths using recursive backtracker
             const visited = Array.from({ length: gs }, () => Array(gs).fill(false));
-            const stack = [];
-            const startR = 0,
-                startC = 0;
-            visited[startR][startC] = true;
-            stack.push({ r: startR, c: startC });
+            const stack = [{ r: 0, c: 0 }];
+            visited[0][0] = true;
 
             const directions = [
-                { dr: -1, dc: 0, wallType: 'h', wallR: (r, c) => r - 1, wallC: (r, c) => c },
-                { dr: 1, dc: 0, wallType: 'h', wallR: (r, c) => r, wallC: (r, c) => c },
-                { dr: 0, dc: -1, wallType: 'v', wallR: (r, c) => r, wallC: (r, c) => c - 1 },
-                { dr: 0, dc: 1, wallType: 'v', wallR: (r, c) => r, wallC: (r, c) => c },
+                { dr: -1, dc: 0, wallType: 'h', wallR: (r,c)=>r-1, wallC: (r,c)=>c },
+                { dr: 1, dc: 0, wallType: 'h', wallR: (r,c)=>r, wallC: (r,c)=>c },
+                { dr: 0, dc: -1, wallType: 'v', wallR: (r,c)=>r, wallC: (r,c)=>c-1 },
+                { dr: 0, dc: 1, wallType: 'v', wallR: (r,c)=>r, wallC: (r,c)=>c },
             ];
 
-            while (stack.length > 0) {
-                const current = stack[stack.length - 1];
-                const { r, c } = current;
+            while (stack.length) {
+                const { r, c } = stack[stack.length - 1];
                 const neighbors = [];
                 for (const d of directions) {
-                    const nr = r + d.dr;
-                    const nc = c + d.dc;
+                    const nr = r + d.dr, nc = c + d.dc;
                     if (nr >= 0 && nr < gs && nc >= 0 && nc < gs && !visited[nr][nc]) {
                         neighbors.push({ nr, nc, ...d });
                     }
                 }
-                if (neighbors.length === 0) {
-                    stack.pop();
-                } else {
+                if (!neighbors.length) stack.pop();
+                else {
                     const chosen = neighbors[Math.floor(Math.random() * neighbors.length)];
                     visited[chosen.nr][chosen.nc] = true;
-                    // Remove wall between current and chosen
-                    const wr = chosen.wallR(r, c);
-                    const wc = chosen.wallC(r, c);
-                    if (chosen.wallType === 'h' && wr >= 0 && wr < gs - 1 && wc >= 0 && wc < gs) {
-                        horizontalWalls[wr][wc] = 'open';
-                    } else if (chosen.wallType === 'v' && wr >= 0 && wr < gs && wc >= 0 && wc < gs - 1) {
-                        verticalWalls[wr][wc] = 'open';
-                    }
+                    const wr = chosen.wallR(r, c), wc = chosen.wallC(r, c);
+                    if (chosen.wallType === 'h' && wr >= 0 && wr < gs - 1) horizontalWalls[wr][wc] = 'open';
+                    else if (chosen.wallType === 'v' && wc >= 0 && wc < gs - 1) verticalWalls[wr][wc] = 'open';
                     stack.push({ r: chosen.nr, c: chosen.nc });
                 }
             }
 
-            // Add extra connections to create loops
-            const extraConnections = Math.floor(gs * gs * 0.15);
-            for (let i = 0; i < extraConnections; i++) {
-                const r = Math.floor(Math.random() * gs);
-                const c = Math.floor(Math.random() * gs);
-                const isH = Math.random() < 0.5;
-                if (isH && r < gs - 1 && horizontalWalls[r][c] === 'solid') {
-                    horizontalWalls[r][c] = 'open';
-                } else if (!isH && c < gs - 1 && verticalWalls[r][c] === 'solid') {
-                    verticalWalls[r][c] = 'open';
-                }
+            const extraConn = Math.floor(gs * gs * 0.15);
+            for (let i = 0; i < extraConn; i++) {
+                const r = Math.floor(Math.random() * gs), c = Math.floor(Math.random() * gs);
+                if (Math.random() < 0.5 && r < gs - 1 && horizontalWalls[r][c] === 'solid') horizontalWalls[r][c] = 'open';
+                else if (c < gs - 1 && verticalWalls[r][c] === 'solid') verticalWalls[r][c] = 'open';
             }
 
-            // Convert some open walls to quantum based on level
             const quantumFraction = 0.15 + level * 0.12;
             const allWallKeys = [];
-            for (let r = 0; r < gs - 1; r++)
-                for (let c = 0; c < gs; c++)
-                    if (horizontalWalls[r][c] === 'open') allWallKeys.push({ type: 'h', r, c });
-            for (let r = 0; r < gs; r++)
-                for (let c = 0; c < gs - 1; c++)
-                    if (verticalWalls[r][c] === 'open') allWallKeys.push({ type: 'v', r, c });
-
+            for (let r = 0; r < gs - 1; r++) for (let c = 0; c < gs; c++) if (horizontalWalls[r][c] === 'open') allWallKeys.push({ type: 'h', r, c });
+            for (let r = 0; r < gs; r++) for (let c = 0; c < gs - 1; c++) if (verticalWalls[r][c] === 'open') allWallKeys.push({ type: 'v', r, c });
             const numQuantum = Math.floor(allWallKeys.length * quantumFraction);
             const shuffled = [...allWallKeys].sort(() => Math.random() - 0.5);
             for (let i = 0; i < Math.min(numQuantum, shuffled.length); i++) {
@@ -831,57 +826,56 @@
                 else verticalWalls[wk.r][wk.c] = 'quantum';
             }
 
-            // Mark remaining walls
-            for (let r = 0; r < gs - 1; r++) {
-                for (let c = 0; c < gs; c++) {
-                    const key = `h-${r}-${c}`;
-                    if (!wallTypes[key] && horizontalWalls[r][c] === 'solid') wallTypes[key] = 'solid';
-                    if (!wallTypes[key] && horizontalWalls[r][c] === 'open') wallTypes[key] = 'open';
-                    if (!wallTypes[key] && horizontalWalls[r][c] === 'quantum') wallTypes[key] = 'quantum';
-                }
+            for (let r = 0; r < gs - 1; r++) for (let c = 0; c < gs; c++) {
+                const key = `h-${r}-${c}`;
+                if (!wallTypes[key]) wallTypes[key] = horizontalWalls[r][c];
             }
-            for (let r = 0; r < gs; r++) {
-                for (let c = 0; c < gs - 1; c++) {
-                    const key = `v-${r}-${c}`;
-                    if (!wallTypes[key] && verticalWalls[r][c] === 'solid') wallTypes[key] = 'solid';
-                    if (!wallTypes[key] && verticalWalls[r][c] === 'open') wallTypes[key] = 'open';
-                    if (!wallTypes[key] && verticalWalls[r][c] === 'quantum') wallTypes[key] = 'quantum';
-                }
+            for (let r = 0; r < gs; r++) for (let c = 0; c < gs - 1; c++) {
+                const key = `v-${r}-${c}`;
+                if (!wallTypes[key]) wallTypes[key] = verticalWalls[r][c];
             }
 
-            // Set start, key, exit positions
             GAME_STATE.startPosition = { row: 0, col: 0 };
-            const exitR = gs - 1;
-            const exitC = gs - 1;
+            const exitR = gs - 1, exitC = gs - 1;
             let keyR, keyC;
             do {
                 keyR = Math.floor(Math.random() * gs);
                 keyC = Math.floor(Math.random() * gs);
-            } while ((keyR === 0 && keyC === 0) || (keyR === exitR && keyC === exitC) || (Math.abs(keyR - exitR) + Math.abs(
-                keyC - exitC) < 2));
+            } while ((keyR === 0 && keyC === 0) || (keyR === exitR && keyC === exitC));
 
-            GAME_STATE.exitPosition = { row: exitR, col: exitC };
-            GAME_STATE.keyPosition = { row: keyR, col: keyC };
-            GAME_STATE.playerHasKey = false;
+            // ----- MISSING KEY/EXIT LOGIC -----
+            const levelFactor = level - 1;
+            const keyMissingChance = Math.min(0.4, levelFactor * 0.1);
+            const exitMissingChance = Math.min(0.35, levelFactor * 0.08);
+            const keyExists = Math.random() > keyMissingChance;
+            const exitExists = Math.random() > exitMissingChance;
 
-            // Ensure path exists from start to key and key to exit
-            ensurePathExists({ row: 0, col: 0 }, GAME_STATE.keyPosition);
-            ensurePathExists(GAME_STATE.keyPosition, GAME_STATE.exitPosition);
-
-            // Build 3D geometry
-            buildMazeGeometry();
-
-            // Place key and exit
-            placeKey(keyR, keyC);
-            placeExit(exitR, exitC);
-
-            // Initialize observation timestamps
-            const now = performance.now() / 1000;
-            for (const key in wallTypes) {
-                wallLastObserved[key] = now;
+            if (keyExists) {
+                GAME_STATE.keyPosition = { row: keyR, col: keyC };
+                ensurePathExists({ row: 0, col: 0 }, GAME_STATE.keyPosition);
+            } else {
+                GAME_STATE.keyPosition = null;
             }
 
-            // Initialize light flicker
+            if (exitExists) {
+                GAME_STATE.exitPosition = { row: exitR, col: exitC };
+                if (keyExists) ensurePathExists(GAME_STATE.keyPosition, GAME_STATE.exitPosition);
+            } else {
+                GAME_STATE.exitPosition = null;
+            }
+
+            GAME_STATE.playerHasKey = false;
+
+            buildMazeGeometry();
+
+            if (keyExists) placeKey(keyR, keyC);
+            else keyGroup.clear();
+            if (exitExists) placeExit(exitR, exitC);
+            else exitGroup.clear();
+
+            const now = performance.now() / 1000;
+            for (const key in wallTypes) wallLastObserved[key] = now;
+
             cellLightFlicker = Array.from({ length: gs }, () =>
                 Array.from({ length: gs }, () => ({
                     phase: Math.random() * Math.PI * 2,
@@ -893,6 +887,7 @@
         }
 
         function ensurePathExists(from, to) {
+            if (!from || !to) return;
             const gs = GAME_STATE.gridSize;
             const visited = Array.from({ length: gs }, () => Array(gs).fill(false));
             const queue = [{ r: from.row, c: from.col }];
@@ -903,13 +898,11 @@
                 { dr: 0, dc: -1, wType: 'v', wcOff: -1 },
                 { dr: 0, dc: 1, wType: 'v', wcOff: 0 },
             ];
-
-            while (queue.length > 0) {
+            while (queue.length) {
                 const { r, c } = queue.shift();
-                if (r === to.row && c === to.col) return true;
+                if (r === to.row && c === to.col) return;
                 for (const d of dirs) {
-                    const nr = r + d.dr;
-                    const nc = c + d.dc;
+                    const nr = r + d.dr, nc = c + d.dc;
                     if (nr < 0 || nr >= gs || nc < 0 || nc >= gs || visited[nr][nc]) continue;
                     const wr = d.wType === 'h' ? (d.wrOff === -1 ? r - 1 : r) : r;
                     const wc = d.wType === 'v' ? (d.wcOff === -1 ? c - 1 : c) : c;
@@ -921,34 +914,28 @@
                     }
                 }
             }
-            // If no path, force open some walls
             carvePath(from, to);
-            return true;
         }
 
         function carvePath(from, to) {
             const gs = GAME_STATE.gridSize;
-            let cr = from.row,
-                cc = from.col;
+            let cr = from.row, cc = from.col;
             while (cr !== to.row || cc !== to.col) {
-                const dr = Math.sign(to.row - cr);
-                const dc = Math.sign(to.col - cc);
+                const dr = Math.sign(to.row - cr), dc = Math.sign(to.col - cc);
                 if (dr !== 0 && (Math.random() < 0.5 || dc === 0)) {
-                    const wr = dr === -1 ? cr - 1 : cr;
-                    const wc = cc;
+                    const wr = dr === -1 ? cr - 1 : cr, wc = cc;
                     const key = `h-${wr}-${wc}`;
-                    if (wr >= 0 && wr < gs - 1 && wc >= 0 && wc < gs) {
+                    if (wr >= 0 && wr < gs - 1) {
                         wallTypes[key] = 'open';
-                        if (horizontalWalls[wr]) horizontalWalls[wr][wc] = 'open';
+                        horizontalWalls[wr][wc] = 'open';
                     }
                     cr += dr;
                 } else if (dc !== 0) {
-                    const wr = cr;
-                    const wc = dc === -1 ? cc - 1 : cc;
+                    const wr = cr, wc = dc === -1 ? cc - 1 : cc;
                     const key = `v-${wr}-${wc}`;
-                    if (wr >= 0 && wr < gs && wc >= 0 && wc < gs - 1) {
+                    if (wc >= 0 && wc < gs - 1) {
                         wallTypes[key] = 'open';
-                        if (verticalWalls[wr]) verticalWalls[wr][wc] = 'open';
+                        verticalWalls[wr][wc] = 'open';
                     }
                     cc += dc;
                 }
@@ -956,12 +943,8 @@
         }
 
         function buildMazeGeometry() {
-            const gs = GAME_STATE.gridSize;
-            const rs = GAME_STATE.roomSize;
-            const wh = GAME_STATE.wallHeight;
-            const wt = 0.2;
+            const gs = GAME_STATE.gridSize, rs = GAME_STATE.roomSize, wh = GAME_STATE.wallHeight, wt = 0.2;
 
-            // Floor
             const floorGeo = new THREE.PlaneGeometry(gs * rs + 1, gs * rs + 1);
             const floorMesh = new THREE.Mesh(floorGeo, floorMaterial);
             floorMesh.rotation.x = -Math.PI / 2;
@@ -969,7 +952,6 @@
             floorMesh.receiveShadow = true;
             floorGroup.add(floorMesh);
 
-            // Ceiling
             const ceilGeo = new THREE.PlaneGeometry(gs * rs + 1, gs * rs + 1);
             const ceilMesh = new THREE.Mesh(ceilGeo, ceilingMaterial);
             ceilMesh.rotation.x = Math.PI / 2;
@@ -977,48 +959,33 @@
             ceilMesh.receiveShadow = true;
             ceilingGroup.add(ceilMesh);
 
-            // Build walls
-            const totalW = gs * rs;
-            const totalD = gs * rs;
-
-            // Outer boundary walls
-            const outerWallGeoH = new THREE.BoxGeometry(totalW + 2, wh, wt);
-            const outerWallGeoV = new THREE.BoxGeometry(wt, wh, totalD + 2);
-
+            const outerWallGeoH = new THREE.BoxGeometry(gs * rs + 2, wh, wt);
+            const outerWallGeoV = new THREE.BoxGeometry(wt, wh, gs * rs + 2);
             const outerWalls = [
-                { geo: outerWallGeoH, pos: [totalW / 2, wh / 2, -wt / 2], rot: [0, 0, 0] },
-                { geo: outerWallGeoH, pos: [totalW / 2, wh / 2, totalD + wt / 2], rot: [0, 0, 0] },
-                { geo: outerWallGeoV, pos: [-wt / 2, wh / 2, totalD / 2], rot: [0, 0, 0] },
-                { geo: outerWallGeoV, pos: [totalW + wt / 2, wh / 2, totalD / 2], rot: [0, 0, 0] },
+                { geo: outerWallGeoH, pos: [(gs * rs) / 2, wh / 2, -wt / 2] },
+                { geo: outerWallGeoH, pos: [(gs * rs) / 2, wh / 2, gs * rs + wt / 2] },
+                { geo: outerWallGeoV, pos: [-wt / 2, wh / 2, (gs * rs) / 2] },
+                { geo: outerWallGeoV, pos: [gs * rs + wt / 2, wh / 2, (gs * rs) / 2] },
             ];
             outerWalls.forEach(ow => {
                 const mesh = new THREE.Mesh(ow.geo, wallMaterial);
                 mesh.position.set(...ow.pos);
-                mesh.rotation.set(...(ow.rot || [0, 0, 0]));
                 mesh.castShadow = true;
                 mesh.receiveShadow = true;
                 mesh.userData.isOuter = true;
                 wallsGroup.add(mesh);
             });
 
-            // Interior walls
             for (let r = 0; r < gs - 1; r++) {
                 for (let c = 0; c < gs; c++) {
                     const key = `h-${r}-${c}`;
                     const wtype = wallTypes[key] || 'solid';
                     if (wtype === 'solid' || wtype === 'quantum') {
-                        const wx = c * rs + rs / 2;
-                        const wz = (r + 1) * rs;
-                        const wallGeo = new THREE.BoxGeometry(rs + wt, wh, wt);
-                        const mesh = new THREE.Mesh(wallGeo, wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
+                        const wx = c * rs + rs / 2, wz = (r + 1) * rs;
+                        const mesh = new THREE.Mesh(new THREE.BoxGeometry(rs + wt, wh, wt), wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
                         mesh.position.set(wx, wh / 2, wz);
-                        mesh.castShadow = true;
-                        mesh.receiveShadow = true;
-                        mesh.userData.wallKey = key;
-                        mesh.userData.wallType = wtype;
-                        mesh.userData.isHorizontal = true;
-                        mesh.userData.gridR = r;
-                        mesh.userData.gridC = c;
+                        mesh.castShadow = true; mesh.receiveShadow = true;
+                        mesh.userData.wallKey = key; mesh.userData.wallType = wtype;
                         wallMeshes[key] = mesh;
                         wallsGroup.add(mesh);
                     }
@@ -1029,56 +996,32 @@
                     const key = `v-${r}-${c}`;
                     const wtype = wallTypes[key] || 'solid';
                     if (wtype === 'solid' || wtype === 'quantum') {
-                        const wx = (c + 1) * rs;
-                        const wz = r * rs + rs / 2;
-                        const wallGeo = new THREE.BoxGeometry(wt, wh, rs + wt);
-                        const mesh = new THREE.Mesh(wallGeo, wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
+                        const wx = (c + 1) * rs, wz = r * rs + rs / 2;
+                        const mesh = new THREE.Mesh(new THREE.BoxGeometry(wt, wh, rs + wt), wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
                         mesh.position.set(wx, wh / 2, wz);
-                        mesh.castShadow = true;
-                        mesh.receiveShadow = true;
-                        mesh.userData.wallKey = key;
-                        mesh.userData.wallType = wtype;
-                        mesh.userData.isHorizontal = false;
-                        mesh.userData.gridR = r;
-                        mesh.userData.gridC = c;
+                        mesh.castShadow = true; mesh.receiveShadow = true;
+                        mesh.userData.wallKey = key; mesh.userData.wallType = wtype;
                         wallMeshes[key] = mesh;
                         wallsGroup.add(mesh);
                     }
                 }
             }
 
-            // Ceiling lights
             for (let r = 0; r < gs; r++) {
                 cellLightMeshes[r] = [];
                 for (let c = 0; c < gs; c++) {
-                    const lx = c * rs + rs / 2;
-                    const lz = r * rs + rs / 2;
+                    const lx = c * rs + rs / 2, lz = r * rs + rs / 2;
                     const lightGeo = new THREE.BoxGeometry(1.2, 0.08, 0.5);
-                    const lightMat = new THREE.MeshStandardMaterial({
-                        color: 0xfff8e8,
-                        roughness: 0.2,
-                        metalness: 0.1,
-                        emissive: 0xfff8e8,
-                        emissiveIntensity: 1.0,
-                    });
+                    const lightMat = new THREE.MeshStandardMaterial({ color: 0xfff8e8, roughness: 0.2, metalness: 0.1, emissive: 0xfff8e8, emissiveIntensity: 1.0 });
                     const lightMesh = new THREE.Mesh(lightGeo, lightMat);
                     lightMesh.position.set(lx, wh - 0.05, lz);
-                    lightMesh.castShadow = false;
-                    lightMesh.userData.gridR = r;
-                    lightMesh.userData.gridC = c;
-                    cellLightMeshes[r][c] = lightMesh;
-                    lightsGroup.add(lightMesh);
-
-                    // Point light for this fixture
                     const ptLight = new THREE.PointLight(0xffeedd, 1.8, 8, 2);
                     ptLight.position.set(lx, wh - 0.2, lz);
-                    ptLight.castShadow = false;
-                    ptLight.userData.gridR = r;
-                    ptLight.userData.gridC = c;
                     ptLight.userData.baseIntensity = 1.8;
+                    lightMesh.userData = { pointLight: ptLight };
+                    cellLightMeshes[r][c] = lightMesh;
+                    lightsGroup.add(lightMesh);
                     lightsGroup.add(ptLight);
-                    if (!cellLightMeshes[r][c].userData) cellLightMeshes[r][c].userData = {};
-                    cellLightMeshes[r][c].userData.pointLight = ptLight;
                 }
             }
         }
@@ -1087,57 +1030,31 @@
             const mesh = wallMeshes[key];
             const wtype = wallTypes[key];
             if (!mesh && (wtype === 'solid' || wtype === 'quantum')) {
-                // Need to create mesh
-                const parts = key.split('-');
-                const type = parts[0];
-                const r = parseInt(parts[1]);
-                const c = parseInt(parts[2]);
-                const rs = GAME_STATE.roomSize;
-                const wh = GAME_STATE.wallHeight;
-                const wt = 0.2;
-                let wallGeo, wx, wz;
-                if (type === 'h') {
-                    wallGeo = new THREE.BoxGeometry(rs + wt, wh, wt);
-                    wx = c * rs + rs / 2;
-                    wz = (r + 1) * rs;
-                } else {
-                    wallGeo = new THREE.BoxGeometry(wt, wh, rs + wt);
-                    wx = (c + 1) * rs;
-                    wz = r * rs + rs / 2;
-                }
-                const newMesh = new THREE.Mesh(wallGeo, wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
+                const parts = key.split('-'), type = parts[0], r = parseInt(parts[1]), c = parseInt(parts[2]);
+                const rs = GAME_STATE.roomSize, wh = GAME_STATE.wallHeight, wt = 0.2;
+                let geo, wx, wz;
+                if (type === 'h') { geo = new THREE.BoxGeometry(rs + wt, wh, wt); wx = c * rs + rs / 2; wz = (r + 1) * rs; }
+                else { geo = new THREE.BoxGeometry(wt, wh, rs + wt); wx = (c + 1) * rs; wz = r * rs + rs / 2; }
+                const newMesh = new THREE.Mesh(geo, wtype === 'quantum' ? wallMaterialAlt : wallMaterial);
                 newMesh.position.set(wx, wh / 2, wz);
-                newMesh.castShadow = true;
-                newMesh.receiveShadow = true;
-                newMesh.userData.wallKey = key;
-                newMesh.userData.wallType = wtype;
-                newMesh.userData.isHorizontal = type === 'h';
-                newMesh.userData.gridR = r;
-                newMesh.userData.gridC = c;
+                newMesh.castShadow = true; newMesh.receiveShadow = true;
+                newMesh.userData = { wallKey: key, wallType: wtype, isHorizontal: type === 'h' };
                 wallMeshes[key] = newMesh;
                 wallsGroup.add(newMesh);
             } else if (mesh && wtype === 'open') {
-                // Remove mesh
                 wallsGroup.remove(mesh);
-                if (mesh.geometry) mesh.geometry.dispose();
-                if (mesh.material) mesh.material.dispose();
+                mesh.geometry?.dispose();
+                mesh.material?.dispose();
                 delete wallMeshes[key];
             } else if (mesh && (wtype === 'solid' || wtype === 'quantum')) {
-                // Update material
                 mesh.material = wtype === 'quantum' ? wallMaterialAlt : wallMaterial;
                 mesh.userData.wallType = wtype;
                 mesh.visible = true;
             }
         }
 
-        function rebuildAllWalls() {
-            for (const key in wallTypes) {
-                updateWallMesh(key);
-            }
-        }
-
         // ─────────────────────────────────────
-        // OBSERVATION SYSTEM
+        // OBSERVATION & QUANTUM EFFECTS
         // ─────────────────────────────────────
         function getPlayerGridPos() {
             const rs = GAME_STATE.roomSize;
@@ -1150,91 +1067,75 @@
         }
 
         function isWallObserved(wallKey) {
-            const parts = wallKey.split('-');
-            const type = parts[0];
-            const wr = parseInt(parts[1]);
-            const wc = parseInt(parts[2]);
+            const parts = wallKey.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
             const rs = GAME_STATE.roomSize;
-            const gs = GAME_STATE.gridSize;
-
-            let wallCenterX, wallCenterZ;
-            if (type === 'h') {
-                wallCenterX = wc * rs + rs / 2;
-                wallCenterZ = (wr + 1) * rs;
-            } else {
-                wallCenterX = (wc + 1) * rs;
-                wallCenterZ = wr * rs + rs / 2;
-            }
-
-            const dx = wallCenterX - playerPosition.x;
-            const dz = wallCenterZ - playerPosition.z;
-            const dist = Math.sqrt(dx * dx + dz * dz);
-
+            let wx, wz;
+            if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
+            else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
+            const dx = wx - playerPosition.x, dz = wz - playerPosition.z;
+            const dist = Math.sqrt(dx*dx + dz*dz);
             if (dist > 18) return false;
-
-            const forward = new THREE.Vector3(0, 0, -1);
-            forward.applyQuaternion(camera.quaternion);
+            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
             const toWall = new THREE.Vector3(dx, 0, dz).normalize();
             const dot = forward.dot(toWall);
-
-            // Wall is observed if it's roughly in front of the player
-            if (dot > 0.15 && dist < 14) return true;
-            if (dot > -0.1 && dist < 6) return true;
-
-            return false;
+            return (dot > 0.15 && dist < 14) || (dot > -0.1 && dist < 6);
         }
 
         function updateObservation() {
             const now = performance.now() / 1000;
             for (const key in wallTypes) {
-                if (isWallObserved(key)) {
-                    wallLastObserved[key] = now;
-                }
+                if (isWallObserved(key)) wallLastObserved[key] = now;
             }
         }
 
-        // ─────────────────────────────────────
-        // QUANTUM EVENTS
-        // ─────────────────────────────────────
+        function wallChangeEffect(position) {
+            const light = new THREE.PointLight(0xaaaaff, 2, 4, 2);
+            light.position.copy(position);
+            scene.add(light);
+            setTimeout(() => scene.remove(light), 200);
+            for (let i = 0; i < 10; i++) {
+                const geo = new THREE.SphereGeometry(0.05, 2, 2);
+                const mat = new THREE.MeshBasicMaterial({ color: 0xaaaaff, transparent: true, opacity: 0.8 });
+                const particle = new THREE.Mesh(geo, mat);
+                particle.position.set(
+                    position.x + (Math.random() - 0.5) * 1.2,
+                    position.y + Math.random() * 1.5,
+                    position.z + (Math.random() - 0.5) * 1.2
+                );
+                scene.add(particle);
+                setTimeout(() => { scene.remove(particle); geo.dispose(); mat.dispose(); }, 500);
+            }
+        }
+
         function triggerQuantumFluctuation() {
             const now = performance.now() / 1000;
             const chaosLevel = GAME_STATE.currentLevel * 0.18;
             const candidates = [];
-
             for (const key in wallTypes) {
                 if (wallTypes[key] !== 'quantum') continue;
                 const lastSeen = wallLastObserved[key] || now;
-                const unseenDuration = now - lastSeen;
-                if (unseenDuration > 1.8 && !isWallObserved(key)) {
-                    const probability = Math.min(0.7, (unseenDuration - 1.8) * 0.12 * (1 + chaosLevel));
-                    if (Math.random() < probability) {
-                        candidates.push(key);
-                    }
+                if (now - lastSeen > 1.0 && !isWallObserved(key)) {
+                    const probability = Math.min(0.8, (now - lastSeen - 1.0) * 0.2 * (1 + chaosLevel));
+                    if (Math.random() < probability) candidates.push(key);
                 }
             }
-
             if (candidates.length > 0) {
                 const numChanges = Math.min(candidates.length, 1 + Math.floor(Math.random() * 3 * (1 + chaosLevel)));
                 const shuffled = candidates.sort(() => Math.random() - 0.5);
                 for (let i = 0; i < numChanges; i++) {
                     const key = shuffled[i];
                     const currentState = wallTypes[key];
-                    const newState = currentState === 'quantum' ?
-                        (Math.random() < 0.5 ? 'solid' : 'open') :
-                        (currentState === 'solid' ? 'open' : 'solid');
+                    const newState = currentState === 'quantum' ? (Math.random() < 0.5 ? 'solid' : 'open') : (currentState === 'solid' ? 'open' : 'solid');
                     wallTypes[key] = newState;
                     const parts = key.split('-');
-                    if (parts[0] === 'h') {
-                        horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                    } else {
-                        verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                    }
+                    if (parts[0] === 'h') horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
+                    else verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
+                    const mesh = wallMeshes[key];
+                    if (mesh) wallChangeEffect(mesh.position);
                     updateWallMesh(key);
                     wallLastObserved[key] = now;
                 }
-                if (numChanges > 0 && Math.random() < 0.4) {
-                    playDistantDoor();
-                }
+                if (numChanges > 0 && Math.random() < 0.6) playDistantDoor();
                 GAME_STATE.quantumInstability = Math.min(1, GAME_STATE.quantumInstability + 0.15);
             }
         }
@@ -1242,95 +1143,42 @@
         function checkQuantumTunneling() {
             const now = performance.now() / 1000;
             if (now - GAME_STATE.lastTunnelTime < GAME_STATE.tunnelCooldown) return false;
-            const chaosLevel = GAME_STATE.currentLevel * 0.06;
-            const baseChance = 0.003 + chaosLevel;
+            const chaosLevel = GAME_STATE.currentLevel * 0.08;
+            const baseChance = 0.015 + chaosLevel;
             if (Math.random() < baseChance * (1 + GAME_STATE.quantumInstability)) {
                 GAME_STATE.lastTunnelTime = now;
-                GAME_STATE.quantumInstability = Math.max(0, GAME_STATE.quantumInstability - 0.4);
+                GAME_STATE.quantumInstability = Math.max(0, GAME_STATE.quantumInstability - 0.3);
                 return true;
             }
             return false;
         }
 
         function attemptQuantumTunnel() {
-            const rs = GAME_STATE.roomSize;
-            const gs = GAME_STATE.gridSize;
-            const playerGrid = getPlayerGridPos();
-            const px = playerPosition.x;
-            const pz = playerPosition.z;
-
-            // Find nearest solid wall
+            const rs = GAME_STATE.roomSize, gs = GAME_STATE.gridSize;
+            const px = playerPosition.x, pz = playerPosition.z;
             const candidates = [];
             for (const key in wallTypes) {
                 const wtype = wallTypes[key];
                 if (wtype !== 'solid' && wtype !== 'quantum') continue;
-                const parts = key.split('-');
-                const type = parts[0];
-                const wr = parseInt(parts[1]);
-                const wc = parseInt(parts[2]);
+                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
                 let wx, wz;
-                if (type === 'h') {
-                    wx = wc * rs + rs / 2;
-                    wz = (wr + 1) * rs;
-                } else {
-                    wx = (wc + 1) * rs;
-                    wz = wr * rs + rs / 2;
-                }
+                if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
+                else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
                 const dist = Math.sqrt((px - wx) ** 2 + (pz - wz) ** 2);
-                if (dist < 1.8) {
-                    candidates.push({ key, type, wr, wc, wx, wz, dist });
-                }
+                if (dist < 1.8) candidates.push({ key, type, wx, wz, dist });
             }
-
-            if (candidates.length === 0) return false;
+            if (!candidates.length) return false;
             candidates.sort((a, b) => a.dist - b.dist);
             const target = candidates[0];
-
-            // Teleport player to other side
             const offset = 2.5;
-            if (target.type === 'h') {
-                const playerSide = pz < target.wz ? -1 : 1;
-                playerPosition.z = target.wz + playerSide * offset;
-            } else {
-                const playerSide = px < target.wx ? -1 : 1;
-                playerPosition.x = target.wx + playerSide * offset;
-            }
+            if (target.type === 'h') playerPosition.z = target.wz + (pz < target.wz ? -1 : 1) * offset;
+            else playerPosition.x = target.wx + (px < target.wx ? -1 : 1) * offset;
             playerPosition.x = Math.max(0.5, Math.min(gs * rs - 0.5, playerPosition.x));
             playerPosition.z = Math.max(0.5, Math.min(gs * rs - 0.5, playerPosition.z));
-
-            // Visual effect
             GAME_STATE.screenShakeAmount = 0.6;
             playThud(0.2, 40);
-            addTunnelParticles(playerPosition.x, playerPosition.y, playerPosition.z);
-
+            wallChangeEffect(new THREE.Vector3(playerPosition.x, 1.6, playerPosition.z));
             return true;
-        }
-
-        function addTunnelParticles(x, y, z) {
-            const particleGroup = new THREE.Group();
-            const particleMat = new THREE.MeshBasicMaterial({ color: 0xaaccff, transparent: true, opacity: 0.7 });
-            for (let i = 0; i < 20; i++) {
-                const geo = new THREE.SphereGeometry(0.04, 4, 4);
-                const particle = new THREE.Mesh(geo, particleMat);
-                particle.position.set(
-                    x + (Math.random() - 0.5) * 3,
-                    y + Math.random() * 2,
-                    z + (Math.random() - 0.5) * 3
-                );
-                particle.userData.velocity = new THREE.Vector3(
-                    (Math.random() - 0.5) * 2,
-                    Math.random() * 2,
-                    (Math.random() - 0.5) * 2
-                );
-                particle.userData.life = 0.6 + Math.random() * 0.5;
-                particleGroup.add(particle);
-            }
-            particleGroup.userData.spawnTime = performance.now() / 1000;
-            particleGroup.userData.lifetime = 1.2;
-            scene.add(particleGroup);
-            // Cleanup will be in game loop
-            if (!GAME_STATE._tempParticles) GAME_STATE._tempParticles = [];
-            GAME_STATE._tempParticles.push(particleGroup);
         }
 
         // ─────────────────────────────────────
@@ -1341,15 +1189,11 @@
         function setupEntangledDoors() {
             entangledPairs = [];
             const quantumWalls = [];
-            for (const key in wallTypes) {
-                if (wallTypes[key] === 'quantum') quantumWalls.push(key);
-            }
+            for (const key in wallTypes) if (wallTypes[key] === 'quantum') quantumWalls.push(key);
             const numPairs = Math.min(3 + GAME_STATE.currentLevel, Math.floor(quantumWalls.length / 2));
             const shuffled = [...quantumWalls].sort(() => Math.random() - 0.5);
             for (let i = 0; i < numPairs * 2; i += 2) {
-                if (i + 1 < shuffled.length) {
-                    entangledPairs.push([shuffled[i], shuffled[i + 1]]);
-                }
+                if (i + 1 < shuffled.length) entangledPairs.push([shuffled[i], shuffled[i + 1]]);
             }
         }
 
@@ -1361,11 +1205,8 @@
                         const newState = Math.random() < 0.5 ? 'solid' : 'open';
                         wallTypes[partner] = newState;
                         const parts = partner.split('-');
-                        if (parts[0] === 'h') {
-                            horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                        } else {
-                            verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
-                        }
+                        if (parts[0] === 'h') horizontalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
+                        else verticalWalls[parseInt(parts[1])][parseInt(parts[2])] = newState;
                         updateWallMesh(partner);
                         wallLastObserved[partner] = performance.now() / 1000;
                         playDistantDoor();
@@ -1375,86 +1216,49 @@
         }
 
         // ─────────────────────────────────────
-        // COLLISION DETECTION
+        // COLLISION
         // ─────────────────────────────────────
         function isPositionBlocked(x, z, radius = 0.45) {
-            const rs = GAME_STATE.roomSize;
-            const gs = GAME_STATE.gridSize;
-
-            // Check outer bounds
-            if (x - radius < 0 || x + radius > gs * rs || z - radius < 0 || z + radius > gs * rs) {
-                return true;
-            }
-
-            // Check interior walls
+            const rs = GAME_STATE.roomSize, gs = GAME_STATE.gridSize;
+            if (x - radius < 0 || x + radius > gs * rs || z - radius < 0 || z + radius > gs * rs) return true;
             for (const key in wallTypes) {
                 const wtype = wallTypes[key];
                 if (wtype !== 'solid' && wtype !== 'quantum') continue;
-                const parts = key.split('-');
-                const type = parts[0];
-                const wr = parseInt(parts[1]);
-                const wc = parseInt(parts[2]);
+                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
                 let wx, wz;
-                const wt = 0.2;
+                const wt = 0.2, rs = GAME_STATE.roomSize;
                 if (type === 'h') {
-                    wx = wc * rs + rs / 2;
-                    wz = (wr + 1) * rs;
-                    const halfLen = rs / 2 + wt;
-                    if (Math.abs(x - wx) < halfLen + radius && Math.abs(z - wz) < wt / 2 + radius) {
-                        return true;
-                    }
+                    wx = wc * rs + rs / 2; wz = (wr + 1) * rs;
+                    if (Math.abs(x - wx) < (rs / 2 + wt) + radius && Math.abs(z - wz) < wt / 2 + radius) return true;
                 } else {
-                    wx = (wc + 1) * rs;
-                    wz = wr * rs + rs / 2;
-                    const halfLen = rs / 2 + wt;
-                    if (Math.abs(x - wx) < wt / 2 + radius && Math.abs(z - wz) < halfLen + radius) {
-                        return true;
-                    }
+                    wx = (wc + 1) * rs; wz = wr * rs + rs / 2;
+                    if (Math.abs(x - wx) < wt / 2 + radius && Math.abs(z - wz) < (rs / 2 + wt) + radius) return true;
                 }
             }
             return false;
         }
 
         function resolveCollision(desiredX, desiredZ, radius = 0.45) {
-            if (!isPositionBlocked(desiredX, desiredZ, radius)) {
-                return { x: desiredX, z: desiredZ, blocked: false };
-            }
-            // Try sliding along X
-            if (!isPositionBlocked(desiredX, playerPosition.z, radius)) {
-                return { x: desiredX, z: playerPosition.z, blocked: true };
-            }
-            // Try sliding along Z
-            if (!isPositionBlocked(playerPosition.x, desiredZ, radius)) {
-                return { x: playerPosition.x, z: desiredZ, blocked: true };
-            }
+            if (!isPositionBlocked(desiredX, desiredZ, radius)) return { x: desiredX, z: desiredZ, blocked: false };
+            if (!isPositionBlocked(desiredX, playerPosition.z, radius)) return { x: desiredX, z: playerPosition.z, blocked: true };
+            if (!isPositionBlocked(playerPosition.x, desiredZ, radius)) return { x: playerPosition.x, z: desiredZ, blocked: true };
             return { x: playerPosition.x, z: playerPosition.z, blocked: true };
         }
 
         // ─────────────────────────────────────
-        // INPUT HANDLING
+        // INPUT & INTERACTION
         // ─────────────────────────────────────
-        document.addEventListener('keydown', (e) => {
-            keysPressed[e.code] = true;
-            if (e.code === 'KeyF' && GAME_STATE.gameActive) {
-                tryInteract();
-            }
-        });
+        document.addEventListener('keydown', (e) => { keysPressed[e.code] = true; if (e.code === 'KeyF') tryInteract(); });
         document.addEventListener('keyup', (e) => { keysPressed[e.code] = false; });
-
         document.addEventListener('mousemove', (e) => {
             if (!pointerLocked || !GAME_STATE.gameActive) return;
-            const sensitivity = 0.002;
-            playerEuler.y -= e.movementX * sensitivity;
-            playerEuler.x -= e.movementY * sensitivity;
+            playerEuler.y -= e.movementX * 0.002;
+            playerEuler.x -= e.movementY * 0.002;
             playerEuler.x = Math.max(-Math.PI / 2.3, Math.min(Math.PI / 2.3, playerEuler.x));
         });
-
         document.addEventListener('click', () => {
-            if (GAME_STATE.gameActive && !pointerLocked) {
-                renderer.domElement.requestPointerLock();
-            }
+            if (GAME_STATE.gameActive && !pointerLocked) renderer.domElement.requestPointerLock();
         });
-
         document.addEventListener('pointerlockchange', () => {
             pointerLocked = document.pointerLockElement === renderer.domElement;
             if (!pointerLocked && GAME_STATE.gameActive) {
@@ -1466,60 +1270,34 @@
 
         function tryInteract() {
             if (!GAME_STATE.gameActive || GAME_STATE.levelComplete) return;
-            const playerGrid = getPlayerGridPos();
             const rs = GAME_STATE.roomSize;
-            const px = playerPosition.x;
-            const pz = playerPosition.z;
-
-            // Check key pickup
+            const px = playerPosition.x, pz = playerPosition.z;
             if (keyMesh && !GAME_STATE.playerHasKey) {
-                const kx = keyMesh.position.x;
-                const kz = keyMesh.position.z;
-                const dist = Math.sqrt((px - kx) ** 2 + (pz - kz) ** 2);
+                const dist = Math.sqrt((px - keyMesh.position.x) ** 2 + (pz - keyMesh.position.z) ** 2);
                 if (dist < 2.0) {
                     GAME_STATE.playerHasKey = true;
                     keyGroup.remove(keyMesh);
-                    if (keyMesh.userData?.glowLight) keyMesh.userData.glowLight.dispose();
-                    keyMesh.traverse(c => { if (c.material && c.material.dispose && c.material !== keyMesh.userData
-                            ?.glowLight?.material) c.material.dispose(); });
+                    keyMesh.traverse(c => { if (c.material) c.material.dispose(); });
                     keyMesh = null;
                     GAME_STATE.keyPosition = null;
                     playThud(0.4, 200);
                     hintEl.style.opacity = '1';
-                    hintEl.textContent = 'KEY ACQUIRED - FIND THE EXIT';
+                    hintEl.textContent = 'KEY ACQUIRED';
                     setTimeout(() => { hintEl.style.opacity = '0'; }, 3000);
                     return;
                 }
             }
-
-            // Check exit
             if (GAME_STATE.playerHasKey && exitMarkerMesh) {
-                const ex = exitMarkerMesh.position.x;
-                const ez = exitMarkerMesh.position.z;
-                const dist = Math.sqrt((px - ex) ** 2 + (pz - ez) ** 2);
-                if (dist < 2.2) {
-                    completeLevel();
-                    return;
-                }
+                const dist = Math.sqrt((px - exitMarkerMesh.position.x) ** 2 + (pz - exitMarkerMesh.position.z) ** 2);
+                if (dist < 2.2) { completeLevel(); return; }
             }
-
-            // Check door interaction (toggle nearby quantum walls)
             for (const key in wallTypes) {
                 if (wallTypes[key] !== 'quantum') continue;
-                const parts = key.split('-');
-                const type = parts[0];
-                const wr = parseInt(parts[1]);
-                const wc = parseInt(parts[2]);
+                const parts = key.split('-'), type = parts[0], wr = parseInt(parts[1]), wc = parseInt(parts[2]);
                 let wx, wz;
-                if (type === 'h') {
-                    wx = wc * rs + rs / 2;
-                    wz = (wr + 1) * rs;
-                } else {
-                    wx = (wc + 1) * rs;
-                    wz = wr * rs + rs / 2;
-                }
-                const dist = Math.sqrt((px - wx) ** 2 + (pz - wz) ** 2);
-                if (dist < 2.5) {
+                if (type === 'h') { wx = wc * rs + rs / 2; wz = (wr + 1) * rs; }
+                else { wx = (wc + 1) * rs; wz = wr * rs + rs / 2; }
+                if (Math.sqrt((px - wx) ** 2 + (pz - wz) ** 2) < 2.5) {
                     const newState = wallTypes[key] === 'solid' ? 'open' : 'solid';
                     wallTypes[key] = newState;
                     if (type === 'h') horizontalWalls[wr][wc] = newState;
@@ -1539,16 +1317,10 @@
             hintEl.style.opacity = '1';
             if (GAME_STATE.currentLevel >= GAME_STATE.maxLevel) {
                 hintEl.textContent = 'YOU ESCAPED THE QUANTUM MAZE';
-                setTimeout(() => {
-                    hintEl.style.opacity = '0';
-                    resetGame();
-                }, 4000);
+                setTimeout(() => { hintEl.style.opacity = '0'; resetGame(); }, 4000);
             } else {
-                hintEl.textContent = `LEVEL ${GAME_STATE.currentLevel} COMPLETE - PREPARE FOR LEVEL ${GAME_STATE.currentLevel + 1}`;
-                setTimeout(() => {
-                    GAME_STATE.currentLevel++;
-                    startLevel();
-                }, 3500);
+                hintEl.textContent = `LEVEL ${GAME_STATE.currentLevel} COMPLETE`;
+                setTimeout(() => { GAME_STATE.currentLevel++; startLevel(); }, 3500);
             }
         }
 
@@ -1563,15 +1335,8 @@
             GAME_STATE.screenShakeAmount = 0;
             GAME_STATE.lastTunnelTime = 0;
             GAME_STATE.heartbeating = false;
-            GAME_STATE.heartbeatTimer = 0;
             clearMaze();
-            entities.forEach(e => entityGroup.remove(e));
-            entities.length = 0;
-            if (GAME_STATE._tempParticles) {
-                GAME_STATE._tempParticles.forEach(p => scene.remove(p));
-                GAME_STATE._tempParticles = [];
-            }
-            generateMaze(GAME_STATE.currentLevel);
+            generateMaze(1);
             setupEntangledDoors();
             resetPlayer();
             GAME_STATE.gameActive = true;
@@ -1589,26 +1354,15 @@
             GAME_STATE.jumpscareCooldown = 0;
             GAME_STATE.screenShakeAmount = 0;
             GAME_STATE.lastTunnelTime = 0;
-            GAME_STATE.heartbeating = false;
-            GAME_STATE.heartbeatTimer = 0;
             clearMaze();
-            entities.forEach(e => entityGroup.remove(e));
-            entities.length = 0;
-            if (GAME_STATE._tempParticles) {
-                GAME_STATE._tempParticles.forEach(p => scene.remove(p));
-                GAME_STATE._tempParticles = [];
-            }
             generateMaze(level);
             setupEntangledDoors();
             resetPlayer();
             GAME_STATE.gameActive = true;
-            GAME_STATE.levelComplete = false;
             hintEl.style.opacity = '1';
             hintEl.textContent = `LEVEL ${level} - FIND THE KEY`;
             setTimeout(() => { hintEl.style.opacity = '0'; }, 3000);
-            if (pointerLocked) {
-                document.exitPointerLock();
-            }
+            if (pointerLocked) document.exitPointerLock();
         }
 
         // ─────────────────────────────────────
@@ -1617,119 +1371,45 @@
         function updateEntities(deltaTime) {
             const now = performance.now() / 1000;
             const chaosLevel = GAME_STATE.currentLevel * 0.12;
-
-            // Spawn entities occasionally
-            if (entities.length < 2 + GAME_STATE.currentLevel && Math.random() < 0.008 * (1 + chaosLevel) && GAME_STATE
-                .jumpscareCooldown <= 0) {
-                const gs = GAME_STATE.gridSize;
-                const playerGrid = getPlayerGridPos();
+            if (entities.length < 2 + GAME_STATE.currentLevel && Math.random() < 0.012 * (1 + chaosLevel) && GAME_STATE.jumpscareCooldown <= 0) {
+                const gs = GAME_STATE.gridSize, pg = getPlayerGridPos();
                 let sr, sc;
-                let attempts = 0;
-                do {
-                    sr = Math.floor(Math.random() * gs);
-                    sc = Math.floor(Math.random() * gs);
-                    attempts++;
-                } while (
-                    (Math.abs(sr - playerGrid.row) + Math.abs(sc - playerGrid.col) < 3) &&
-                    attempts < 30
-                );
-                if (attempts < 30) {
-                    const ent = spawnEntity(sr, sc);
-                    ent.userData.state = 'idle';
+                for (let i = 0; i < 30; i++) {
+                    sr = Math.floor(Math.random() * gs); sc = Math.floor(Math.random() * gs);
+                    if (Math.abs(sr - pg.row) + Math.abs(sc - pg.col) >= 3) break;
                 }
+                spawnEntity(sr, sc);
             }
-
-            // Update existing entities
             for (const entity of entities) {
                 if (entity.userData.vanished) continue;
-                const ex = entity.position.x;
-                const ez = entity.position.z;
-                const dx = playerPosition.x - ex;
-                const dz = playerPosition.z - ez;
-                const distToPlayer = Math.sqrt(dx * dx + dz * dz);
-
-                // Check if player is looking at entity
-                const forward = new THREE.Vector3(0, 0, -1);
-                forward.applyQuaternion(camera.quaternion);
+                const dx = playerPosition.x - entity.position.x, dz = playerPosition.z - entity.position.z;
+                const dist = Math.sqrt(dx*dx + dz*dz);
+                const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
                 const toEntity = new THREE.Vector3(dx, 0, dz).normalize();
-                const dotToEntity = forward.dot(toEntity);
-                const playerLookingAtEntity = dotToEntity > 0.7 && distToPlayer < 12;
-
-                // Update state
-                const state = entity.userData.state;
-
-                if (state === 'idle') {
-                    if (distToPlayer < 5 && !playerLookingAtEntity && Math.random() < 0.02) {
-                        entity.userData.state = 'stalking';
-                    } else if (playerLookingAtEntity && distToPlayer < 10 && Math.random() < 0.03) {
-                        entity.userData.state = 'vanishing';
-                        entity.userData.vanished = true;
-                        entity.userData.vanishStart = now;
-                    }
-                } else if (state === 'stalking') {
-                    if (distToPlayer < 2.5 && GAME_STATE.jumpscareCooldown <= 0) {
-                        entity.userData.state = 'charging';
-                        entity.userData.chargeTarget = playerPosition.clone();
-                        triggerJumpscare(entity);
-                    } else if (playerLookingAtEntity && Math.random() < 0.06) {
-                        entity.userData.state = 'vanishing';
-                        entity.userData.vanished = true;
-                        entity.userData.vanishStart = now;
-                    } else {
-                        // Move toward player slowly
-                        const speed = 0.8 + chaosLevel;
-                        const moveX = (dx / distToPlayer) * speed * deltaTime;
-                        const moveZ = (dz / distToPlayer) * speed * deltaTime;
-                        entity.position.x += moveX;
-                        entity.position.z += moveZ;
-                        entity.position.y = 0;
+                const looking = forward.dot(toEntity) > 0.7 && dist < 12;
+                if (entity.userData.state === 'idle') {
+                    if (dist < 5 && !looking && Math.random() < 0.03) entity.userData.state = 'stalking';
+                    else if (looking && Math.random() < 0.04) { despawnEntity(entity); }
+                } else if (entity.userData.state === 'stalking') {
+                    if (dist < 2.5 && GAME_STATE.jumpscareCooldown <= 0) triggerJumpscare(entity);
+                    else if (looking && Math.random() < 0.08) { despawnEntity(entity); }
+                    else {
+                        const speed = 1.0 + chaosLevel;
+                        entity.position.x += (dx / dist) * speed * deltaTime;
+                        entity.position.z += (dz / dist) * speed * deltaTime;
                         entity.lookAt(playerPosition.x, entity.position.y, playerPosition.z);
                     }
                 }
-
-                // Animate entity
-                const animPhase = entity.userData.animationPhase + now * entity.userData.animationSpeed;
-                if (entity.userData.bodyMesh) {
-                    entity.userData.bodyMesh.position.y = 1.1 + Math.sin(animPhase) * 0.08;
-                }
-                if (entity.userData.headMesh) {
-                    entity.userData.headMesh.position.y = 2.0 + Math.sin(animPhase * 1.3) * 0.05;
-                }
-
-                // Fade out vanishing entities
                 if (entity.userData.vanished) {
                     const elapsed = now - entity.userData.vanishStart;
-                    const opacity = Math.max(0, 0.85 - elapsed * 1.7);
-                    entity.traverse(child => {
-                        if (child.material && child.material.transparent) {
-                            child.material.opacity = opacity;
-                        }
-                    });
+                    entity.traverse(c => { if (c.material && c.material.transparent) c.material.opacity = Math.max(0, 0.85 - elapsed * 1.7); });
                 }
             }
-
-            // Heartbeat near entities
-            const nearbyEntity = entities.find(e => {
-                if (e.userData.vanished) return false;
-                const dx = playerPosition.x - e.position.x;
-                const dz = playerPosition.z - e.position.z;
-                return Math.sqrt(dx * dx + dz * dz) < 7;
-            });
-
-            if (nearbyEntity && !GAME_STATE.heartbeating) {
-                GAME_STATE.heartbeating = true;
-                GAME_STATE.heartbeatTimer = 0;
-            } else if (!nearbyEntity && GAME_STATE.heartbeating) {
-                GAME_STATE.heartbeating = false;
-                GAME_STATE.heartbeatTimer = 0;
-            }
-
+            const nearby = entities.some(e => !e.userData.vanished && Math.hypot(playerPosition.x - e.position.x, playerPosition.z - e.position.z) < 7);
+            GAME_STATE.heartbeating = nearby;
             if (GAME_STATE.heartbeating) {
                 GAME_STATE.heartbeatTimer += deltaTime;
-                if (GAME_STATE.heartbeatTimer > 1.5) {
-                    GAME_STATE.heartbeatTimer = 0;
-                    playHeartbeat();
-                }
+                if (GAME_STATE.heartbeatTimer > 1.5) { GAME_STATE.heartbeatTimer = 0; playHeartbeat(); }
             }
         }
 
@@ -1737,253 +1417,114 @@
             GAME_STATE.jumpscareCooldown = 4;
             GAME_STATE.screenShakeAmount = 1.5;
             playJumpscareSound();
-
-            // Flash
             jumpscareFlash.style.opacity = '0.9';
             setTimeout(() => { jumpscareFlash.style.opacity = '0'; }, 120);
-
-            // Teleport player randomly
-            const gs = GAME_STATE.gridSize;
-            const rs = GAME_STATE.roomSize;
-            const newR = Math.floor(Math.random() * gs);
-            const newC = Math.floor(Math.random() * gs);
-            playerPosition.x = newC * rs + rs / 2;
-            playerPosition.z = newR * rs + rs / 2;
-            playerPosition.y = 1.6;
-
-            // Despawn entity
+            const gs = GAME_STATE.gridSize, rs = GAME_STATE.roomSize;
+            playerPosition.x = Math.floor(Math.random() * gs) * rs + rs / 2;
+            playerPosition.z = Math.floor(Math.random() * gs) * rs + rs / 2;
             despawnEntity(entity);
-
-            // Increase chaos
             GAME_STATE.quantumInstability = Math.min(1, GAME_STATE.quantumInstability + 0.35);
-            GAME_STATE.totalChaos += 0.2;
         }
 
         // ─────────────────────────────────────
         // GAME LOOP
         // ─────────────────────────────────────
         const clock = new THREE.Clock();
-        let quantumEventTimer = 0;
-        let flickerUpdateTimer = 0;
+        let quantumEventTimer = 0, flickerTimer = 0;
 
         function update(deltaTime) {
             if (!GAME_STATE.gameActive || GAME_STATE.levelComplete) {
-                // Still update camera rotation
                 camera.rotation.order = 'YXZ';
                 camera.rotation.y = playerEuler.y;
                 camera.rotation.x = playerEuler.x;
                 return;
             }
-
             deltaTime = Math.min(deltaTime, 0.2);
+            if (GAME_STATE.jumpscareCooldown > 0) GAME_STATE.jumpscareCooldown -= deltaTime;
+            if (GAME_STATE.screenShakeAmount > 0.001) GAME_STATE.screenShakeAmount *= Math.exp(-deltaTime * 4);
+            else GAME_STATE.screenShakeAmount = 0;
 
-            // Update jumpscare cooldown
-            if (GAME_STATE.jumpscareCooldown > 0) {
-                GAME_STATE.jumpscareCooldown -= deltaTime;
-            }
-
-            // Screen shake decay
-            if (GAME_STATE.screenShakeAmount > 0.001) {
-                GAME_STATE.screenShakeAmount *= Math.exp(-deltaTime * 4);
-            } else {
-                GAME_STATE.screenShakeAmount = 0;
-            }
-
-            // Player movement
-            const forward = new THREE.Vector3(0, 0, -1);
-            forward.applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
-            const right = new THREE.Vector3(1, 0, 0);
-            right.applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
-
-            const moveSpeed = 5.5;
-            let moveX = 0;
-            let moveZ = 0;
-
-            if (keysPressed['KeyW'] || keysPressed['ArrowUp']) { moveX += forward.x;
-                moveZ += forward.z; }
-            if (keysPressed['KeyS'] || keysPressed['ArrowDown']) { moveX -= forward.x;
-                moveZ -= forward.z; }
-            if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) { moveX -= right.x;
-                moveZ -= right.z; }
-            if (keysPressed['KeyD'] || keysPressed['ArrowRight']) { moveX += right.x;
-                moveZ += right.z; }
-
+            const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
+            const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(new THREE.Vector3(0, 1, 0), playerEuler.y);
+            let moveX = 0, moveZ = 0;
+            if (keysPressed['KeyW'] || keysPressed['ArrowUp']) { moveX += forward.x; moveZ += forward.z; }
+            if (keysPressed['KeyS'] || keysPressed['ArrowDown']) { moveX -= forward.x; moveZ -= forward.z; }
+            if (keysPressed['KeyA'] || keysPressed['ArrowLeft']) { moveX -= right.x; moveZ -= right.z; }
+            if (keysPressed['KeyD'] || keysPressed['ArrowRight']) { moveX += right.x; moveZ += right.z; }
             if (moveX !== 0 || moveZ !== 0) {
-                const len = Math.sqrt(moveX * moveX + moveZ * moveZ);
-                moveX /= len;
-                moveZ /= len;
-                const desiredX = playerPosition.x + moveX * moveSpeed * deltaTime;
-                const desiredZ = playerPosition.z + moveZ * moveSpeed * deltaTime;
-                const resolved = resolveCollision(desiredX, desiredZ, 0.45);
-
+                const len = Math.sqrt(moveX*moveX + moveZ*moveZ);
+                moveX /= len; moveZ /= len;
+                const desiredX = playerPosition.x + moveX * 5.5 * deltaTime;
+                const desiredZ = playerPosition.z + moveZ * 5.5 * deltaTime;
+                const resolved = resolveCollision(desiredX, desiredZ);
                 if (resolved.blocked && checkQuantumTunneling()) {
-                    if (attemptQuantumTunnel()) {
-                        // Tunneling succeeded
-                    } else {
-                        playerPosition.x = resolved.x;
-                        playerPosition.z = resolved.z;
-                    }
-                } else {
-                    playerPosition.x = resolved.x;
-                    playerPosition.z = resolved.z;
-                }
+                    if (!attemptQuantumTunnel()) { playerPosition.x = resolved.x; playerPosition.z = resolved.z; }
+                } else { playerPosition.x = resolved.x; playerPosition.z = resolved.z; }
             }
-
             playerPosition.y = 1.6;
-
-            // Update camera with screen shake
-            const shakeX = GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3;
-            const shakeY = GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.25;
-            const shakeZ = GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3;
-
             camera.position.set(
-                playerPosition.x + shakeX,
-                playerPosition.y + shakeY,
-                playerPosition.z + shakeZ
+                playerPosition.x + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3,
+                playerPosition.y + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.25,
+                playerPosition.z + GAME_STATE.screenShakeAmount * (Math.random() - 0.5) * 0.3
             );
             camera.rotation.order = 'YXZ';
             camera.rotation.y = playerEuler.y;
             camera.rotation.x = playerEuler.x;
 
-            // Update observation
             updateObservation();
-
-            // Quantum events
             quantumEventTimer += deltaTime;
-            if (quantumEventTimer > 1.2 + Math.random() * 0.8) {
-                quantumEventTimer = 0;
-                triggerQuantumFluctuation();
-            }
-
-            // Update entities
+            if (quantumEventTimer > 1.0 + Math.random() * 0.5) { quantumEventTimer = 0; triggerQuantumFluctuation(); }
             updateEntities(deltaTime);
             cleanupEntities();
 
-            // Update flickering lights
-            flickerUpdateTimer += deltaTime;
-            if (flickerUpdateTimer > 0.3) {
-                flickerUpdateTimer = 0;
+            flickerTimer += deltaTime;
+            if (flickerTimer > 0.3) {
+                flickerTimer = 0;
                 const now = performance.now() / 1000;
-                for (let r = 0; r < GAME_STATE.gridSize; r++) {
-                    for (let c = 0; c < GAME_STATE.gridSize; c++) {
-                        if (cellLightFlicker[r] && cellLightFlicker[r][c]) {
-                            const flicker = cellLightFlicker[r][c];
-                            if (now > flicker.nextFlicker) {
-                                flicker.intensity = 0.25 + Math.random() * 0.75;
-                                flicker.nextFlicker = now + 0.5 + Math.random() * 4;
-                                flicker.speed = 0.3 + Math.random() * 2;
-                            }
-                            const lightLevel = flicker.intensity + Math.sin(now * flicker.speed + flicker.phase) * 0.2;
-                            const clampedLevel = Math.max(0.3, Math.min(1.5, lightLevel));
-                            if (cellLightMeshes[r] && cellLightMeshes[r][c] && cellLightMeshes[r][c].userData
-                                .pointLight) {
-                                cellLightMeshes[r][c].userData.pointLight.intensity =
-                                    cellLightMeshes[r][c].userData.pointLight.userData.baseIntensity *
-                                    clampedLevel;
-                            }
-                            if (cellLightMeshes[r] && cellLightMeshes[r][c] && cellLightMeshes[r][c].material) {
-                                cellLightMeshes[r][c].material.emissiveIntensity = clampedLevel;
-                            }
-                        }
-                    }
+                for (let r = 0; r < GAME_STATE.gridSize; r++) for (let c = 0; c < GAME_STATE.gridSize; c++) {
+                    if (!cellLightFlicker[r]?.[c]) continue;
+                    const f = cellLightFlicker[r][c];
+                    if (now > f.nextFlicker) { f.intensity = 0.25 + Math.random() * 0.75; f.nextFlicker = now + 0.5 + Math.random() * 4; }
+                    const level = Math.max(0.3, Math.min(1.5, f.intensity + Math.sin(now * f.speed + f.phase) * 0.2));
+                    const pt = cellLightMeshes[r]?.[c]?.userData?.pointLight;
+                    if (pt) pt.intensity = pt.userData.baseIntensity * level;
+                    if (cellLightMeshes[r]?.[c]?.material) cellLightMeshes[r][c].material.emissiveIntensity = level;
                 }
             }
 
-            // Animate key
-            if (keyMesh && keyMesh.userData) {
-                keyMesh.position.y = keyMesh.userData.baseY + Math.sin(performance.now() / 1000 * 2) * 0.25;
-                keyMesh.rotation.y += deltaTime * 1.5;
-            }
+            if (keyMesh) { keyMesh.position.y = keyMesh.userData.baseY + Math.sin(performance.now() / 1000 * 2) * 0.25; keyMesh.rotation.y += deltaTime * 1.5; }
+            if (exitMarkerMesh) { exitMarkerMesh.rotation.y += deltaTime * 0.6; if (exitMarkerMesh.userData.glowLight) exitMarkerMesh.userData.glowLight.intensity = 2 + Math.sin(performance.now() / 1000 * 3) * 0.8; }
 
-            // Animate exit marker
-            if (exitMarkerMesh && exitMarkerMesh.userData) {
-                exitMarkerMesh.rotation.y += deltaTime * 0.6;
-                const glow = exitMarkerMesh.userData.glowLight;
-                if (glow) {
-                    glow.intensity = 2 + Math.sin(performance.now() / 1000 * 3) * 0.8;
-                }
-            }
-
-            // Cleanup temp particles
-            if (GAME_STATE._tempParticles && GAME_STATE._tempParticles.length > 0) {
-                const now2 = performance.now() / 1000;
-                for (let i = GAME_STATE._tempParticles.length - 1; i >= 0; i--) {
-                    const pg = GAME_STATE._tempParticles[i];
-                    const age = now2 - pg.userData.spawnTime;
-                    if (age > pg.userData.lifetime) {
-                        pg.children.forEach(c => { if (c.geometry) c.geometry.dispose(); if (c.material) c.material
-                                .dispose(); });
-                        scene.remove(pg);
-                        GAME_STATE._tempParticles.splice(i, 1);
-                    } else {
-                        pg.children.forEach(c => {
-                            if (c.userData.velocity) {
-                                c.position.x += c.userData.velocity.x * deltaTime;
-                                c.position.y += c.userData.velocity.y * deltaTime;
-                                c.position.z += c.userData.velocity.z * deltaTime;
-                                c.userData.velocity.y += deltaTime * 0.5;
-                            }
-                            if (c.material && c.material.opacity !== undefined) {
-                                c.material.opacity = Math.max(0, c.userData.life - age) / (c.userData
-                                    .life || 1);
-                            }
-                        });
-                    }
-                }
-            }
-
-            // Update overlay effects based on quantum instability
-            const instability = GAME_STATE.quantumInstability;
-            overlayEl.style.background = `radial-gradient(ellipse at center, transparent ${55 - instability * 20}%, rgba(0,0,0,${0.55 + instability * 0.3}) 100%)`;
-            vignetteEl.style.boxShadow = `inset 0 0 ${180 + instability * 80}px ${60 + instability * 50}px rgba(0,0,0,${0.7 + instability * 0.25})`;
-
-            // Decay quantum instability
+            const inst = GAME_STATE.quantumInstability;
+            overlayEl.style.background = `radial-gradient(ellipse at center, transparent ${55 - inst*20}%, rgba(0,0,0,${0.55 + inst*0.3}) 100%)`;
+            vignetteEl.style.boxShadow = `inset 0 0 ${180 + inst*80}px ${60 + inst*50}px rgba(0,0,0,${0.7 + inst*0.25})`;
+            chromaticEl.style.opacity = 0.08 + inst * 0.12;
             GAME_STATE.quantumInstability = Math.max(0, GAME_STATE.quantumInstability - deltaTime * 0.04);
-
-            // Update ambient hum based on chaos
-            if (humGain && GAME_STATE.gameActive) {
-                const chaosVal = GAME_STATE.totalChaos + GAME_STATE.quantumInstability;
-                humGain.gain.value = 0.04 + chaosVal * 0.06;
-                humFilter.frequency.value = 200 - chaosVal * 80;
-            }
+            if (humGain) { const cv = GAME_STATE.totalChaos + GAME_STATE.quantumInstability; humGain.gain.value = 0.04 + cv * 0.06; humFilter.frequency.value = 200 - cv * 80; }
         }
 
-        function render() {
-            renderer.render(scene, camera);
-        }
+        function render() { renderer.render(scene, camera); }
 
         function gameLoop() {
             requestAnimationFrame(gameLoop);
-            const deltaTime = Math.min(clock.getDelta(), 0.25);
-            update(deltaTime);
+            update(Math.min(clock.getDelta(), 0.25));
             render();
         }
 
         // ─────────────────────────────────────
-        // INITIALIZATION
+        // INIT
         // ─────────────────────────────────────
         function initGame() {
-            GAME_STATE.currentLevel = 1;
-            GAME_STATE.gridSize = 6;
-            GAME_STATE.playerHasKey = false;
-            GAME_STATE.levelComplete = false;
-            GAME_STATE.gameActive = false;
-            GAME_STATE.quantumInstability = 0;
-            GAME_STATE.totalChaos = 0;
-            GAME_STATE.jumpscareCooldown = 0;
-            GAME_STATE.screenShakeAmount = 0;
-            GAME_STATE.lastTunnelTime = 0;
-            GAME_STATE.heartbeating = false;
-            GAME_STATE.heartbeatTimer = 0;
-            GAME_STATE._tempParticles = [];
+            GAME_STATE.currentLevel = 1; GAME_STATE.gridSize = 6; GAME_STATE.playerHasKey = false; GAME_STATE.levelComplete = false;
+            GAME_STATE.gameActive = false; GAME_STATE.quantumInstability = 0; GAME_STATE.totalChaos = 0;
+            GAME_STATE.jumpscareCooldown = 0; GAME_STATE.screenShakeAmount = 0; GAME_STATE.lastTunnelTime = 0;
+            GAME_STATE.heartbeating = false; GAME_STATE.heartbeatTimer = 0;
             clearMaze();
-            entities.length = 0;
             generateMaze(1);
             setupEntangledDoors();
             resetPlayer();
             camera.position.copy(playerPosition);
             camera.rotation.set(0, playerEuler.y, 0);
-            hintEl.style.opacity = '0';
         }
 
         enterBtn.addEventListener('click', () => {
@@ -1993,34 +1534,19 @@
             splashEl.classList.add('hidden');
             hintEl.style.opacity = '1';
             hintEl.textContent = 'CLICK TO FOCUS - WASD TO MOVE - F TO INTERACT';
-            setTimeout(() => {
-                hintEl.style.opacity = '0';
-                renderer.domElement.requestPointerLock();
-            }, 3500);
+            setTimeout(() => { hintEl.style.opacity = '0'; renderer.domElement.requestPointerLock(); }, 3500);
         });
 
-        // Handle window resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Initialize and start
         initGame();
         gameLoop();
-
-        // Show splash
         splashEl.classList.remove('hidden');
         hintEl.style.opacity = '0';
-
-        console.log('🔮 Quantum Backrooms initialized');
-        console.log('   - Observer Effect: Your surroundings change when unseen');
-        console.log('   - Quantum Tunneling: Phase through walls randomly');
-        console.log('   - Entangled Doors: Distant doors echo your actions');
-        console.log('   - Shadow Entities: They watch from the dark');
-        console.log('   - Find the key, reach the exit, survive the maze.');
-        console.log('   Controls: WASD = Move | Mouse = Look | F = Interact | Click = Lock cursor');
     </script>
 </body>
 </html>
