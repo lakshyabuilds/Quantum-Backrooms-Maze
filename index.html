@@ -10,7 +10,6 @@
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="language" content="English">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://quantum-backrooms.vercel.app/">
     <meta property="og:title" content="Quantum Backrooms: The Observer's Maze">
@@ -22,7 +21,6 @@
     <meta property="og:site_name" content="Quantum Backrooms">
     <meta property="og:locale" content="en_US">
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://quantum-backrooms.vercel.app/">
     <meta name="twitter:title" content="Quantum Backrooms: The Observer's Maze">
@@ -31,17 +29,13 @@
     <meta name="twitter:image:alt" content="A dim maze corridor with a golden key floating ahead.">
     <meta name="twitter:creator" content="@techiral">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://quantum-backrooms.vercel.app/">
 
-    <!-- Favicon & App Icons -->
     <link rel="icon" type="image/jpeg" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
     <link rel="apple-touch-icon" href="https://github.com/lakshyabuilds/Quantum-Backrooms-Maze/blob/main/quantum-backrooms.jpg?raw=true">
 
-    <!-- Theme color -->
     <meta name="theme-color" content="#0a0a0a">
 
-    <!-- Structured Data for Game -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -74,15 +68,13 @@
     </style>
 </head>
 <body>
-    <div id="splash">
-        <h1>QUANTUM<br>BACKROOMS</h1>
-        <p class="subtitle">THE OBSERVER'S MAZE</p>
+    <div id="splash"><h1>QUANTUM<br>BACKROOMS</h1><p class="subtitle">THE OBSERVER'S MAZE</p>
         <div class="description">
             <p>YOUR EYES ARE THE ONLY REALITY.</p>
             <p>Walls shift when you look away. Doors entangle across the void.</p>
             <p>Quantum tunneling phases you through solid matter.</p>
-            <p>Shadow entities stalk from the corners of perception.</p>
-            <p>Hallucinations warp your senses. The exit may not exist.</p>
+            <p>Shadow entities freeze when watched – stare too long and they attack.</p>
+            <p>Hallucinations warp your senses.</p>
             <p>This is not a maze – it's a quantum nightmare.</p>
         </div>
         <button class="enter-btn" id="enterBtn">Enter</button>
@@ -165,6 +157,7 @@
             camera.position.copy(playerPos); camera.rotation.set(0,playerEuler.y,0);
         }
 
+        // ---------- ENTITIES (Enderman-like behavior) ----------
         const entities=[], entityGrp=new THREE.Group(); scene.add(entityGrp);
         function createEntity(){
             const g=new THREE.Group(), m=new THREE.MeshStandardMaterial({color:0x080808,roughness:1,transparent:true,opacity:0.85});
@@ -172,16 +165,180 @@
             const head=new THREE.Mesh(new THREE.SphereGeometry(0.28,8,6),m); head.position.y=2.0; head.castShadow=true; g.add(head);
             const lm=new THREE.MeshStandardMaterial({color:0x050505,roughness:1,transparent:true,opacity:0.7});
             for(let i=-1;i<=1;i+=2){ const a=new THREE.Mesh(new THREE.CapsuleGeometry(0.1,0.7,4,6),lm); a.position.set(i*0.4,1.5,0); a.rotation.z=i*0.3; g.add(a); }
-            g.userData={bodyMesh:body,headMesh:head,animPhase:Math.random()*Math.PI*2,animSpeed:0.4+Math.random()*0.8};
+            g.userData={
+                bodyMesh:body, headMesh:head,
+                state: 'idle',       // idle, frozen, stalking, aggressive
+                stareTimer: 0,       // how long player has been looking
+                teleportCooldown: 0,
+                animPhase: Math.random()*Math.PI*2, animSpeed: 0.4+Math.random()*0.8
+            };
             return g;
         }
         function spawnEntity(r,c){
             const rs=STATE.roomSize, e=createEntity(); e.position.set(c*rs+rs/2,0,r*rs+rs/2);
-            e.userData.gridR=r; e.userData.gridC=c; e.userData.state='idle'; e.userData.vanished=false;
+            e.userData.gridR=r; e.userData.gridC=c;
             entityGrp.add(e); entities.push(e); return e;
         }
-        function despawnEntity(e){ e.userData.state='vanishing'; e.userData.vanished=true; e.userData.vanishStart=performance.now()/1000; }
 
+        // Check if player is looking at a specific entity
+        function isPlayerLookingAt(e){
+            const dx = e.position.x - playerPos.x, dz = e.position.z - playerPos.z;
+            const dist = Math.hypot(dx, dz);
+            if(dist > 15) return false;
+            const fwd = new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
+            const to = new THREE.Vector3(dx, 0, dz).normalize();
+            const dot = fwd.dot(to);
+            // looking within ~30° cone and not too far
+            return dot > 0.86 && dist < 10;
+        }
+
+        function teleportEntity(e){
+            const gs = STATE.gridSize, rs = STATE.roomSize;
+            // teleport to a random nearby cell
+            const curR = e.userData.gridR, curC = e.userData.gridC;
+            let newR, newC;
+            for(let tries=0; tries<20; tries++){
+                newR = curR + Math.floor(Math.random()*5)-2;
+                newC = curC + Math.floor(Math.random()*5)-2;
+                if(newR>=0 && newR<gs && newC>=0 && newC<gs && (newR!==curR || newC!==curC)) break;
+            }
+            e.position.set(newC*rs+rs/2, 0, newR*rs+rs/2);
+            e.userData.gridR = newR; e.userData.gridC = newC;
+            // small visual flash
+            const l = new THREE.PointLight(0x8888ff,1.5,3);
+            l.position.copy(e.position); l.position.y += 1.5;
+            scene.add(l); setTimeout(()=>scene.remove(l), 200);
+        }
+
+        function updateEntities(dt){
+            const now = performance.now()/1000;
+            const playerGrid = getGrid();
+            for(const e of entities){
+                const dx = e.position.x - playerPos.x, dz = e.position.z - playerPos.z;
+                const dist = Math.hypot(dx, dz);
+                const lookedAt = isPlayerLookingAt(e);
+
+                // Teleport cooldown
+                if(e.userData.teleportCooldown > 0) e.userData.teleportCooldown -= dt;
+
+                // State machine
+                switch(e.userData.state){
+                    case 'idle':
+                        if(lookedAt){
+                            e.userData.state = 'frozen';
+                            e.userData.stareTimer = 0;
+                        } else if(dist < 7 && Math.random()<0.01){
+                            // occasionally start stalking when close and unobserved
+                            e.userData.state = 'stalking';
+                        } else {
+                            // idle wandering
+                            if(Math.random()<0.02){
+                                const angle = Math.random()*Math.PI*2;
+                                e.position.x += Math.cos(angle)*0.3*dt;
+                                e.position.z += Math.sin(angle)*0.3*dt;
+                            }
+                        }
+                        break;
+
+                    case 'frozen':
+                        if(!lookedAt){
+                            // player looked away -> teleport away sometimes
+                            if(Math.random()<0.4 && e.userData.teleportCooldown<=0){
+                                teleportEntity(e);
+                                e.userData.teleportCooldown = 2.0;
+                            }
+                            e.userData.state = 'idle';
+                            e.userData.stareTimer = 0;
+                        } else {
+                            e.userData.stareTimer += dt;
+                            if(e.userData.stareTimer > 1.5){
+                                // stared too long -> become aggressive (like Enderman)
+                                e.userData.state = 'aggressive';
+                                e.userData.stareTimer = 0;
+                                playDistantDoor(); // eerie sound
+                            }
+                        }
+                        break;
+
+                    case 'stalking':
+                        if(lookedAt){
+                            e.userData.state = 'frozen';
+                            e.userData.stareTimer = 0;
+                        } else if(dist < 2.2 && STATE.jumpscareCd<=0){
+                            // very close and unobserved -> jumpscare
+                            triggerJumpscare(e);
+                        } else if(dist > 12){
+                            e.userData.state = 'idle';
+                        } else {
+                            // move toward player slowly
+                            const speed = 1.0 + STATE.level*0.12;
+                            const moveX = (-dx/dist) * speed * dt;
+                            const moveZ = (-dz/dist) * speed * dt;
+                            e.position.x += moveX;
+                            e.position.z += moveZ;
+                            e.lookAt(playerPos.x, e.position.y, playerPos.z);
+                        }
+                        break;
+
+                    case 'aggressive':
+                        // always moves toward player, even if looked at
+                        if(dist < 2.0 && STATE.jumpscareCd<=0){
+                            triggerJumpscare(e);
+                        } else if(dist > 15){
+                            e.userData.state = 'idle';
+                        } else {
+                            const speed = 1.8 + STATE.level*0.2;
+                            const moveX = (-dx/dist) * speed * dt;
+                            const moveZ = (-dz/dist) * speed * dt;
+                            e.position.x += moveX;
+                            e.position.z += moveZ;
+                            e.lookAt(playerPos.x, e.position.y, playerPos.z);
+                            // if player looks away for a while, maybe go back to idle
+                            if(!lookedAt && Math.random()<0.05){
+                                e.userData.state = 'idle';
+                            }
+                        }
+                        break;
+                }
+
+                // Clamp to grid
+                const rs = STATE.roomSize, gs = STATE.gridSize;
+                e.position.x = Math.max(0.5, Math.min(gs*rs-0.5, e.position.x));
+                e.position.z = Math.max(0.5, Math.min(gs*rs-0.5, e.position.z));
+
+                // Animation
+                const anim = e.userData.animPhase + now*e.userData.animSpeed;
+                if(e.userData.bodyMesh) e.userData.bodyMesh.position.y = 1.1 + Math.sin(anim)*0.08;
+                if(e.userData.headMesh) e.userData.headMesh.position.y = 2.0 + Math.sin(anim*1.3)*0.05;
+            }
+            // Spawn new entities occasionally
+            if(entities.length < 2+STATE.level && Math.random()<0.02*(1+STATE.level*0.12) && STATE.jumpscareCd<=0){
+                const pg = getGrid();
+                let sr, sc;
+                for(let i=0;i<30;i++){
+                    sr = Math.floor(Math.random()*gs); sc = Math.floor(Math.random()*gs);
+                    if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) break;
+                }
+                if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) spawnEntity(sr,sc);
+            }
+            // Heartbeat when entity nearby
+            const near = entities.some(e => Math.hypot(playerPos.x-e.position.x, playerPos.z-e.position.z)<7);
+            STATE.heartbeat = near;
+            if(STATE.heartbeat){ STATE.hbTimer+=dt; if(STATE.hbTimer>1.5){ STATE.hbTimer=0; playHeartbeat(); } }
+        }
+
+        function triggerJumpscare(e){
+            STATE.jumpscareCd = 4; STATE.shake = 1.5; playJumpscareSound();
+            jumpscareFlash.style.opacity='0.9'; setTimeout(()=>jumpscareFlash.style.opacity='0',120);
+            const gs=STATE.gridSize, rs=STATE.roomSize;
+            playerPos.x = Math.floor(Math.random()*gs)*rs+rs/2;
+            playerPos.z = Math.floor(Math.random()*gs)*rs+rs/2;
+            // Remove entity and spawn another elsewhere
+            entityGrp.remove(e); entities.splice(entities.indexOf(e),1);
+            STATE.instability = Math.min(1, STATE.instability+0.35);
+        }
+
+        // ---------- KEY & EXIT (always present) ----------
         const keyGrp=new THREE.Group(), exitGrp=new THREE.Group(); scene.add(keyGrp); scene.add(exitGrp);
         let keyMesh=null, exitMesh=null;
         function makeKey(){
@@ -208,6 +365,7 @@
             STATE.exitPos={row:r,col:c}; exitGrp.add(exitMesh);
         }
 
+        // ---------- MAZE GENERATION (key & exit always present) ----------
         function clearMaze(){
             wallsGrp.clear(); lightsGrp.clear(); floorGrp.clear(); ceilGrp.clear();
             wallMeshes={}; wallTypes={}; wallLastObs={}; cellFlick=[]; cellLights=[];
@@ -250,7 +408,6 @@
                 const w=shuf[i], key=`${w.type}-${w.r}-${w.c}`; wallTypes[key]='quantum';
                 if(w.type==='h') hWalls[w.r][w.c]='quantum'; else vWalls[w.r][w.c]='quantum';
             }
-            // register all walls
             for(let r=0;r<gs-1;r++)for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=hWalls[r][c]; }
             for(let r=0;r<gs;r++)for(let c=0;c<gs-1;c++){ const k=`v-${r}-${c}`; if(!wallTypes[k]) wallTypes[k]=vWalls[r][c]; }
 
@@ -266,6 +423,7 @@
                 return false;
             }
 
+            // Always place key and exit
             const exitR=gs-1, exitC=gs-1;
             let keyR,keyC; do{ keyR=Math.floor(Math.random()*gs); keyC=Math.floor(Math.random()*gs); }while((keyR===0&&keyC===0)||(keyR===exitR&&keyC===exitC));
             STATE.keyPos={row:keyR,col:keyC}; STATE.exitPos={row:exitR,col:exitC};
@@ -309,12 +467,10 @@
             const gs=STATE.gridSize, rs=STATE.roomSize, wh=STATE.wallH, wt=0.2;
             const fg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const fm=new THREE.Mesh(fg,floorMat); fm.rotation.x=-Math.PI/2; fm.position.set(gs*rs/2,-0.05,gs*rs/2); fm.receiveShadow=true; floorGrp.add(fm);
             const cg=new THREE.PlaneGeometry(gs*rs+1,gs*rs+1); const cm=new THREE.Mesh(cg,ceilMat); cm.rotation.x=Math.PI/2; cm.position.set(gs*rs/2,wh+0.05,gs*rs/2); cm.receiveShadow=true; ceilGrp.add(cm);
-            // outer
             const oh=new THREE.BoxGeometry(gs*rs+2,wh,wt), ov=new THREE.BoxGeometry(wt,wh,gs*rs+2);
             [[oh,gs*rs/2,wh/2,-wt/2],[oh,gs*rs/2,wh/2,gs*rs+wt/2],[ov,-wt/2,wh/2,gs*rs/2],[ov,gs*rs+wt/2,wh/2,gs*rs/2]].forEach(([geo,x,y,z])=>{
                 const m=new THREE.Mesh(geo,wallMat); m.position.set(x,y,z); m.castShadow=m.receiveShadow=true; wallsGrp.add(m);
             });
-            // interior
             for(let r=0;r<gs-1;r++) for(let c=0;c<gs;c++){ const k=`h-${r}-${c}`, t=wallTypes[k]||'solid'; if(t==='solid'||t==='quantum'){
                 const mesh=new THREE.Mesh(new THREE.BoxGeometry(rs+wt,wh,wt), t==='quantum'?wallMatAlt:wallMat);
                 mesh.position.set(c*rs+rs/2,wh/2,(r+1)*rs); mesh.castShadow=mesh.receiveShadow=true;
@@ -325,7 +481,6 @@
                 mesh.position.set((c+1)*rs,wh/2,r*rs+rs/2); mesh.castShadow=mesh.receiveShadow=true;
                 mesh.userData={wallKey:k,wallType:t}; wallMeshes[k]=mesh; wallsGrp.add(mesh);
             }}
-            // lights
             for(let r=0;r<gs;r++){ cellLights[r]=[]; for(let c=0;c<gs;c++){
                 const lx=c*rs+rs/2, lz=r*rs+rs/2;
                 const lm=new THREE.Mesh(new THREE.BoxGeometry(1.2,0.08,0.5), new THREE.MeshStandardMaterial({color:0xfff8e8,roughness:0.2,metalness:0.1,emissive:0xfff8e8,emissiveIntensity:1}));
@@ -456,49 +611,10 @@
             STATE.gridSize=6+Math.floor((STATE.level-1)*1.2);
             STATE.hasKey=false; STATE.instability=STATE.level*0.08; STATE.chaos=STATE.level*0.1;
             STATE.jumpscareCd=0; STATE.shake=0;
-            clearMaze();
-            generateMaze(STATE.level);
-            setupEntangled();
-            resetPlayer();
-            STATE.gameActive=true;
-            STATE.levelComplete=false;
-            hintEl.style.opacity='1';
-            hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`;
+            clearMaze(); generateMaze(STATE.level); setupEntangled(); resetPlayer();
+            STATE.gameActive=true; STATE.levelComplete=false;
+            hintEl.style.opacity='1'; hintEl.textContent=`LEVEL ${STATE.level} - FIND THE KEY`;
             setTimeout(()=>hintEl.style.opacity='0',3000);
-        }
-
-        function updateEntities(dt){
-            const now=performance.now()/1000, chaosLvl=STATE.level*0.12;
-            if(entities.length<2+STATE.level && Math.random()<0.02*(1+chaosLvl) && STATE.jumpscareCd<=0){
-                const gs=STATE.gridSize, pg=getGrid(); let sr,sc; for(let i=0;i<30;i++){ sr=Math.floor(Math.random()*gs); sc=Math.floor(Math.random()*gs); if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) break; }
-                if(Math.abs(sr-pg.row)+Math.abs(sc-pg.col)>=3) spawnEntity(sr,sc);
-            }
-            for(const e of entities){
-                if(e.userData.vanished) continue;
-                const dx=playerPos.x-e.position.x, dz=playerPos.z-e.position.z, dist=Math.hypot(dx,dz);
-                const fwd=new THREE.Vector3(0,0,-1).applyQuaternion(camera.quaternion);
-                const to=new THREE.Vector3(dx,0,dz).normalize(); const looking=fwd.dot(to)>0.7 && dist<12;
-                if(e.userData.state==='idle'){
-                    if(dist<5&&!looking&&Math.random()<0.04) e.userData.state='stalking';
-                    else if(looking&&Math.random()<0.05){ despawnEntity(e); }
-                }else if(e.userData.state==='stalking'){
-                    if(dist<2.5&&STATE.jumpscareCd<=0) triggerJumpscare(e);
-                    else if(looking&&Math.random()<0.1){ despawnEntity(e); }
-                    else{ const sp=1.2+chaosLvl; e.position.x+=(dx/dist)*sp*dt; e.position.z+=(dz/dist)*sp*dt; e.lookAt(playerPos.x,e.position.y,playerPos.z); }
-                }
-                if(e.userData.vanished){ const el=now-e.userData.vanishStart; e.traverse(c=>{if(c.material&&c.material.transparent)c.material.opacity=Math.max(0,0.85-el*1.7);}); }
-                const anim=e.userData.animPhase+now*e.userData.animSpeed; if(e.userData.bodyMesh) e.userData.bodyMesh.position.y=1.1+Math.sin(anim)*0.08; if(e.userData.headMesh) e.userData.headMesh.position.y=2.0+Math.sin(anim*1.3)*0.05;
-            }
-            const near=entities.some(e=>!e.userData.vanished&&Math.hypot(playerPos.x-e.position.x,playerPos.z-e.position.z)<7);
-            STATE.heartbeat=near; if(STATE.heartbeat){ STATE.hbTimer+=dt; if(STATE.hbTimer>1.5){ STATE.hbTimer=0; playHeartbeat(); } }
-        }
-
-        function triggerJumpscare(e){
-            STATE.jumpscareCd=4; STATE.shake=1.5; playJumpscareSound();
-            jumpscareFlash.style.opacity='0.9'; setTimeout(()=>jumpscareFlash.style.opacity='0',120);
-            const gs=STATE.gridSize, rs=STATE.roomSize;
-            playerPos.x=Math.floor(Math.random()*gs)*rs+rs/2; playerPos.z=Math.floor(Math.random()*gs)*rs+rs/2;
-            despawnEntity(e); STATE.instability=Math.min(1,STATE.instability+0.35);
         }
 
         const clock=new THREE.Clock(); let qt=0, ft=0, hallTimer=0;
@@ -523,8 +639,7 @@
             camera.position.set(playerPos.x+STATE.shake*(Math.random()-0.5)*0.3, playerPos.y+STATE.shake*(Math.random()-0.5)*0.25, playerPos.z+STATE.shake*(Math.random()-0.5)*0.3);
             camera.rotation.order='YXZ'; camera.rotation.y=playerEuler.y; camera.rotation.x=playerEuler.x;
 
-            updateObs();
-            qt+=dt; if(qt>0.8+Math.random()*0.4){ qt=0; quantumFluctuation(); }
+            updateObs(); qt+=dt; if(qt>0.8+Math.random()*0.4){ qt=0; quantumFluctuation(); }
             updateEntities(dt);
             for(let i=entities.length-1;i>=0;i--){ const e=entities[i]; if(e.userData.vanished&&performance.now()/1000-e.userData.vanishStart>0.5){ entityGrp.remove(e); entities.splice(i,1); }}
 
