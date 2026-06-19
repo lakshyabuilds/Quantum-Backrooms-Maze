@@ -157,7 +157,7 @@ The game periodically injects:
 
 ## Audience Modes
 
-## For Gamers — “GTA VI Release Guide” Energy
+## For Gamers
 
 ### The pitch
 This is the kind of game people open “just to test it” and end up staying in for the atmosphere. It is built to feel like a **suspense-driven launch title teaser**: bold title, striking visuals, heavy identity, and a mechanic hook that is immediately understandable.
@@ -176,7 +176,7 @@ You are not just escaping a maze. You are trying to outthink a hostile reality s
 
 ---
 
-## For Researchers / Scientists — “Formal Research Page” Tone
+## For Researchers / Scientists
 
 ### Abstract
 This project models a perceptual horror environment in which spatial stability depends on player observation. The result is a deterministic-but-unstable maze system combining procedural generation, conditional state transitions, entangled event propagation, and sensory disruption.
@@ -205,7 +205,7 @@ This structure is useful for:
 
 ---
 
-## For Developers — “Linux Manual” Style
+## For Developers
 
 ### Name
 `quantum-backrooms`
